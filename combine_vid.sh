@@ -5,10 +5,14 @@ set -e
 orig_video_suffix=$1
 orig_video=/Users/chenghanngan/Movies/OBS/"$orig_video_suffix".mov
 
+start_time_raw=$2
 start_time=00:00:$2
 
 orig_audio_suffix=$3
 orig_audio=/Users/chenghanngan/Documents/Programs/iOS/LoopMusic/Tracks/"$orig_audio_suffix".m4a
+final_audio=$orig_audio
+
+fade_audio=/Users/chenghanngan/Documents/Music/Transcription/Videos/fade_audio.m4a
 
 final_name_suffix=$4
 if [ -z "$final_name_suffix" ]; then
@@ -47,21 +51,23 @@ fi
 
 if [ "$valid" = true ]; then
 
-    ffmpeg -i "$orig_video" -ss $start_time -async 1 "$cut_temp_file"
-
-    ffmpeg -i "$cut_temp_file" -i "$orig_audio" -c:v copy -c:a aac -shortest -map 0:v:0 -map 1:a:0 "$splice_output"
-
     if [ "$fade" = true ]; then
-        video_length=`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$splice_output"`
-        fade_start=`echo "$video_length - $fade_out_time" | bc`
+        video_length=`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$orig_video"`
+        fade_start=`echo "$video_length - $start_time_raw - $fade_out_time" | bc`
 
-        ffmpeg -i "$splice_output" -af 'afade=out:st='$fade_start':d='$fade_out_time "$final_name"
+        ffmpeg -i "$orig_audio" -af 'afade=out:st='$fade_start':d='$fade_out_time "$fade_audio"
 
-        trash "$splice_output"
+        final_audio=$fade_audio
     fi
 
-    # ffmpeg -i "$final_name" -itsoffset 0.3 -i "$final_name" -map 0:v -map 1:a -vcodec copy -acodec copy "$final_name_delayed"
+    ffmpeg -i "$orig_video" -ss $start_time -async 1 "$cut_temp_file"
+
+    ffmpeg -i "$cut_temp_file" -i "$final_audio" -c:v copy -c:a aac -b:a 192k -shortest -map 0:v:0 -map 1:a:0 "$final_name"
 
     trash "$cut_temp_file"
+
+    if [ "$fade" = true ]; then
+        trash "$fade_audio"
+    fi
 
 fi
