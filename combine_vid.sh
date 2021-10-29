@@ -53,7 +53,10 @@ if [ "$valid" = true ]; then
 
     if [ "$fade" = true ]; then
         video_length=`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$orig_video"`
-        fade_start=`echo "$video_length - $start_time_raw - $fade_out_time" | bc`
+        video_length=`echo "$video_length - $start_time_raw" | bc`
+        audio_length=`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$orig_audio"`
+        min_length=`echo "if ($video_length < $audio_length) $video_length else $audio_length" | bc`
+        fade_start=`echo "$min_length - $fade_out_time" | bc`
 
         ffmpeg -i "$orig_audio" -af 'afade=out:st='$fade_start':d='$fade_out_time "$fade_audio"
 

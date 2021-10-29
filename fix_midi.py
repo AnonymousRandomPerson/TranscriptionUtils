@@ -8,6 +8,7 @@ midi_instruments = {
   'Harpsichord': 7,
   'Clavinet': 8,
   'Celesta': 9,
+  'Cowbell (Autotune)': 9,
   'Glass Harmonica': 9,
   'Crotales': 10,
   'Glockenspiel': 10,
@@ -46,14 +47,16 @@ midi_instruments = {
   'Laugh FX': 53,
   'Soprano': 53,
   'Tenor': 53,
+  'Voice': 54,
   'Vocals': 54,
+  'Synth Voice': 55,
   'Orchestra Hit': 56,
   'Trumpet': 57,
   'Muted Trombone': 58,
   'Trombone': 58,
-  'Muted Trumpet': 60,
-  'Euphonium': 70,
+  'Euphonium': 59,
   'Tuba': 59,
+  'Muted Trumpet': 60,
   'Flugelhorn': 61,
   'Horn': 61,
   'Synth Brass': 63,
@@ -76,9 +79,12 @@ midi_instruments = {
   'Synth Lead': 81,
   'Synth Pad': 89,
   'Sound FX': 97,
+  'Squeak FX': 100,
   'Wind FX': 100,
   'Static FX': 103,
+  'Zap FX': 103,
   'Sitar': 105,
+  'Banjo': 106,
   'Kalimba': 109,
   'Bagpipes': 110,
   'Steel Drums': 115,
@@ -201,10 +207,10 @@ percussion_parts = {
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 overwrite = True
 new_file_location = 'Modified'
-game_acronym = 'EY'
-game_name = 'Kirby\'s Epic Yarn'
+game_acronym = 'MPDS'
+game_name = 'Mario Party DS'
 track_names = [
-  'Rainbow Falls'
+  'Bowser\'s Pinball Machine'
 ]
 
 for track_name in track_names:
