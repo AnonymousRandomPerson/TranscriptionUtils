@@ -25,6 +25,7 @@ midi_instruments = {
   'Organ': 18,
   'Accordion': 22,
   'Harmonica': 23,
+  'Melodica': 23,
   'Acoustic Guitar': 25,
   'Mandolin': 25,
   'Ukulele': 25,
@@ -103,7 +104,8 @@ percussion_parts = {
     47: 61,
     48: 60,
     50: 60,
-    60: 60
+    60: 60,
+    61: 61
   },
   'Cabasa': 69,
   'Castanets': 85,
@@ -167,6 +169,8 @@ percussion_parts = {
     57: 77,
     63: 76,
     70: 76,
+    76: 76,
+    77: 77,
   },
   'Timbales': {
     70: 66,
@@ -207,10 +211,10 @@ percussion_parts = {
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 overwrite = True
 new_file_location = 'Modified'
-game_acronym = 'MPDS'
-game_name = 'Mario Party DS'
+game_acronym = 'CS'
+game_name = 'Paper Mario Color Splash'
 track_names = [
-  'Bowser\'s Pinball Machine'
+  'The Golden Coliseum'
 ]
 
 for track_name in track_names:
