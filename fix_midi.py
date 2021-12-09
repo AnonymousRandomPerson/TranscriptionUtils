@@ -73,6 +73,7 @@ midi_instruments = {
   'Piccolo': 73,
   'Alto Flute': 74,
   'Flute': 74,
+  'Alto Recorder': 75,
   'Soprano Recorder': 75,
   'Fife': 76,
   'Pan Flute': 76,
@@ -173,6 +174,8 @@ percussion_parts = {
     77: 77,
   },
   'Timbales': {
+    65: 65,
+    66: 66,
     70: 66,
     71: 65,
     72: 66
@@ -211,14 +214,20 @@ percussion_parts = {
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 overwrite = True
 new_file_location = 'Modified'
-game_acronym = 'CS'
-game_name = 'Paper Mario Color Splash'
+game_acronym = 'FO BD'
+game_name = 'Bouncedown'
 track_names = [
-  'The Golden Coliseum'
+  ('Main Theme', 'Theme')
 ]
 
 for track_name in track_names:
-  short_name = '{} {}'.format(game_acronym, track_name)
+  if type(track_name) is tuple:
+    short_name = track_name[1]
+    track_name = track_name[0]
+  else:
+    short_name = track_name
+
+  short_name = '{} {}'.format(game_acronym, short_name)
   long_name = '{} ({})'.format(track_name, game_name)
 
   file_name = '{}.midi'.format(long_name)
