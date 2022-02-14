@@ -214,10 +214,10 @@ percussion_parts = {
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 overwrite = True
 new_file_location = 'Modified'
-game_acronym = 'FO BD'
-game_name = 'Bouncedown'
+game_acronym = 'DPP'
+game_name = 'Pokemon Diamond Pearl'
 track_names = [
-  ('Main Theme', 'Theme')
+  'Eterna City (Day)'
 ]
 
 for track_name in track_names:
