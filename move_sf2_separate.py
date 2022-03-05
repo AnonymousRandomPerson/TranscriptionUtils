@@ -2,7 +2,7 @@ import os
 import shutil
 
 source_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Sforzando', 'ARIAConverted', 'sf2')
-target_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Pokémon Colosseum')
+target_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Chrono Trigger')
 target_folder_wav = os.path.join(target_folder, 'Wav')
 
 for folder in os.listdir(source_folder):
