@@ -4,7 +4,7 @@ import os;
 
 overwrite = False
 new_file_location = 'Modified'
-join_name = 'Gourmet Race'
+join_name = 'Grass Land 2'
 track_names = [
   os.path.join(join_name, join_name)
 ]
