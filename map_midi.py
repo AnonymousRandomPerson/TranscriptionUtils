@@ -4,7 +4,7 @@ import os;
 
 overwrite = False
 new_file_location = 'Modified'
-join_name = 'Grass Land 2'
+join_name = 'Grass Land 4'
 track_names = [
   os.path.join(join_name, join_name)
 ]
@@ -21,23 +21,32 @@ for track_name in track_names:
   mid = MidiFile(file_location)
   for i, track in enumerate(mid.tracks):
     current_program = None
+    percussion = True
+    found_note = False
     for msg in track:
       if msg.type == 'program_change':
         current_program = msg.program
         if current_program not in percussion_programs:
+          percussion = False
           if msg.program in program_mapping:
             msg.program = program_mapping[msg.program]
           else:
             unmapped_programs.add(msg.program)
       elif hasattr(msg, 'channel'):
-        percussion = current_program in percussion_programs
-        if percussion:
+        if percussion and found_note:
           msg.channel = 9
         if msg.type == 'note_on' or msg.type == 'note_off':
+          found_note = True
           if percussion:
             note = msg.note + percussion_transpose
             if note in percussion_parts:
-              msg.note = percussion_parts[note]
+              mapped_note = percussion_parts[note]
+              if isinstance(mapped_note, int):
+                msg.note = percussion_parts[note]
+              elif current_program in mapped_note:
+                msg.note = mapped_note[current_program]
+              else:
+                unmapped_percussion_notes.add((current_program, note))
             else:
               unmapped_percussion_notes.add(note)
           elif current_program in program_transpose:
