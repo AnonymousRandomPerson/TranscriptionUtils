@@ -215,10 +215,10 @@ percussion_parts = {
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 overwrite = True
 new_file_location = 'Modified'
-game_acronym = 'BDSP'
-game_name = 'Pokemon Brilliant Diamond Shining Pearl'
+game_acronym = 'MDTDS'
+game_name = 'Pokemon Mystery Dungeon Explorers of Time Darkness'
 track_names = [
-  'Route 228 (Night)'
+  'Sealed Ruin Pit'
 ]
 
 for track_name in track_names:
