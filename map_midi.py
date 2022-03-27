@@ -9,15 +9,9 @@ dry_run = False
 overwrite = False
 new_file_location = 'Modified'
 track_names = [
+  'dun_forest',
   'dun_forest_1',
-  # 'dun_forest_2',
-  # 'dun_grassy',
-  # 'dun_grassy_1',
-  # 'dun_grassy_2',
-  # 'dun_sea',
-  # 'dun_sea_1',
-  # 'dun_sea_2',
-  # 'sys_map'
+  'dun_forest_2',
 ]
 
 unmapped_programs = set()
@@ -41,41 +35,49 @@ for track_name in track_names:
 
   mid = MidiFile(file_location)
   for i, track in enumerate(mid.tracks):
+    remove_messages = []
     for msg in track:
+      if msg.type == 'sysex':
+        remove_messages.append(msg)
       if hasattr(msg, 'channel'):
         channel = channels[msg.channel]
         if msg.type == 'program_change':
           channel.current_program = msg.program
           if msg.program in percussion_programs:
             channel.percussion = True
-            msg.program = PERCUSSION
+            msg.channel = 9
           else:
             channel.percussion = False
             if msg.program in program_mapping:
               msg.program = program_mapping[msg.program]
             else:
               unmapped_programs.add(msg.program)
-        else:
-          if channel.percussion and channel.found_note:
-            msg.channel = 9
-          if msg.type == 'note_on' or msg.type == 'note_off':
-            channel.found_note = True
-            if channel.percussion:
-              note = msg.note + percussion_transpose
-              if note in percussion_parts:
-                mapped_note = percussion_parts[note]
-                if isinstance(mapped_note, int):
-                  msg.note = percussion_parts[note]
-                elif mapped_note is None:
-                  msg.velocity = 0
-                elif channel.current_program in mapped_note:
-                  msg.note = mapped_note[channel.current_program]
-                else:
-                  unmapped_percussion_notes.add((channel.current_program, note))
+    for msg in track:
+      if msg.type != 'program_change' and hasattr(msg, 'channel'):
+        channel = channels[msg.channel]
+        if channel.percussion and (channel.found_note or not default_to_percussion):
+          msg.channel = 9
+        if msg.type == 'note_on' or msg.type == 'note_off':
+          channel.found_note = True
+          if channel.percussion:
+            note = msg.note + percussion_transpose
+            if note in percussion_parts:
+              mapped_note = percussion_parts[note]
+              if isinstance(mapped_note, int):
+                msg.note = percussion_parts[note]
+              elif mapped_note is None:
+                msg.velocity = 0
+              elif channel.current_program in mapped_note:
+                msg.note = mapped_note[channel.current_program]
               else:
-                unmapped_percussion_notes.add(note)
-            elif channel.current_program in program_transpose:
-              msg.note += program_transpose[channel.current_program]
+                unmapped_percussion_notes.add((channel.current_program, note))
+            else:
+              unmapped_percussion_notes.add(note)
+          elif channel.current_program in program_transpose:
+            msg.note += program_transpose[channel.current_program]
+    for msg in remove_messages:
+      track.remove(msg)
+
 
   if len(unmapped_programs):
     print('Encountered unmapped programs:', sorted(list(unmapped_programs)))
