@@ -82,6 +82,7 @@ midi_instruments = {
   'Synth Lead': LEAD_1_SQUARE,
   'Synth Pad': PAD_1_NEW_AGE,
   'Sound FX': FX_1_RAIN,
+  'Rock Hit FX': FX_4_ATMOSPHERE,
   'Squeak FX': FX_4_ATMOSPHERE,
   'Wind FX': FX_4_ATMOSPHERE,
   'Static FX': FX_7_ECHOES,
@@ -215,10 +216,10 @@ percussion_parts = {
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 overwrite = True
 new_file_location = 'Modified'
-game_acronym = 'MDTDS'
-game_name = 'Pokemon Mystery Dungeon Explorers of Time Darkness'
+game_acronym = 'BDSP'
+game_name = 'Pokemon Brilliant Diamond Shining Pearl'
 track_names = [
-  'Sealed Ruin Pit'
+  'Battle! (Ramanas Park - Minor Legendary Pokemon)'
 ]
 
 for track_name in track_names:
