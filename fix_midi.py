@@ -1,7 +1,9 @@
-from mido import MidiFile
+from mido import MidiFile, MetaMessage
 from general_midi import *
 import os;
 import re;
+
+DEFAULT_TRACK = 'Default'
 
 midi_instruments = {
   'Piano': ACOUSTIC_GRAND_PIANO,
@@ -54,6 +56,7 @@ midi_instruments = {
   'Synth Voice': SYNTH_VOICE,
   'Orchestra Hit': ORCHESTRA_HIT,
   'Trumpet': TRUMPET,
+  'Bass Trombone': TROMBONE,
   'Muted Trombone': TROMBONE,
   'Trombone': TROMBONE,
   'Euphonium': TUBA,
@@ -213,14 +216,53 @@ percussion_parts = {
   }
 }
 
+program_transpose = {
+  'MDB': {
+    STRING_ENSEMBLE_1: 12,
+    PERCUSSIVE_ORGAN: 24
+  },
+  'MDRTDX': {
+    BASSOON: -12,
+    CHOIR_AAHS: {
+      'Great Canyon': -12,
+      'Mt Blaze': -12,
+      'Sky Tower': -12,
+      'The Escape': -12
+    },
+    PERCUSSIVE_ORGAN: 12,
+    STRING_ENSEMBLE_1: {
+      DEFAULT_TRACK: 12,
+      'It\'s a Thief': 0,
+      'Monster House': 0,
+      'Oddity Cave': 0,
+      'The Escape': 0
+    },
+    SYNTH_BASS_1: {
+      'Lapis Cave': -12,
+      'Magma Cavern': -12,
+      'Makuhita Dojo': -24,
+      'Monster House': -12,
+      'Mt Freeze': -12,
+      'Mt Steel': -12,
+      'Silent Chasm': -12,
+      'Tiny Woods': -12
+    }
+  }
+}
+
+remap_channels = {
+}
+
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 overwrite = True
 new_file_location = 'Modified'
-game_acronym = 'BDSP'
-game_name = 'Pokemon Brilliant Diamond Shining Pearl'
+game_acronym = 'DPP'
+game_name = 'Pokemon Diamond Pearl'
 track_names = [
-  'Battle! (Ramanas Park - Minor Legendary Pokemon)'
+  'Veilstone City (Day)',
 ]
+search_tracks = set()
+search_instruments = set([])
 
 for track_name in track_names:
   if type(track_name) is tuple:
@@ -238,40 +280,75 @@ for track_name in track_names:
   # file_name = '{}.midi'.format(short_name)
   # file_location = os.path.join(parts_folder, file_name)
   # new_file_name = '{}.midi'.format(long_name)
+  remap_results = {}
 
   mid = MidiFile(file_location)
   for i, track in enumerate(mid.tracks):
-    track_name = track.name
-    if len(track_name) == 0:
+    instrument_name = track.name
+    if len(instrument_name) == 0:
       continue
 
-    track_name = re.sub(r' [\dIV]{1,3}$', '', track_name)
+    instrument_name = re.sub(r' [\dIV]{1,3}$', '', instrument_name)
 
-    percussion = track_name in percussion_parts
+    percussion = instrument_name in percussion_parts
+    current_program = None
     for msg in track:
       if percussion and hasattr(msg, 'channel'):
         msg.channel = 9
         if msg.type == 'note_on' or msg.type == 'note_off':
-          if percussion_parts[track_name] is not None:
-            mapping = percussion_parts[track_name]
+          if percussion_parts[instrument_name] is not None:
+            mapping = percussion_parts[instrument_name]
             if isinstance(mapping, int):
-              msg.note = percussion_parts[track_name]
+              msg.note = percussion_parts[instrument_name]
             else:
               if msg.note in mapping:
                 msg.note = mapping[msg.note]
               else:
                 print('Encountered unmapped percussion note:', track.name, msg.note)
       elif msg.type == 'program_change':
-        if msg.program == 45:
-          # Pizzicato strings
-          msg.program = 46
-        elif track_name in midi_instruments:
-          msg.program = midi_instruments[track_name]
+        if msg.program == PIZZICATO_STRINGS:
+          pass
+        elif instrument_name in midi_instruments:
+          msg.program = midi_instruments[instrument_name]
         else:
-          print('Encountered unmapped track:', track_name)
+          print('Encountered unmapped track:', instrument_name)
+        current_program = msg.program
+        if current_program in search_instruments:
+          search_tracks.add(track_name)
+      elif msg.type == 'note_on' or msg.type == 'note_off':
+        if game_acronym in program_transpose:
+          current_program_transpose = program_transpose[game_acronym]
+          if current_program in current_program_transpose:
+            transpose_offset = current_program_transpose[current_program]
+            if not isinstance(transpose_offset, int):
+              if track_name in transpose_offset:
+                transpose_offset = transpose_offset[track_name]
+              elif DEFAULT_TRACK in transpose_offset:
+                transpose_offset = transpose_offset[DEFAULT_TRACK]
+              else:
+                transpose_offset = 0
+            msg.note = msg.note + transpose_offset
+      if not percussion and hasattr(msg, 'channel') and msg.channel == 9:
+        new_channel = 15
+        if track_name in remap_channels:
+          remap_data = remap_channels[track_name]
+          if i in remap_data:
+            new_channel = remap_data[i]
+        msg.channel = new_channel
+        remap_results[i] = (instrument_name, new_channel)
+
+  if len(remap_results) > 0:
+    for i, entry in remap_results.items():
+      print('Remapped track %d (%s) to %s' % (i, entry[0], entry[1]))
+
   if overwrite:
     new_file_path = file_location
   else:
     new_file_path = os.path.join(new_file_location, new_file_name)
   print('Saving file to', new_file_path)
   mid.save(new_file_path)
+
+
+
+if len(search_tracks) > 0:
+  print(list(sorted(search_tracks)))

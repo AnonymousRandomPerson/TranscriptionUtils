@@ -9,16 +9,7 @@ dry_run = False
 overwrite = False
 new_file_location = 'Modified'
 track_names = [
-  # 'dun_forest',
-  # 'dun_forest_1',
-  # 'dun_forest_2',
-  # 'dun_grassy',
-  # 'dun_grassy_1',
-  # 'dun_grassy_2',
-  # 'dun_sea',
-  # 'dun_sea_1',
-  'dun_sea_2',
-  # 'sys_map',
+  'dun_boss'
 ]
 
 percussion_transpose = -12
@@ -61,7 +52,8 @@ for track_name in track_names:
           channel.current_mapped_program = msg.program
           if msg.program in percussion_programs:
             channel.current_percussion = True
-            remove_messages.append(msg)
+            msg.program = PERCUSSION
+            #remove_messages.append(msg)
           else:
             channel.current_percussion = False
             if msg.program in program_mapping:
@@ -107,12 +99,16 @@ for track_name in track_names:
           remap_percussion_channel = i
           print('Remapping channel', PERCUSSION_CHANNEL, 'to', remap_percussion_channel)
           break
+      if remap_percussion_channel is None:
+        for i in range(0, 15):
+          if channels[i].current_percussion:
+            remap_percussion_channel = i
+            print('Remapping channel', PERCUSSION_CHANNEL, 'to', remap_percussion_channel)
+            break
 
     for msg in track:
       if hasattr(msg, 'channel'):
         channel = channels[msg.channel]
-        if msg.type == 'program_change':
-          channel.current_percussion = msg.program in percussion_programs
         if msg.type == 'note_on':
           channel.found_note = True
 
