@@ -5,7 +5,7 @@ from mido import MidiFile
 soundfont_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Pokémon FireRed and LeafGreen')
 midi_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Sf2', 'Pokémon FireRed and LeafGreen')
 
-midi_file_name = 'Battle! (Mewtwo)'
+midi_file_name = 'Battle! (Wild Pokemon)'
 
 midi_file = os.path.join(midi_folder, midi_file_name + '.mid')
 search_programs: Set[int] = set()

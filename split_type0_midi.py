@@ -21,8 +21,6 @@ def subdivide_midi_tracks(path):
   for track_idx, track in enumerate(messages):
     for i in track:
       channel = i.get('channel', -1)
-      if channel == -1:
-        print(channel)
       d[channel].append(i)
   # covert time units in each program back to relative units
   for channel in d:
@@ -34,7 +32,7 @@ def subdivide_midi_tracks(path):
   # create a midi file and add a track for each channel
   m2 = mido.MidiFile()
   for channel in sorted(d.keys()):
-    if channel != 9 and channel != 3 and channel != 1 and channel != 2 and channel != 4 and channel != 5 and channel != 6 and channel != 7 and channel != 8 and channel != 10 and channel != 11 and channel != 12 and channel != 13 and channel != 14 and channel != 15 and channel != 16 and channel != -1:
+    if channel != 9 and channel != 3 and channel != 1 and channel != 2 and channel != 4 and channel != 5 and channel != 6 and channel != 7 and channel != 8 and channel != 10 and channel != 11 and channel != 12 and channel != 13 and channel != 14 and channel != 15 and channel != 0 and channel != -1:
       continue
     track = mido.midifiles.tracks.MidiTrack()
     # add the notes to this track
@@ -51,10 +49,10 @@ def subdivide_midi_tracks(path):
   m2.ticks_per_beat = m.ticks_per_beat
   return m2
 
+if __name__ == '__main__':
+  midi_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Utility', 'Modified')
+  file = 'dun_boss.mid'
+  file2 = 'dun_boss.mid'
 
-midi_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Utility', 'Modified')
-file = 'dun_grassy.mid'
-file2 = 'dun_grassy_1.mid'
-
-m2 = subdivide_midi_tracks(os.path.join(midi_folder, file))
-m2.save(os.path.join(midi_folder, file2))
+  m2 = subdivide_midi_tracks(os.path.join(midi_folder, file))
+  m2.save(os.path.join(midi_folder, file2))
