@@ -2,7 +2,11 @@ import os
 from general_midi import *
 
 program_mapping = {
-  1: TRUMPET,
+  1: {
+    'Default': ELECTRIC_PIANO_1,
+    'me_item': TRUMPET,
+    'me_lvup': TRUMPET,
+  },
   2: {
     'Default': BASSOON,
     'me_item': PERCUSSIVE_ORGAN,
@@ -137,6 +141,8 @@ program_transpose = {
     TIMPANI: -12,
   },
   9: -24,
+  15: -12,
+  16: -12,
   25: -24,
   35: -12,
   48: 24,

@@ -5,7 +5,7 @@ from mido import MidiFile
 soundfont_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Pokémon FireRed and LeafGreen')
 midi_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Sf2', 'Pokémon FireRed and LeafGreen')
 
-midi_file_name = 'Battle! (Wild Pokemon)'
+midi_file_name = 'Road to Fuschia City Leaving Lavender Town'
 
 midi_file = os.path.join(midi_folder, midi_file_name + '.mid')
 search_programs: Set[int] = set()
@@ -35,11 +35,12 @@ for folder_name in os.listdir(soundfont_folder):
     for program in search_program_strings:
       if program not in folder_programs:
         num_mismatches += 1
+    sorted_programs = list(sorted(folder_programs))
     if num_mismatches == 0:
       found_match = True
-      print('Found match:', folder_name)
+      print('Found match:', folder_name, sorted_programs)
     elif closest_match is None or closest_match[1] > num_mismatches:
-      closest_match = (folder_name, num_mismatches, list(sorted(folder_programs)))
+      closest_match = (folder_name, num_mismatches, sorted_programs)
 
 if not found_match:
   print('Closest match:', closest_match)
