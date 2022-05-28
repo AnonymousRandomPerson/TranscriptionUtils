@@ -2,7 +2,7 @@ from mido import MidiFile
 import os
 
 midi_folder = os.path.join('.', 'Modified')
-file = 'dun_mount_2.mid'
+file = 'HGSS Goldenrod City2.mid'
 midi_path = os.path.join(midi_folder, file)
 channel = 9
 
@@ -20,7 +20,7 @@ for i, track in enumerate(mid.tracks):
     if msg.type == 'program_change' and msg.channel == channel:
       print('Program:', msg.program)
     if msg.type == 'note_on' and msg.velocity > 0 and msg.channel == channel:
-      print(msg.note, current_time / mid.ticks_per_beat)
+      #print(msg.note, current_time / mid.ticks_per_beat)
       notes.append(msg.note)
 
 #print(notes)

@@ -59,6 +59,11 @@ track_names = [
   'sys_steal',
 ]
 
+track_names = [
+  'dun_bossfloor',
+  'ev_fear',
+]
+
 percussion_transpose = -12
 
 default_to_percussion = False

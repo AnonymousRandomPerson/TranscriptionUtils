@@ -3,24 +3,24 @@ from general_midi import *
 
 program_mapping = {
   1: {
-    'Default': ELECTRIC_PIANO_1,
+    DEFAULT_TRACK: ELECTRIC_PIANO_1,
     'me_item': TRUMPET,
     'me_lvup': TRUMPET,
   },
   2: {
-    'Default': BASSOON,
+    DEFAULT_TRACK: BASSOON,
     'me_item': PERCUSSIVE_ORGAN,
   },
   3: {
-    'Default': VIBRAPHONE,
+    DEFAULT_TRACK: VIBRAPHONE,
     'sys_steal': TRUMPET,
   },
   4: {
-    'Default': ELECTRIC_PIANO_1,
+    DEFAULT_TRACK: ELECTRIC_PIANO_1,
     'sys_steal': TRUMPET,
   },
   5: {
-    'Default': MARIMBA,
+    DEFAULT_TRACK: MARIMBA,
     'me_lankup': TIMPANI,
     'me_lvup': TIMPANI,
     'no_sound': ACOUSTIC_GRAND_PIANO,
@@ -30,33 +30,33 @@ program_mapping = {
   10: MUSIC_BOX,
   11: SYNTH_BASS_1,
   14: ELECTRIC_PIANO_1,
-  15: CELESTA,
-  16: CELESTA,
+  15: PAD_1_NEW_AGE,
+  16: PAD_1_NEW_AGE,
   18: CLARINET,
   20: {
-    'Default': None,
+    DEFAULT_TRACK: None,
     'me_wind_m': SEASHORE,
     'me_wind_s': SEASHORE,
   },
   21: SEASHORE,
   22: {
-    'Default': GLOCKENSPIEL,
+    DEFAULT_TRACK: GLOCKENSPIEL,
     'me_wave_s': SEASHORE,
   },
   23: {
-    'Default': ACCORDION,
+    DEFAULT_TRACK: ACCORDION,
     'me_wave_m': SEASHORE,
   },
   25: SYNTH_BASS_1,
   28: ORCHESTRAL_HARP,
   30: VIBRAPHONE,
   31: {
-    'Default': STRING_ENSEMBLE_1,
+    DEFAULT_TRACK: STRING_ENSEMBLE_1,
     'me_join': VIBRAPHONE,
   },
   32: STRING_ENSEMBLE_1,
   33: {
-    'Default': SYNTH_STRINGS_1,
+    DEFAULT_TRACK: SYNTH_STRINGS_1,
     'me_dunopen': VIBRAPHONE,
   },
   34: PERCUSSIVE_ORGAN,
@@ -65,14 +65,14 @@ program_mapping = {
   40: FLUTE,
   41: MARIMBA,
   42: {
-    'Default': LEAD_1_SQUARE,
+    DEFAULT_TRACK: LEAD_1_SQUARE,
     'me_item': None,
   },
   43: PERCUSSIVE_ORGAN,
   44: PERCUSSIVE_ORGAN,
   45: PERCUSSIVE_ORGAN,
   47: {
-    'Default': TUBA,
+    DEFAULT_TRACK: TUBA,
     'sys_steal': SYNTH_BASS_1
   },
   48: GLOCKENSPIEL,
@@ -80,7 +80,7 @@ program_mapping = {
   51: TRUMPET,
   52: PERCUSSIVE_ORGAN,
   53: {
-    'Default': TUBA,
+    DEFAULT_TRACK: TUBA,
     'me_evolution_e': ORCHESTRAL_HARP,
     'me_evolution': ORCHESTRAL_HARP,
     'me_exclude': ORCHESTRAL_HARP,
@@ -90,7 +90,7 @@ program_mapping = {
   54: PERCUSSIVE_ORGAN,
   55: FLUTE,
   56: {
-    'Default': FLUTE,
+    DEFAULT_TRACK: FLUTE,
     'me_exclude': VIBRAPHONE
   },
   57: VIBRAPHONE,
@@ -190,7 +190,7 @@ percussion_parts = {
   51: OPEN_HIGH_CONGA,
   52: LOW_CONGA,
   54: {
-    'Default': TAMBOURINE,
+    DEFAULT_TRACK: TAMBOURINE,
     95: None,
   },
   57: MARACAS,
@@ -202,7 +202,7 @@ percussion_parts = {
   68: MUTE_TRIANGLE,
   69: OPEN_TRIANGLE,
   72: {
-    'Default': BELL_TREE,
+    DEFAULT_TRACK: BELL_TREE,
     101: CLOSED_HI_HAT,
   },
   76: None,
