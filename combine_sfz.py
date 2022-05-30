@@ -1,8 +1,8 @@
 import os
 
 combined_soundfont_name = 'combined.sfz'
-soundfont_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Pokémon FireRed and LeafGreen')
-soundfont_bank = '031'
+soundfont_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Pokémon HeartGold and SoulSilver')
+soundfont_bank = 'Route 11'
 
 soundfont_folder = os.path.join(soundfont_folder, soundfont_bank)
 combined_soundfont_path = os.path.join(soundfont_folder, combined_soundfont_name);

@@ -2,7 +2,6 @@ from mido import MidiFile
 from finale_remap import *
 from game_acronyms import *
 import os;
-import re;
 
 remap_channels = {
 }
@@ -18,19 +17,11 @@ search_instruments = set([])
 
 for file in sorted(os.listdir(scores_folder)):
   if file.endswith('.mid'):
+    print('Fixing', file)
     full_file_name = file[:-4]
     game_acronym, track_name, game_name = split_track_name(full_file_name)
     file_location = os.path.join(scores_folder, file)
     remap_results = {}
-
-    if game_acronym in midi_instrument_overrides:
-      game_instrument_overrides = midi_instrument_overrides[game_acronym]
-    else:
-      game_instrument_overrides = {}
-    if full_file_name in midi_instrument_overrides:
-      instrument_overrides = midi_instrument_overrides[full_file_name]
-    else:
-      instrument_overrides = {}
 
     mid = MidiFile(file_location)
     for i, track in enumerate(mid.tracks):
@@ -38,7 +29,7 @@ for file in sorted(os.listdir(scores_folder)):
       if len(orig_instrument_name) == 0:
         continue
 
-      instrument_name = re.sub(r' [\dIV]{1,3}$', '', orig_instrument_name)
+      instrument_name = get_instrument_name(orig_instrument_name)
 
       percussion = instrument_name in percussion_parts
       current_program = None
@@ -47,46 +38,24 @@ for file in sorted(os.listdir(scores_folder)):
           msg.channel = 9
           if msg.type == 'note_on' or msg.type == 'note_off':
             if percussion_parts[instrument_name] is not None:
-              mapping = percussion_parts[instrument_name]
-              if isinstance(mapping, int):
-                msg.note = percussion_parts[instrument_name]
+              mapping = get_percussion_mapping(instrument_name, msg.note)
+              if mapping is None:
+                print('Encountered unmapped percussion note:', track.name, msg.note)
               else:
-                if msg.note in mapping:
-                  msg.note = mapping[msg.note]
-                else:
-                  print('Encountered unmapped percussion note:', track.name, msg.note)
+                msg.note = mapping
         elif msg.type == 'program_change':
-          if msg.program == PIZZICATO_STRINGS:
-            pass
-          elif orig_instrument_name in instrument_overrides:
-            msg.program = instrument_overrides[orig_instrument_name]
-          elif instrument_name in game_instrument_overrides:
-            msg.program = game_instrument_overrides[instrument_name]
-          elif instrument_name in midi_instruments:
-            msg.program = midi_instruments[instrument_name]
-          else:
-            print('Encountered unmapped track:', instrument_name)
+          if msg.program != PIZZICATO_STRINGS:
+            mapped_program = get_mapped_program(game_acronym, full_file_name, instrument_name, orig_instrument_name)
+            if mapped_program is None:
+              print('Encountered unmapped track:', instrument_name)
+            else:
+              msg.program = mapped_program
           current_program = msg.program
           if current_program in search_instruments:
             search_tracks.add(track_name)
         elif msg.type == 'note_on' or msg.type == 'note_off':
-          if game_acronym in program_transpose:
-            current_program_transpose = program_transpose[game_acronym]
-            if current_program in current_program_transpose:
-              transpose_offset = current_program_transpose[current_program]
-              if not isinstance(transpose_offset, int):
-                if track_name in transpose_offset:
-                  transpose_offset = transpose_offset[track_name]
-                  if not isinstance(transpose_offset, int):
-                    if orig_instrument_name in transpose_offset:
-                      transpose_offset = transpose_offset[orig_instrument_name]
-                    else:
-                      transpose_offset = 0
-                elif DEFAULT_TRACK in transpose_offset:
-                  transpose_offset = transpose_offset[DEFAULT_TRACK]
-                else:
-                  transpose_offset = 0
-              msg.note = msg.note + transpose_offset
+          transpose_offset = get_transpose_offset(game_acronym, current_program, track_name, orig_instrument_name)
+          msg.note = msg.note + transpose_offset
         if not percussion and hasattr(msg, 'channel') and msg.channel == 9:
           new_channel = 15
           if track_name in remap_channels:

@@ -1,4 +1,5 @@
 from general_midi import *
+import re
 
 DEFAULT_TRACK = 'Default'
 
@@ -145,6 +146,12 @@ midi_instruments = {
   'Gunshot': GUNSHOT,
   'Piano Slam': GUNSHOT,
   'Rock Hit FX': GUNSHOT,
+}
+
+mxl_instruments = {
+  PERCUSSIVE_ORGAN: 'keyboard.organ.percussive',
+  SLAP_BASS_1: 'effect.bass-string-slap',
+  VOICE_OOHS: 'voice.oo',
 }
 
 percussion_parts = {
@@ -310,20 +317,39 @@ percussion_parts = {
   }
 }
 
+percussion_notes = {
+  'Crash Cymbals Crash': CRASH_CYMBAL_1,
+  'Triangle Open': OPEN_TRIANGLE,
+}
+
+ignore_unmapped_percussion = set([
+  'ARIA Player'
+])
+
 program_transpose = {
   'AM': {
     BANJO: 12,
+    BLOWN_BOTTLE: 12,
     CLAVINET: -12,
-    ELECTRIC_BASS_FINGER: -24,
+    ELECTRIC_BASS_FINGER: {
+      'Default': -24,
+      'Forest Nature Area': 0
+    },
     GLOCKENSPIEL: 36,
     OCARINA: 12,
     ORCHESTRA_HIT: 12,
     PAN_FLUTE: 12,
     SLAP_BASS_1: -24,
     STEEL_DRUMS: 12,
-    STRING_ENSEMBLE_1: 12,
+    STRING_ENSEMBLE_1: {
+      'Default': 12,
+      'Olive Ocean': 24,
+    },
     SYNTH_BRASS_1: {
       DEFAULT_TRACK: 12,
+      'Dark Mind Battle': {
+        'Synth Brass 2': 12
+      },
       'Mustard Mountain': 0,
     },
     TIMPANI: {
@@ -674,3 +700,55 @@ midi_instrument_overrides = {
     'Organ': CHURCH_ORGAN,
   },
 }
+
+def get_instrument_name(orig_instrument_name: str):
+  return re.sub(r' [\dIV]{1,3}$', '', orig_instrument_name)
+
+def get_mapped_program(game_acronym: str, full_file_name: str, instrument_name: str, orig_instrument_name: str):
+  if game_acronym in midi_instrument_overrides:
+    game_instrument_overrides = midi_instrument_overrides[game_acronym]
+  else:
+    game_instrument_overrides = {}
+  if full_file_name in midi_instrument_overrides:
+    instrument_overrides = midi_instrument_overrides[full_file_name]
+  else:
+    instrument_overrides = {}
+
+  if orig_instrument_name in instrument_overrides:
+    return instrument_overrides[orig_instrument_name]
+  elif instrument_name in game_instrument_overrides:
+    return game_instrument_overrides[instrument_name]
+  elif instrument_name in midi_instruments:
+    return midi_instruments[instrument_name]
+  return None
+
+def get_transpose_offset(game_acronym: str, current_program: int, track_name: str, orig_instrument_name: str):
+  transpose_offset = 0
+  if game_acronym in program_transpose:
+    current_program_transpose = program_transpose[game_acronym]
+    if current_program in current_program_transpose:
+      transpose_offset = current_program_transpose[current_program]
+      if not isinstance(transpose_offset, int):
+        if track_name in transpose_offset:
+          transpose_offset = transpose_offset[track_name]
+          if not isinstance(transpose_offset, int):
+            if orig_instrument_name in transpose_offset:
+              transpose_offset = transpose_offset[orig_instrument_name]
+            else:
+              transpose_offset = 0
+        elif DEFAULT_TRACK in transpose_offset:
+          transpose_offset = transpose_offset[DEFAULT_TRACK]
+        else:
+          transpose_offset = 0
+  return transpose_offset
+
+def get_percussion_mapping(instrument_name, current_note):
+  if instrument_name in percussion_parts:
+    mapping = percussion_parts[instrument_name]
+    if isinstance(mapping, int):
+      return percussion_parts[instrument_name]
+    elif mapping is not None and current_note in mapping:
+      return mapping[current_note]
+  if instrument_name in percussion_notes:
+    return percussion_notes[instrument_name]
+  return None
