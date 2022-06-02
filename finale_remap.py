@@ -144,15 +144,23 @@ midi_instruments = {
   'Zap FX': HELICOPTER,
   'Gun Shot FX': GUNSHOT,
   'Gunshot': GUNSHOT,
+  'Metal Bang FX': GUNSHOT,
   'Piano Slam': GUNSHOT,
   'Rock Hit FX': GUNSHOT,
 }
 
 mxl_instruments = {
+  GUNSHOT: 'effect.gunshot',
+  HELICOPTER: 'effect.helicopter',
   PERCUSSIVE_ORGAN: 'keyboard.organ.percussive',
   SLAP_BASS_1: 'effect.bass-string-slap',
   VOICE_OOHS: 'voice.oo',
 }
+
+unpitched_instruments = set([
+  'Metal Bang FX',
+  'Zap FX',
+])
 
 percussion_parts = {
   'Agogo Bells': {
@@ -198,6 +206,7 @@ percussion_parts = {
   'Crash Cymbal': CRASH_CYMBAL_1,
   'Crash Cymbals': CRASH_CYMBAL_1,
   'Cu\x92ca': OPEN_CUICA,
+  'Cuíca': OPEN_CUICA,
   'Cymbal FX': CRASH_CYMBAL_1,
   'Djembe': OPEN_HIGH_CONGA,
   'Drum Set': None,
@@ -308,6 +317,7 @@ percussion_parts = {
     71: HIGH_BONGO,
   },
   'VibraSlap': VIBRASLAP,
+  'Washboard': SHORT_GUIRO,
   'Whip': SLAP_NOISE,
   'Wind Chimes': BELL_TREE,
   'Wood Block': HIGH_WOODBLOCK,
@@ -317,13 +327,9 @@ percussion_parts = {
   }
 }
 
-percussion_notes = {
-  'Crash Cymbals Crash': CRASH_CYMBAL_1,
-  'Triangle Open': OPEN_TRIANGLE,
-}
-
 ignore_unmapped_percussion = set([
-  'ARIA Player'
+  'ARIA Player',
+  'Drum Set',
 ])
 
 program_transpose = {
@@ -335,7 +341,10 @@ program_transpose = {
       'Default': -24,
       'Forest Nature Area': 0
     },
-    GLOCKENSPIEL: 36,
+    GLOCKENSPIEL: {
+      'Default': 36,
+      'Space Area': 24,
+    },
     OCARINA: 12,
     ORCHESTRA_HIT: 12,
     PAN_FLUTE: 12,
@@ -356,7 +365,10 @@ program_transpose = {
       DEFAULT_TRACK: -12,
       'Mustard Mountain': -14
     },
-    TRUMPET: 12,
+    TRUMPET: {
+      'Default': 12,
+      'Space Area': 0,
+    },
     VOICE_OOHS: 12,
   },
   'B2W2': {
@@ -749,6 +761,4 @@ def get_percussion_mapping(instrument_name, current_note):
       return percussion_parts[instrument_name]
     elif mapping is not None and current_note in mapping:
       return mapping[current_note]
-  if instrument_name in percussion_notes:
-    return percussion_notes[instrument_name]
   return None

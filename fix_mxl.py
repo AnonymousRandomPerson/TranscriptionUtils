@@ -6,8 +6,6 @@ import xml.etree.ElementTree as ElementTree
 
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 scores_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Scores')
-raw_mxl_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Raw MXLs')
-overwrite = False
 new_file_folder = os.path.join('.', 'Modified')
 
 for file in sorted(os.listdir(scores_folder)):
@@ -42,24 +40,25 @@ for file in sorted(os.listdir(scores_folder)):
                   break
 
               if percussion:
-                percussion_instruments = {}
-                default_instrument = None
-                for score_instrument in part_info.findall('score-instrument'):
-                  percussion_instrument_name = score_instrument.find('instrument-name').text.strip().replace('%g', '')
-                  percussion_instruments[score_instrument.attrib['id']] = percussion_instrument_name
-                  if percussion_instrument_name == 'ARIA Player':
-                    default_instrument = score_instrument.find('instrument-sound').text
-                for midi_instrument in part_info.findall('midi-instrument'):
-                  percussion_instrument_name = percussion_instruments[midi_instrument.attrib['id']]
-                  midi_unpitched = midi_instrument.find('midi-unpitched')
-                  if midi_unpitched is None:
-                    if full_score and not percussion_instrument_name in ignore_unmapped_percussion:
-                      print('Encountered unmapped percussion note:', percussion_instrument_name)
-                  else:
-                    current_note = int(midi_unpitched.text)
-                    percussion_mapping = get_percussion_mapping(percussion_instrument_name, current_note)
-                    if percussion_mapping is not None:
-                      midi_unpitched.text = str(percussion_mapping + 1)
+                if not instrument_name in ignore_unmapped_percussion:
+                  percussion_instruments = {}
+                  for score_instrument in part_info.findall('score-instrument'):
+                    percussion_instrument_name = score_instrument.find('instrument-name').text.strip().replace('%g', '')
+                    percussion_instruments[score_instrument.attrib['id']] = percussion_instrument_name
+                  for midi_instrument in part_info.findall('midi-instrument'):
+                    percussion_instrument_name = percussion_instruments[midi_instrument.attrib['id']]
+                    midi_unpitched = midi_instrument.find('midi-unpitched')
+                    if midi_unpitched is None:
+                      if full_score and not percussion_instrument_name in ignore_unmapped_percussion:
+                        print('Encountered unmapped percussion note', percussion_instrument_name, 'in', instrument_name)
+                    else:
+                      current_note = int(midi_unpitched.text) - 1
+                      percussion_mapping = get_percussion_mapping(instrument_name, current_note)
+                      if percussion_mapping is None:
+                        if full_score and not percussion_instrument_name in ignore_unmapped_percussion:
+                          print('Encountered unmapped percussion note', current_note, 'in', instrument_name)
+                      else:
+                        midi_unpitched.text = str(percussion_mapping + 1)
 
               else:
                 program = get_mapped_program(game_acronym, full_file_name, instrument_name, part_name)
@@ -89,24 +88,35 @@ for file in sorted(os.listdir(scores_folder)):
 
                 for measure in part.findall('measure'):
                   attributes = measure.find('attributes')
-                  if attributes:
+                  if attributes is not None:
                     transpose = attributes.find('transpose')
-                    if transpose:
-                      octave_change_tag = transpose.find('octave-change')
-                      octave_change_tag.text = str(int(octave_change_tag.text) + octave_change)
+                    if transpose is None:
+                      transpose = ElementTree.SubElement(attributes, 'transpose')
+                    octave_change_tag = transpose.find('octave-change')
+                    if octave_change_tag is None:
+                      ElementTree.SubElement(transpose, 'diatonic').text = '0'
+                      ElementTree.SubElement(transpose, 'chromatic').text = '0'
+                      octave_change_tag = ElementTree.SubElement(transpose, 'octave-change')
+                      octave_change_text = '0'
+                    else:
+                      octave_change_text = octave_change_tag.text
 
-              if program == STRING_ENSEMBLE_1:
-                has_pizzicato = False
+                    octave_change_tag.text = str(int(octave_change_text) + octave_change)
+
+              if program == STRING_ENSEMBLE_1 and full_score:
                 for measure in part.findall('measure'):
                   for direction in measure.findall('direction'):
                     words = direction.find('direction-type').find('words')
-                    if words is not None and words.text == 'pizz.':
-                      has_pizzicato = True
-                      break
-                  if has_pizzicato:
-                    break
-                if has_pizzicato and full_score:
-                  print('Found pizzicato in', part_name)
+                    if words is not None and (words.text == 'pizz.' or words.text == 'arco'):
+                      print('Found', words.text, 'in', part_name)
+
+              if instrument_name in unpitched_instruments:
+                for measure in part.findall('measure'):
+                  for note in measure.findall('note'):
+                    unpitched = note.find('unpitched')
+                    if unpitched is not None:
+                      unpitched.find('display-step').text = 'F'
+                      unpitched.find('display-octave').text = '5'
 
             newZip.writestr(item, ElementTree.tostring(xml_root))
           else:

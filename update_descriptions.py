@@ -7,8 +7,7 @@ os.environ["OAUTHLIB_INSECURE_TRANSPORT"] = "1"
 
 scopes = ['https://www.googleapis.com/auth/youtube.readonly', 'https://www.googleapis.com/auth/youtube']
 
-flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file(
-    'client_secrets.json', scopes)
+flow = google_auth_oauthlib.flow.InstalledAppFlow.from_client_secrets_file('client_secrets.json', scopes)
 credentials = flow.run_console()
 youtube = googleapiclient.discovery.build('youtube', 'v3', credentials=credentials)
 
@@ -50,9 +49,8 @@ while response:
         }
       ).execute()
 
-      pass
-
-
-  response = youtube.playlistItems().list_next(request, response).execute()
-
-print(response)
+  next_request = youtube.playlistItems().list_next(request, response)
+  if next_request is None:
+    response = None
+  else:
+    response = next_request.execute()

@@ -4,7 +4,7 @@ from game_acronyms import *
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 scores_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Scores')
 mxl_folder = os.path.join('.', 'Modified')
-raw_mxl_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Raw MXLs')
+raw_mxl_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Raw Exports')
 
 overwrite = True
 
@@ -17,7 +17,6 @@ for file in sorted(os.listdir(mxl_folder)):
 
     parts_dir = os.path.join(parts_folder, full_name)
     if os.path.isdir(parts_dir):
-      new_mxl_file = os.path.join(parts_dir, long_name)
       found_mxl = False
       for file in os.listdir(parts_dir):
         if file.endswith('.mxl'):

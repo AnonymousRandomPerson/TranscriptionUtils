@@ -2,7 +2,7 @@ import os
 
 combined_soundfont_name = 'combined.sfz'
 soundfont_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Pokémon HeartGold and SoulSilver')
-soundfont_bank = 'Route 11'
+soundfont_bank = 'Route 34'
 
 soundfont_folder = os.path.join(soundfont_folder, soundfont_bank)
 combined_soundfont_path = os.path.join(soundfont_folder, combined_soundfont_name);
@@ -32,3 +32,4 @@ for file_name in sorted(os.listdir(soundfont_folder)):
 if combined_soundfont:
   with open(combined_soundfont_path, 'w') as combined_soundfont_file:
     combined_soundfont_file.write(combined_soundfont)
+  print('Created combined soundfont at', combined_soundfont_path)
