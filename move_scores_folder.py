@@ -1,7 +1,10 @@
-import os, shutil, sys
+import os, shutil, sys, time
 from game_acronyms import *
 
 combined_name = sys.argv[1]
+
+copy_recent_files = True
+recent_threshold = time.time() - 60 * 60 * 12
 
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts', combined_name)
 scores_drive_folder = os.path.join(os.sep, 'Volumes', 'GoogleDrive', 'My Drive', 'Transcribed Scores')
@@ -21,28 +24,29 @@ if not os.path.exists(drive_path):
 if not os.path.exists(drive_pdfs):
   os.mkdir(drive_pdfs)
 
-def copy_file(source, dest):
-  print('Copying {} to {}'.format(source, dest))
-  shutil.copy(source, dest)
+def copy_file_if_recent(source, dest):
+  if not copy_recent_files or os.path.getmtime(source) > recent_threshold:
+    print('Copying {} to {}'.format(source, dest))
+    shutil.copy(source, dest)
 
 finale_score_path = os.path.join(finale_scores_folder, combined_name + '.musx')
 if not os.path.exists(finale_score_path):
   print('No Finale score found for', combined_name)
   exit()
-copy_file(finale_score_path, os.path.join(drive_path, full_name + '.musx'))
+copy_file_if_recent(finale_score_path, os.path.join(drive_path, full_name + '.musx'))
 
 musescore_score_path = os.path.join(musescore_scores_folder, combined_name + '.mscz')
 if os.path.exists(musescore_score_path):
-  copy_file(musescore_score_path, os.path.join(drive_path, full_name + '.mscz'))
+  copy_file_if_recent(musescore_score_path, os.path.join(drive_path, full_name + '.mscz'))
 
 pdf_files = set()
 for file in sorted(os.listdir(parts_folder)):
   file_path = os.path.join(parts_folder, file)
   if file.endswith('.pdf'):
-    copy_file(file_path, os.path.join(drive_pdfs, file))
+    copy_file_if_recent(file_path, os.path.join(drive_pdfs, file))
     pdf_files.add(file)
   elif file.endswith('.mid') or file.endswith('.mxl'):
-    copy_file(file_path, os.path.join(drive_path, file))
+    copy_file_if_recent(file_path, os.path.join(drive_path, file))
 
 for file in os.listdir(drive_pdfs):
   if file.endswith('.pdf') and file not in pdf_files:
