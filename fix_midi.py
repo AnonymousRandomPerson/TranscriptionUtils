@@ -17,6 +17,7 @@ search_instruments = set([])
 
 for file in sorted(os.listdir(scores_folder)):
   if file.endswith('.mid'):
+    save = True
     print('Fixing', file)
     full_file_name = file[:-4]
     game_acronym, track_name, game_name = split_track_name(full_file_name)
@@ -33,6 +34,7 @@ for file in sorted(os.listdir(scores_folder)):
 
       percussion = instrument_name in percussion_parts
       current_program = None
+      remove_messages = []
       for msg in track:
         if percussion and hasattr(msg, 'channel'):
           msg.channel = 9
@@ -43,6 +45,11 @@ for file in sorted(os.listdir(scores_folder)):
                 print('Encountered unmapped percussion note:', track.name, msg.note)
               else:
                 msg.note = mapping
+            elif 'Drum Set' in instrument_name and msg.note == CRASH_CYMBAL_2:
+              save = True
+              msg.note = CRASH_CYMBAL_1
+          if msg.type == 'program_change':
+            remove_messages.append(msg)
         elif msg.type == 'program_change':
           if msg.program != PIZZICATO_STRINGS:
             mapped_program = get_mapped_program(game_acronym, full_file_name, instrument_name, orig_instrument_name)
@@ -64,14 +71,17 @@ for file in sorted(os.listdir(scores_folder)):
               new_channel = remap_data[i]
           msg.channel = new_channel
           remap_results[i] = (instrument_name, new_channel)
+      for msg in remove_messages:
+        track.remove(msg)
 
     if len(remap_results) > 0:
       for i, entry in remap_results.items():
         print('Remapped track %d (%s) to %s' % (i, entry[0], entry[1]))
 
     new_file_path = os.path.join(new_file_location, file)
-    print('Saving file to', new_file_path)
-    mid.save(new_file_path)
+    if save:
+      print('Saving file to', new_file_path)
+      mid.save(new_file_path)
 
 
 if len(search_tracks) > 0:

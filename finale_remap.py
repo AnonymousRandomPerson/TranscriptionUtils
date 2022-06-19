@@ -141,7 +141,9 @@ midi_instruments = {
   'Drill FX': HELICOPTER,
   'Engine FX': HELICOPTER,
   'Machine FX': HELICOPTER,
+  'Sweep FX': HELICOPTER,
   'Zap FX': HELICOPTER,
+  'Cymbal FX': GUNSHOT,
   'Gun Shot FX': GUNSHOT,
   'Gunshot': GUNSHOT,
   'Metal Bang FX': GUNSHOT,
@@ -150,11 +152,16 @@ midi_instruments = {
 }
 
 mxl_instruments = {
+  ELECTRIC_GUITAR_DISTORTION: '',
   GUNSHOT: 'effect.gunshot',
   HELICOPTER: 'effect.helicopter',
   PERCUSSIVE_ORGAN: 'keyboard.organ.percussive',
   SLAP_BASS_1: 'effect.bass-string-slap',
   VOICE_OOHS: 'voice.oo',
+}
+
+mxl_percussion_override = {
+  'Tsuzumi': HIGH_BONGO,
 }
 
 unpitched_instruments = set([
@@ -322,8 +329,8 @@ percussion_parts = {
   'Wind Chimes': BELL_TREE,
   'Wood Block': HIGH_WOODBLOCK,
   'Wood Blocks': {
-    62: HIGH_WOODBLOCK,
-    63: LOW_WOODBLOCK,
+    63: HIGH_WOODBLOCK,
+    62: LOW_WOODBLOCK,
   }
 }
 
@@ -518,28 +525,38 @@ program_transpose = {
     ELECTRIC_BASS_FINGER: {
       DEFAULT_TRACK: -12,
       'Battle! (Ho-Oh)': 0,
+      'SS Aqua': 0,
     },
     GLOCKENSPIEL: 24,
     LEAD_1_SQUARE: {
       DEFAULT_TRACK: 12,
       'Battle! (Champion)': 0,
-      'Battle! (Gym Leader - Johto Version)': 12,
+      'SS Aqua': 0,
     },
     PERCUSSIVE_ORGAN: {
       'Azalea Town': 12,
       'Battle! (Entei)': 12,
       'Battle! (Raikou)': 12,
     },
-    TIMPANI: -12,
+    TIMPANI: {
+      'Default': -12,
+      'Battle! (Gym Leader - Kanto Version)': 0,
+      'Battle! (Ho-Oh)': {
+        'Timpani 1': 0,
+        'Timpani 2': -12,
+      },
+      'Battle! (Lugia))': {
+        'Timpani 1': 0,
+        'Timpani 2': -12,
+      },
+      'Battle! (Super-Ancient Pokemon)': 0,
+      'Battle! (Trainer Battle - Johto Version)': 0,
+      'Battle! (Wild Pokemon - Johto Version)': 0,
+    }
   },
   'K64': {
-    ELECTRIC_BASS_FINGER: -12,
-    FLUTE: 12,
     GLOCKENSPIEL: 12,
-    PICCOLO: 12,
-    PIZZICATO_STRINGS: -12,
-    SYNTH_BASS_1: -12,
-    VOICE_OOHS: -12,
+    VIBRAPHONE: 12,
   },
   'KSSt': {
     ELECTRIC_BASS_FINGER: -12,
@@ -687,6 +704,13 @@ midi_instrument_overrides = {
   'HGSS Azalea Town': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
+  'HGSS SS Aqua': {
+    'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
+    'Electric Bass': SLAP_BASS_1,
+  },
+  'HGSS Viridian Forest': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
   'ITM Rem': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
@@ -761,4 +785,6 @@ def get_percussion_mapping(instrument_name, current_note):
       return percussion_parts[instrument_name]
     elif mapping is not None and current_note in mapping:
       return mapping[current_note]
+    elif current_note == CRASH_CYMBAL_2:
+      return CRASH_CYMBAL_1
   return None

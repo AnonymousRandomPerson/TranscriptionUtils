@@ -32,12 +32,14 @@ for file in sorted(os.listdir(scores_folder)):
             for part_info in xml_root.find('part-list').findall('score-part'):
               part_name = part_info.find('part-name').text
               instrument_name = get_instrument_name(part_name)
+              program = None
+              #print(item.filename, part_name)
 
-              percussion = False
-              for midi_instrument in part_info.findall('midi-instrument'):
-                if midi_instrument.find('midi-unpitched') is not None:
-                  percussion = True
-                  break
+              percussion = instrument_name in mxl_percussion_override
+              if not percussion:
+                for midi_instrument in part_info.findall('midi-instrument'):
+                  if midi_instrument.find('midi-unpitched') is not None:
+                    percussion = True
 
               if percussion:
                 if not instrument_name in ignore_unmapped_percussion:
@@ -48,7 +50,11 @@ for file in sorted(os.listdir(scores_folder)):
                   for midi_instrument in part_info.findall('midi-instrument'):
                     percussion_instrument_name = percussion_instruments[midi_instrument.attrib['id']]
                     midi_unpitched = midi_instrument.find('midi-unpitched')
-                    if midi_unpitched is None:
+                    if instrument_name in mxl_percussion_override:
+                      midi_unpitched = ElementTree.Element('midi-unpitched')
+                      midi_instrument.insert(2, midi_unpitched)
+                      midi_unpitched.text = str(mxl_percussion_override[instrument_name] + 1)
+                    elif midi_unpitched is None:
                       if full_score and not percussion_instrument_name in ignore_unmapped_percussion:
                         print('Encountered unmapped percussion note', percussion_instrument_name, 'in', instrument_name)
                     else:
@@ -63,30 +69,51 @@ for file in sorted(os.listdir(scores_folder)):
               else:
                 program = get_mapped_program(game_acronym, full_file_name, instrument_name, part_name)
                 if program is not None:
-                  parts[part_info.attrib['id']] = (part_name, instrument_name, program)
                   part_info.find('midi-instrument').find('midi-program').text = str(program + 1)
 
                   if program in mxl_instruments:
-                    part_info.find('score-instrument').find('instrument-sound').text = mxl_instruments[program]
+                    score_instrument = part_info.find('score-instrument')
+                    instrument_sound = score_instrument.find('instrument-sound')
+                    if instrument_sound is None:
+                      instrument_sound = ElementTree.SubElement(score_instrument, 'instrument-sound')
+                    instrument_sound.text = mxl_instruments[program]
+              parts[part_info.attrib['id']] = (part_name, instrument_name, program)
+
+              open_hi_hat = False
+              for midi_instrument in part_info.findall('midi-instrument'):
+                midi_unpitched = midi_instrument.find('midi-unpitched')
+                if midi_unpitched is not None:
+                  open_hi_hat = open_hi_hat or midi_unpitched.text == str(OPEN_HI_HAT + 1)
+
+              if full_score:
+                if open_hi_hat:
+                  print('Found open hi-hat in', part_name)
 
             for part in xml_root.findall('part'):
-              part_id = part.attrib['id']
-              if part_id not in parts:
-                continue
-
               part_name, instrument_name, program = parts[part.attrib['id']]
 
-              transpose_offset = get_transpose_offset(game_acronym, program, track_name, part_name)
-              if transpose_offset != 0:
-                octave_change = abs(transpose_offset) // 12
-                if transpose_offset < 0:
-                  octave_change = -octave_change
+              if program is None:
+                transpose_offset = 0
+              else:
+                transpose_offset = get_transpose_offset(game_acronym, program, track_name, part_name)
+                octave_change = 0
+                if transpose_offset != 0:
+                  octave_change = abs(transpose_offset) // 12
+                  if transpose_offset < 0:
+                    octave_change = -octave_change
 
-                chromatic_change = transpose_offset % 12
-                if chromatic_change != 0 and full_score:
-                  print('Found non-octave tranposition', transpose_offset, 'for', part_name)
+                  chromatic_change = transpose_offset % 12
+                  if chromatic_change != 0 and full_score:
+                    print('Found non-octave tranposition', transpose_offset, 'for', part_name)
 
-                for measure in part.findall('measure'):
+              for measure in part.findall('measure'):
+                measure_number = measure.attrib['number']
+
+                print_page = measure.find('print')
+                if print_page is not None and 'new-page' in print_page.attrib:
+                  measure.remove(print_page)
+
+                if transpose_offset != 0:
                   attributes = measure.find('attributes')
                   if attributes is not None:
                     transpose = attributes.find('transpose')
@@ -103,20 +130,32 @@ for file in sorted(os.listdir(scores_folder)):
 
                     octave_change_tag.text = str(int(octave_change_text) + octave_change)
 
-              if program == STRING_ENSEMBLE_1 and full_score:
-                for measure in part.findall('measure'):
+                if full_score:
                   for direction in measure.findall('direction'):
-                    words = direction.find('direction-type').find('words')
-                    if words is not None and (words.text == 'pizz.' or words.text == 'arco'):
-                      print('Found', words.text, 'in', part_name)
+                    direction_type = direction.find('direction-type')
+                    if program == STRING_ENSEMBLE_1:
+                      words = direction_type.find('words')
+                      if words is not None and (words.text == 'pizz.' or words.text == 'arco'):
+                        print('Found {} in {}, measure {}'.format(words.text, part_name, measure_number))
 
-              if instrument_name in unpitched_instruments:
-                for measure in part.findall('measure'):
+                    octave_shift = direction_type.find('octave-shift')
+                    if octave_shift is not None:
+                      shift_type = octave_shift.attrib['type']
+                      if shift_type == 'down' or shift_type == 'up':
+                        print('Found ottava {} in {}, measure {}'.format(shift_type, part_name, measure_number))
+
+                if instrument_name in unpitched_instruments:
                   for note in measure.findall('note'):
                     unpitched = note.find('unpitched')
                     if unpitched is not None:
                       unpitched.find('display-step').text = 'F'
                       unpitched.find('display-octave').text = '5'
+
+                if instrument_name == 'Drum Set' or instrument_name == 'Snare Drum':
+                  for note in measure.findall('note'):
+                    notehead = note.find('notehead')
+                    if notehead is not None and notehead.text == 'back slashed':
+                      note.remove(notehead)
 
             newZip.writestr(item, ElementTree.tostring(xml_root))
           else:

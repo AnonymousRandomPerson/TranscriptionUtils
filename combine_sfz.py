@@ -1,8 +1,8 @@
 import os
 
 combined_soundfont_name = 'combined.sfz'
-soundfont_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Pokémon HeartGold and SoulSilver')
-soundfont_bank = 'Route 34'
+soundfont_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Kirby 64 The Crystal Shards')
+soundfont_bank = 'Bank_00000000'
 
 soundfont_folder = os.path.join(soundfont_folder, soundfont_bank)
 combined_soundfont_path = os.path.join(soundfont_folder, combined_soundfont_name);
@@ -22,9 +22,14 @@ for file_name in sorted(os.listdir(soundfont_folder)):
   with open(folder_path, 'r') as soundfont_file:
     soundfont = soundfont_file.read()
     if combined_soundfont:
-      regions = soundfont[soundfont.index('<region>') : soundfont.index('<curve>')].rstrip('\n') + '\n\n'
+      end_region = soundfont.find('<curve>')
+      if end_region < 0:
+        end_region = len(soundfont)
+      regions = soundfont[soundfont.index('<region>') : end_region].rstrip('\n') + '\n\n'
       regions = regions.replace('<region>', '<region>\n loprog=%s hiprog=%s' % (program, program))
-      combined_curve_index = combined_soundfont.index('<curve>')
+      combined_curve_index = combined_soundfont.find('<curve>')
+      if combined_curve_index < 0:
+        combined_curve_index = len(combined_soundfont)
       combined_soundfont = combined_soundfont[:combined_curve_index].rstrip('\n') + '\n\n' + regions + combined_soundfont[combined_curve_index:]
     else:
       combined_soundfont = soundfont.replace('<region>', '<region>\n loprog=%s hiprog=%s' % (program, program))
