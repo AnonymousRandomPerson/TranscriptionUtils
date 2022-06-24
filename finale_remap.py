@@ -270,6 +270,8 @@ percussion_parts = {
   'Static FX': CASTANETS,
   'Stick Click': DRUM_STICKS,
   'Suspended Cymbal': {
+    49: CRASH_CYMBAL_1,
+    85: CRASH_CYMBAL_1,
     87: CRASH_CYMBAL_1,
     91: RIDE_BELL,
     92: CRASH_CYMBAL_1,
@@ -325,7 +327,7 @@ percussion_parts = {
   },
   'Triangle': {
     80: MUTE_TRIANGLE,
-    81: OPEN_TRIANGLE,
+    81: MUTE_TRIANGLE,
     82: OPEN_TRIANGLE,
   },
   'Tsuzumi': {
@@ -346,12 +348,6 @@ percussion_parts = {
 }
 
 percussion_parts_override = {
-  'B2W2': {
-    'Triangle': {
-      81: MUTE_TRIANGLE,
-      82: OPEN_TRIANGLE,
-    },
-  },
 }
 
 ignore_unmapped_percussion = set([
@@ -422,7 +418,10 @@ program_transpose = {
       'Battle! (Gym Leader)': 24,
       'Battle! (N)': 12,
     },
-    SLAP_BASS_1: -12,
+    SLAP_BASS_1: {
+      'Default': 0,
+      'Pokestar Studios Battle': -12,
+    },
     TIMPANI: {
       'Battle! (Black Kyurem White Kyurem)': -12,
     },
@@ -817,7 +816,7 @@ def get_percussion_mapping(game_acronym: str, track_name: str, instrument_name: 
     if mapping is not None:
       return mapping
 
-  mapping = get_percussion_mapping_from_parts(instrument_name, current_note, percussion_parts)
+  return get_percussion_mapping_from_parts(instrument_name, current_note, percussion_parts)
 
 def get_percussion_mapping_from_parts(instrument_name: str, current_note: str, parts: Dict[str, Dict[int, int]]) -> int:
   if instrument_name in parts:

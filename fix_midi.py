@@ -8,18 +8,22 @@ remap_channels = {
 
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 scores_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Scores')
+#scores_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Raw Exports')
 overwrite = False
 dry_run = False
 new_file_location = 'Modified'
 
 search_tracks = set()
 search_instruments = set([])
+search_percussion = set([
+])
 
 for file in sorted(os.listdir(scores_folder)):
   if file.endswith('.mid'):
     print('Fixing', file)
     full_file_name = file[:-4]
     game_acronym, track_name, game_name = split_track_name(full_file_name)
+    combined_name = game_acronym + ' ' + track_name
     file_location = os.path.join(scores_folder, file)
     remap_results = {}
 
@@ -39,6 +43,10 @@ for file in sorted(os.listdir(scores_folder)):
           msg.channel = 9
           if msg.type == 'note_on' or msg.type == 'note_off':
             if percussion_parts[instrument_name] is not None:
+              if len(search_percussion) > 0:
+                search_percussion_note = (instrument_name, msg.note)
+                if search_percussion_note in search_percussion:
+                  search_tracks.add(combined_name)
               mapping = get_percussion_mapping(game_acronym, track_name, instrument_name, msg.note)
               if mapping is None:
                 print('Encountered unmapped percussion note:', track.name, msg.note)
@@ -55,7 +63,7 @@ for file in sorted(os.listdir(scores_folder)):
               msg.program = mapped_program
           current_program = msg.program
           if current_program in search_instruments:
-            search_tracks.add(track_name)
+            search_tracks.add(combined_name)
         elif msg.type == 'note_on' or msg.type == 'note_off':
           transpose_offset = get_transpose_offset(game_acronym, current_program, track_name, orig_instrument_name)
           msg.note = msg.note + transpose_offset

@@ -3,6 +3,7 @@ from game_acronyms import *
 
 copy_recent_files = True
 recent_threshold = time.time() - 60 * 60 * 12
+# recent_threshold = time.time() - 60 * 20
 
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 scores_drive_folder = os.path.join(os.sep, 'Volumes', 'GoogleDrive', 'My Drive', 'Transcribed Scores')

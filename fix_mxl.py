@@ -1,4 +1,3 @@
-from tkinter import N
 from finale_remap import *
 from game_acronyms import *
 import os;
