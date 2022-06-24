@@ -8,8 +8,8 @@ remap_channels = {
 
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 scores_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Scores')
-raw_midi_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Raw MIDIs')
 overwrite = False
+dry_run = False
 new_file_location = 'Modified'
 
 search_tracks = set()
@@ -17,7 +17,6 @@ search_instruments = set([])
 
 for file in sorted(os.listdir(scores_folder)):
   if file.endswith('.mid'):
-    save = True
     print('Fixing', file)
     full_file_name = file[:-4]
     game_acronym, track_name, game_name = split_track_name(full_file_name)
@@ -40,14 +39,11 @@ for file in sorted(os.listdir(scores_folder)):
           msg.channel = 9
           if msg.type == 'note_on' or msg.type == 'note_off':
             if percussion_parts[instrument_name] is not None:
-              mapping = get_percussion_mapping(instrument_name, msg.note)
+              mapping = get_percussion_mapping(game_acronym, track_name, instrument_name, msg.note)
               if mapping is None:
                 print('Encountered unmapped percussion note:', track.name, msg.note)
               else:
                 msg.note = mapping
-            elif 'Drum Set' in instrument_name and msg.note == CRASH_CYMBAL_2:
-              save = True
-              msg.note = CRASH_CYMBAL_1
           if msg.type == 'program_change':
             remove_messages.append(msg)
         elif msg.type == 'program_change':
@@ -79,7 +75,7 @@ for file in sorted(os.listdir(scores_folder)):
         print('Remapped track %d (%s) to %s' % (i, entry[0], entry[1]))
 
     new_file_path = os.path.join(new_file_location, file)
-    if save:
+    if not dry_run:
       print('Saving file to', new_file_path)
       mid.save(new_file_path)
 

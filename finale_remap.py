@@ -1,5 +1,6 @@
 from general_midi import *
 import re
+from typing import Dict
 
 DEFAULT_TRACK = 'Default'
 
@@ -152,11 +153,15 @@ midi_instruments = {
 }
 
 mxl_instruments = {
+  BIRD_TWEET: 'effect.bird.tweet',
+  BREATH_NOISE: 'effect.breath',
   ELECTRIC_GUITAR_DISTORTION: '',
   GUNSHOT: 'effect.gunshot',
   HELICOPTER: 'effect.helicopter',
   PERCUSSIVE_ORGAN: 'keyboard.organ.percussive',
+  SEASHORE: 'effect.seashore',
   SLAP_BASS_1: 'effect.bass-string-slap',
+  TELEPHONE_RING: 'effect.telephone-ring',
   VOICE_OOHS: 'voice.oo',
 }
 
@@ -264,7 +269,13 @@ percussion_parts = {
   'Splash Cymbal': SPLASH_CYMBAL,
   'Static FX': CASTANETS,
   'Stick Click': DRUM_STICKS,
-  'Suspended Cymbal': CRASH_CYMBAL_1,
+  'Suspended Cymbal': {
+    87: CRASH_CYMBAL_1,
+    91: RIDE_BELL,
+    92: CRASH_CYMBAL_1,
+    93: CRASH_CYMBAL_1,
+    94: RIDE_BELL,
+  },
   'Tablas': {
     36: HIGH_BONGO,
     37: HIGH_BONGO,
@@ -334,6 +345,15 @@ percussion_parts = {
   }
 }
 
+percussion_parts_override = {
+  'B2W2': {
+    'Triangle': {
+      81: MUTE_TRIANGLE,
+      82: OPEN_TRIANGLE,
+    },
+  },
+}
+
 ignore_unmapped_percussion = set([
   'ARIA Player',
   'Drum Set',
@@ -345,11 +365,11 @@ program_transpose = {
     BLOWN_BOTTLE: 12,
     CLAVINET: -12,
     ELECTRIC_BASS_FINGER: {
-      'Default': -24,
+      DEFAULT_TRACK: -24,
       'Forest Nature Area': 0
     },
     GLOCKENSPIEL: {
-      'Default': 36,
+      DEFAULT_TRACK: 36,
       'Space Area': 24,
     },
     OCARINA: 12,
@@ -358,7 +378,7 @@ program_transpose = {
     SLAP_BASS_1: -24,
     STEEL_DRUMS: 12,
     STRING_ENSEMBLE_1: {
-      'Default': 12,
+      DEFAULT_TRACK: 12,
       'Olive Ocean': 24,
     },
     SYNTH_BRASS_1: {
@@ -373,7 +393,7 @@ program_transpose = {
       'Mustard Mountain': -14
     },
     TRUMPET: {
-      'Default': 12,
+      DEFAULT_TRACK: 12,
       'Space Area': 0,
     },
     VOICE_OOHS: 12,
@@ -402,9 +422,11 @@ program_transpose = {
       'Battle! (Gym Leader)': 24,
       'Battle! (N)': 12,
     },
+    SLAP_BASS_1: -12,
     TIMPANI: {
       'Battle! (Black Kyurem White Kyurem)': -12,
     },
+    XYLOPHONE: 12,
   },
   'BDSP': {
     CHOIR_AAHS: 12,
@@ -500,7 +522,8 @@ program_transpose = {
       'Route 4 (Winter)': -12,
       'Victory Lies Before You!': -12,
       'Victory Road': -12,
-    }
+    },
+    XYLOPHONE: 12,
   },
   'C': {
     ELECTRIC_BASS_FINGER: {
@@ -539,7 +562,7 @@ program_transpose = {
       'Battle! (Raikou)': 12,
     },
     TIMPANI: {
-      'Default': -12,
+      DEFAULT_TRACK: -12,
       'Battle! (Gym Leader - Kanto Version)': 0,
       'Battle! (Ho-Oh)': {
         'Timpani 1': 0,
@@ -557,6 +580,7 @@ program_transpose = {
   'K64': {
     GLOCKENSPIEL: 12,
     VIBRAPHONE: 12,
+    TIMPANI: 12,
   },
   'KSSt': {
     ELECTRIC_BASS_FINGER: -12,
@@ -689,7 +713,7 @@ program_transpose = {
   },
   'MLSSBM': {
     ELECTRIC_BASS_FINGER: {
-      'Default': -12,
+      DEFAULT_TRACK: -12,
       'Sweet Surfin\'': 0,
     },
     STEEL_DRUMS: 12,
@@ -713,6 +737,9 @@ midi_instrument_overrides = {
   },
   'ITM Rem': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'K64': {
+    'Synth Pad': PAD_1_NEW_AGE,
   },
   'MDB': {
     'Celesta': PAD_1_NEW_AGE,
@@ -778,11 +805,25 @@ def get_transpose_offset(game_acronym: str, current_program: int, track_name: st
           transpose_offset = 0
   return transpose_offset
 
-def get_percussion_mapping(instrument_name, current_note):
-  if instrument_name in percussion_parts:
-    mapping = percussion_parts[instrument_name]
+def get_percussion_mapping(game_acronym: str, track_name: str, instrument_name: str, current_note: str) -> int:
+  parts_override = None
+  combined_name = game_acronym + ' ' + track_name
+  if game_acronym in percussion_parts_override:
+    parts_override = percussion_parts_override[game_acronym]
+  elif combined_name in percussion_parts_override:
+    parts_override = percussion_parts_override[combined_name]
+  if parts_override is not None:
+    mapping = get_percussion_mapping_from_parts(instrument_name, current_note, parts_override)
+    if mapping is not None:
+      return mapping
+
+  mapping = get_percussion_mapping_from_parts(instrument_name, current_note, percussion_parts)
+
+def get_percussion_mapping_from_parts(instrument_name: str, current_note: str, parts: Dict[str, Dict[int, int]]) -> int:
+  if instrument_name in parts:
+    mapping = parts[instrument_name]
     if isinstance(mapping, int):
-      return percussion_parts[instrument_name]
+      return parts[instrument_name]
     elif mapping is not None and current_note in mapping:
       return mapping[current_note]
     elif current_note == CRASH_CYMBAL_2:

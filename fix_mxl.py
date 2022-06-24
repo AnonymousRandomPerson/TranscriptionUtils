@@ -1,3 +1,4 @@
+from tkinter import N
 from finale_remap import *
 from game_acronyms import *
 import os;
@@ -24,11 +25,13 @@ for file in sorted(os.listdir(scores_folder)):
 
             xml_string = origZip.read(item)
             xml_root = ElementTree.fromstring(xml_string)
+            xml_header = xml_string[0:xml_string.find('<score-partwise'.encode('utf-8'))]
 
             credit_remove = [child for child in xml_root.findall('credit') if child.attrib['page'] != '1' and child.find('credit-type').text == 'title']
             [xml_root.remove(credit) for credit in credit_remove]
 
             parts = {}
+            open_hi_hat_ids = set()
             for part_info in xml_root.find('part-list').findall('score-part'):
               part_name = part_info.find('part-name').text
               instrument_name = get_instrument_name(part_name)
@@ -59,7 +62,7 @@ for file in sorted(os.listdir(scores_folder)):
                         print('Encountered unmapped percussion note', percussion_instrument_name, 'in', instrument_name)
                     else:
                       current_note = int(midi_unpitched.text) - 1
-                      percussion_mapping = get_percussion_mapping(instrument_name, current_note)
+                      percussion_mapping = get_percussion_mapping(game_acronym, track_name, instrument_name, current_note)
                       if percussion_mapping is None:
                         if full_score and not percussion_instrument_name in ignore_unmapped_percussion:
                           print('Encountered unmapped percussion note', current_note, 'in', instrument_name)
@@ -80,14 +83,21 @@ for file in sorted(os.listdir(scores_folder)):
               parts[part_info.attrib['id']] = (part_name, instrument_name, program)
 
               open_hi_hat = False
+              cross_stick = False
               for midi_instrument in part_info.findall('midi-instrument'):
                 midi_unpitched = midi_instrument.find('midi-unpitched')
                 if midi_unpitched is not None:
-                  open_hi_hat = open_hi_hat or midi_unpitched.text == str(OPEN_HI_HAT + 1)
+                  if midi_unpitched.text == str(OPEN_HI_HAT + 1):
+                    open_hi_hat = True
+                    open_hi_hat_ids.add(midi_instrument.attrib['id'])
+                  cross_stick = cross_stick or midi_unpitched.text == str(SIDE_STICK + 1)
+
 
               if full_score:
                 if open_hi_hat:
                   print('Found open hi-hat in', part_name)
+                if cross_stick:
+                  print('Found cross-stick in', part_name)
 
             for part in xml_root.findall('part'):
               part_name, instrument_name, program = parts[part.attrib['id']]
@@ -106,6 +116,7 @@ for file in sorted(os.listdir(scores_folder)):
                   if chromatic_change != 0 and full_score:
                     print('Found non-octave tranposition', transpose_offset, 'for', part_name)
 
+              found_breath_mark = None
               for measure in part.findall('measure'):
                 measure_number = measure.attrib['number']
 
@@ -144,20 +155,77 @@ for file in sorted(os.listdir(scores_folder)):
                       if shift_type == 'down' or shift_type == 'up':
                         print('Found ottava {} in {}, measure {}'.format(shift_type, part_name, measure_number))
 
-                if instrument_name in unpitched_instruments:
-                  for note in measure.findall('note'):
+                tuplet_number = None
+                tuplet_type = None
+                for note in measure.findall('note'):
+                  if instrument_name in unpitched_instruments:
                     unpitched = note.find('unpitched')
                     if unpitched is not None:
-                      unpitched.find('display-step').text = 'F'
-                      unpitched.find('display-octave').text = '5'
+                      print('Found unpitched instrument', instrument_name)
+                      # unpitched.find('display-step').text = 'F'
+                      # unpitched.find('display-octave').text = '5'
 
-                if instrument_name == 'Drum Set' or instrument_name == 'Snare Drum':
-                  for note in measure.findall('note'):
+                  elif instrument_name == 'Drum Set' or instrument_name == 'Snare Drum':
                     notehead = note.find('notehead')
                     if notehead is not None and notehead.text == 'back slashed':
                       note.remove(notehead)
 
-            newZip.writestr(item, ElementTree.tostring(xml_root))
+                    if len(open_hi_hat_ids) > 1:
+                      note_instrument = note.find('instrument')
+                      if note_instrument is not None and note_instrument.attrib['id'] in open_hi_hat_ids:
+                        unpitched = note.find('unpitched')
+                        if unpitched is not None:
+                          unpitched.find('display-step').text = 'G'
+                          unpitched.find('display-octave').text = '5'
+
+                  if full_score and not found_breath_mark:
+                    notations = note.find('notations')
+                    if notations is not None:
+                      articulations = notations.find('articulations')
+                      if articulations is not None:
+                        breath_mark = articulations.find('breath-mark')
+                        if breath_mark is not None:
+                          found_breath_mark = measure_number
+
+                  time_modification = note.find('time-modification')
+                  notations = note.find('notations')
+                  beams = note.findall('beam')
+                  if len(beams) == 3 and time_modification is not None and notations is not None:
+                    tuplet = notations.find('tuplet')
+                    tuplet_normal = tuplet.find('tuplet-normal')
+                    if tuplet_normal is not None:
+                      tuplet_number = tuplet_normal.find('tuplet-number').text
+                      tuplet_type = tuplet_normal.find('tuplet-type').text
+
+                    target_type = None
+                    if tuplet_number == '1' and tuplet_type == 'half' or tuplet_number == '3' and tuplet_type == 'quarter':
+                      target_type = 'half'
+
+                    if target_type is not None:
+                      time_modification.find('actual-notes').text = '2'
+                      time_modification.find('normal-notes').text = '1'
+                      time_modification.remove(time_modification.find('normal-type'))
+                      note.find('type').text = target_type
+                      for beam in beams:
+                        note.remove(beam)
+
+                      if beams[0].text == 'begin':
+                        tremolo_type = 'start'
+                      else:
+                        tremolo_type = 'stop'
+                      notations = note.find('notations')
+                      notations.remove(tuplet)
+                      ornaments = ElementTree.SubElement(notations, 'ornaments')
+                      tremolo = ElementTree.SubElement(ornaments, 'tremolo')
+                      tremolo.attrib['type'] = tremolo_type
+                      tremolo.text = '3'
+                    elif full_score and tuplet_number is not None:
+                      print('Found unknown tremolo {} {} in {}, measure {}'.format(tuplet_number, tuplet_type, part_name, measure_number))
+
+              if found_breath_mark is not None:
+                print('Found breath mark in {}, measure {}.'.format(part_name, found_breath_mark))
+
+            newZip.writestr(item, xml_header + ElementTree.tostring(xml_root))
           else:
             newZip.writestr(item, origZip.read(item.filename))
     print('Saving file to', new_file_location)
