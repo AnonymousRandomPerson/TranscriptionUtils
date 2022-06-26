@@ -1,3 +1,4 @@
+from collections import defaultdict
 from mido import MidiFile
 from finale_remap import *
 from game_acronyms import *
@@ -11,6 +12,7 @@ scores_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Musi
 #scores_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Raw Exports')
 overwrite = False
 dry_run = False
+save_search = False
 new_file_location = 'Modified'
 
 search_tracks = set()
@@ -26,6 +28,7 @@ for file in sorted(os.listdir(scores_folder)):
     combined_name = game_acronym + ' ' + track_name
     file_location = os.path.join(scores_folder, file)
     remap_results = {}
+    percussion_sequence_parts = defaultdict(PercussionSequencePart)
 
     mid = MidiFile(file_location)
     for i, track in enumerate(mid.tracks):
@@ -34,6 +37,8 @@ for file in sorted(os.listdir(scores_folder)):
         continue
 
       instrument_name = get_instrument_name(orig_instrument_name)
+      if instrument_name in search_instruments:
+        search_tracks.add(combined_name)
 
       percussion = instrument_name in percussion_parts
       current_program = None
@@ -47,11 +52,14 @@ for file in sorted(os.listdir(scores_folder)):
                 search_percussion_note = (instrument_name, msg.note)
                 if search_percussion_note in search_percussion:
                   search_tracks.add(combined_name)
-              mapping = get_percussion_mapping(game_acronym, track_name, instrument_name, msg.note)
-              if mapping is None:
-                print('Encountered unmapped percussion note:', track.name, msg.note)
+              if instrument_name in percussion_sequence_mappings:
+                fill_percussion_sequence_parts(instrument_name, msg.note, msg, percussion_sequence_parts)
               else:
-                msg.note = mapping
+                mapping = get_percussion_mapping(game_acronym, track_name, instrument_name, msg.note)
+                if mapping is None:
+                  print('Encountered unmapped percussion note:', track.name, msg.note)
+                else:
+                  msg.note = mapping
           if msg.type == 'program_change':
             remove_messages.append(msg)
         elif msg.type == 'program_change':
@@ -78,12 +86,16 @@ for file in sorted(os.listdir(scores_folder)):
       for msg in remove_messages:
         track.remove(msg)
 
+    for instrument_name, sequence_part in percussion_sequence_parts.items():
+      for msg in sequence_part.messages:
+        msg.note = map_percussion_sequence_note(instrument_name, msg.note, sequence_part)
+
     if len(remap_results) > 0:
       for i, entry in remap_results.items():
         print('Remapped track %d (%s) to %s' % (i, entry[0], entry[1]))
 
     new_file_path = os.path.join(new_file_location, file)
-    if not dry_run:
+    if not dry_run and (not save_search or combined_name in search_tracks):
       print('Saving file to', new_file_path)
       mid.save(new_file_path)
 

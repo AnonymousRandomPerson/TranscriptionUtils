@@ -3,7 +3,7 @@ from game_acronyms import *
 
 copy_recent_files = True
 recent_threshold = time.time() - 60 * 60 * 12
-# recent_threshold = time.time() - 60 * 20
+#recent_threshold = time.time() - 60 * 60 * 2
 
 parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 scores_drive_folder = os.path.join(os.sep, 'Volumes', 'GoogleDrive', 'My Drive', 'Transcribed Scores')
@@ -56,7 +56,8 @@ def move_parts(combined_name: str):
       os.remove(file_path)
 
 if len(sys.argv) > 1:
-  move_parts(sys.argv[1])
+  for arg in sys.argv[1:]:
+    move_parts(arg)
 else:
   for folder in sorted(os.listdir(parts_folder)):
     if os.path.isdir(os.path.join(parts_folder, folder)):

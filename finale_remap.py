@@ -1,6 +1,7 @@
 from general_midi import *
 import re
-from typing import Dict
+from typing import Dict, List, Set
+from dataclasses import dataclass, field
 
 DEFAULT_TRACK = 'Default'
 
@@ -59,7 +60,7 @@ midi_instruments = {
   'Laugh FX': CHOIR_AAHS,
   'Soprano': CHOIR_AAHS,
   'Tenor': CHOIR_AAHS,
-  'Choir Oohs': CHOIR_AAHS,
+  'Choir Oohs': VOICE_OOHS,
   'Kirby Voice': VOICE_OOHS,
   'Voice': VOICE_OOHS,
   'Vocals': VOICE_OOHS,
@@ -125,6 +126,7 @@ midi_instruments = {
   'Kalimba': KALIMBA,
   'Bagpipes': BAGPIPE,
   'Steel Drums': STEEL_DRUMS,
+  'Temple Blocks': WOODBLOCK,
   'Melodic Tom': MELODIC_TOM,
   'Compressed Air FX': BREATH_NOISE,
   'Fire FX': BREATH_NOISE,
@@ -163,16 +165,12 @@ mxl_instruments = {
   SLAP_BASS_1: 'effect.bass-string-slap',
   TELEPHONE_RING: 'effect.telephone-ring',
   VOICE_OOHS: 'voice.oo',
+  WOODBLOCK: '',
 }
 
 mxl_percussion_override = {
   'Tsuzumi': HIGH_BONGO,
 }
-
-unpitched_instruments = set([
-  'Metal Bang FX',
-  'Zap FX',
-])
 
 percussion_parts = {
   'Agogo Bells': {
@@ -287,19 +285,6 @@ percussion_parts = {
   },
   'Tambourine': TAMBOURINE,
   'Tamtam': CHINESE_CYMBAL,
-  'Temple Blocks': {
-    36: LOW_WOODBLOCK,
-    47: HIGH_WOODBLOCK,
-    48: HIGH_WOODBLOCK,
-    57: LOW_WOODBLOCK,
-    63: HIGH_WOODBLOCK,
-    67: LOW_WOODBLOCK,
-    70: HIGH_WOODBLOCK,
-    71: LOW_WOODBLOCK,
-    74: HIGH_WOODBLOCK,
-    76: HIGH_WOODBLOCK,
-    77: LOW_WOODBLOCK,
-  },
   'Timbales': {
     65: HIGH_TIMBALE,
     66: LOW_TIMBALE,
@@ -345,6 +330,37 @@ percussion_parts = {
     63: HIGH_WOODBLOCK,
     62: LOW_WOODBLOCK,
   }
+}
+
+percussion_sequence_mappings = {
+  'Bongo Drums': {
+    1: [HIGH_BONGO],
+    2: [LOW_BONGO, HIGH_BONGO],
+    3: [OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+    4: [LOW_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+    5: [LOW_CONGA, MUTE_HIGH_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+  },
+  'Conga Drums': {
+    1: [OPEN_HIGH_CONGA],
+    2: [LOW_CONGA, OPEN_HIGH_CONGA],
+    3: [LOW_CONGA, OPEN_HIGH_CONGA, LOW_BONGO],
+    4: [LOW_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+    5: [LOW_CONGA, MUTE_HIGH_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+    6: [LOW_CONGA, MUTE_HIGH_CONGA, OPEN_HIGH_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+    7: [LOW_CONGA, LOW_CONGA, MUTE_HIGH_CONGA, OPEN_HIGH_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+  },
+  'Toms': {
+    1: [LOW_MID_TOM],
+    2: [LOW_MID_TOM, HI_MID_TOM],
+    3: [LOW_MID_TOM, HI_MID_TOM, HIGH_TOM],
+    4: [LOW_TOM, LOW_MID_TOM, HI_MID_TOM, HIGH_TOM],
+    5: [HIGH_FLOOR_TOM, LOW_TOM, LOW_MID_TOM, HI_MID_TOM, HIGH_TOM],
+    6: [LOW_FLOOR_TOM, HIGH_FLOOR_TOM, LOW_TOM, LOW_MID_TOM, HI_MID_TOM, HIGH_TOM],
+  },
+  'Triangle': {
+    1: [OPEN_TRIANGLE],
+    2: [MUTE_TRIANGLE, OPEN_TRIANGLE],
+  },
 }
 
 percussion_parts_override = {
@@ -578,6 +594,7 @@ program_transpose = {
   },
   'K64': {
     GLOCKENSPIEL: 12,
+    CELESTA: 12,
     VIBRAPHONE: 12,
     TIMPANI: 12,
   },
@@ -721,6 +738,9 @@ program_transpose = {
 }
 
 midi_instrument_overrides = {
+  'B2W2 Virbank City': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
   'CS Cherry Lake': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
@@ -802,6 +822,8 @@ def get_transpose_offset(game_acronym: str, current_program: int, track_name: st
           transpose_offset = transpose_offset[DEFAULT_TRACK]
         else:
           transpose_offset = 0
+  if current_program == WOODBLOCK and transpose_offset == 0:
+    return 12
   return transpose_offset
 
 def get_percussion_mapping(game_acronym: str, track_name: str, instrument_name: str, current_note: str) -> int:
@@ -828,3 +850,28 @@ def get_percussion_mapping_from_parts(instrument_name: str, current_note: str, p
     elif current_note == CRASH_CYMBAL_2:
       return CRASH_CYMBAL_1
   return None
+
+@dataclass
+class PercussionSequencePart:
+  notes: Set[int] = field(default_factory=set)
+  note_mapping: Dict[int, int] = field(default_factory=dict)
+  messages: List = field(default_factory=list)
+
+def fill_percussion_sequence_parts(instrument_name: str, current_note: int, message, percussion_sequence_parts: Dict[str, PercussionSequencePart]):
+  sequence_part = percussion_sequence_parts[instrument_name]
+  sequence_part.notes.add(current_note)
+  sequence_part.messages.append(message)
+
+def map_percussion_sequence_note(instrument_name: str, current_note: int, sequence_part: PercussionSequencePart) -> int:
+  if len(sequence_part.note_mapping) == 0:
+    num_notes = len(sequence_part.notes)
+    if num_notes not in percussion_sequence_mappings[instrument_name]:
+      print('Percussion sequence length {} not found for {}.'.format(num_notes, instrument_name))
+      return get_percussion_mapping_from_parts(instrument_name, current_note, percussion_parts)
+
+    percussion_sequence_mapping = percussion_sequence_mappings[instrument_name][num_notes]
+    sorted_notes = sorted(sequence_part.notes)
+    for i, note in enumerate(sorted_notes):
+      sequence_part.note_mapping[note] = percussion_sequence_mapping[i]
+
+  return sequence_part.note_mapping[current_note]
