@@ -1,22 +1,19 @@
 from collections import defaultdict
 from finale_remap import *
 from game_acronyms import *
+from file_locations import *
 import os;
 import zipfile
 import xml.etree.ElementTree as ElementTree
 
-parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
-scores_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Scores')
-new_file_folder = os.path.join('.', 'Modified')
-
-for file in sorted(os.listdir(scores_folder)):
+for file in sorted(os.listdir(finale_scores_folder)):
   if file.endswith('.mxl'):
     print('Fixing', file)
     full_file_name = file[:-4]
     game_acronym, track_name, game_name = split_track_name(full_file_name)
 
-    file_location = os.path.join(scores_folder, file)
-    new_file_location = os.path.join(new_file_folder, file)
+    file_location = os.path.join(finale_scores_folder, file)
+    new_file_location = os.path.join(modified_folder, file)
     with zipfile.ZipFile(file_location, 'r') as origZip:
       with zipfile.ZipFile(new_file_location, 'w') as newZip:
         for item in origZip.infolist():
@@ -40,9 +37,13 @@ for file in sorted(os.listdir(scores_folder)):
               program = None
               #print(item.filename, part_name)
 
+              midi_instruments = part_info.findall('midi-instrument')
+              for midi_instrument in midi_instruments:
+                midi_instrument.find('volume').text = '80'
+
               percussion = instrument_name in mxl_percussion_override
               if not percussion:
-                for midi_instrument in part_info.findall('midi-instrument'):
+                for midi_instrument in midi_instruments:
                   midi_unpitched = midi_instrument.find('midi-unpitched')
                   if midi_instrument.find('midi-unpitched') is not None:
                     if instrument_name in midi_instruments:
@@ -52,12 +53,14 @@ for file in sorted(os.listdir(scores_folder)):
                       percussion = True
 
               if percussion:
+                for score_instrument in part_info.findall('score-instrument'):
+                  instrument_name_element = score_instrument.find('instrument-name')
+                  instrument_name_element.text = instrument_name_element.text.strip().replace('%g', '')
                 if not instrument_name in ignore_unmapped_percussion:
                   percussion_instruments = {}
                   for score_instrument in part_info.findall('score-instrument'):
-                    percussion_instrument_name = score_instrument.find('instrument-name').text.strip().replace('%g', '')
-                    percussion_instruments[score_instrument.attrib['id']] = percussion_instrument_name
-                  for midi_instrument in part_info.findall('midi-instrument'):
+                    percussion_instruments[score_instrument.attrib['id']] = score_instrument.find('instrument-name').text
+                  for midi_instrument in midi_instruments:
                     percussion_instrument_name = percussion_instruments[midi_instrument.attrib['id']]
                     midi_unpitched = midi_instrument.find('midi-unpitched')
                     if instrument_name in mxl_percussion_override:
@@ -88,7 +91,8 @@ for file in sorted(os.listdir(scores_folder)):
                     score_instrument = part_info.find('score-instrument')
                     instrument_sound = score_instrument.find('instrument-sound')
                     if instrument_sound is None:
-                      instrument_sound = ElementTree.SubElement(score_instrument, 'instrument-sound')
+                      instrument_sound = ElementTree.Element('instrument-sound')
+                      score_instrument.insert(1, instrument_sound)
                     instrument_sound.text = mxl_instruments[program]
               parts[part_info.attrib['id']] = (part_name, instrument_name, program)
 
@@ -110,7 +114,7 @@ for file in sorted(os.listdir(scores_folder)):
 
             for instrument_name, sequence_part in percussion_sequence_parts.items():
               for msg in sequence_part.messages:
-                current_note = int(midi_unpitched.text) - 1
+                current_note = int(msg.text) - 1
                 mapped_note = map_percussion_sequence_note(instrument_name, current_note, sequence_part)
                 msg.text = str(mapped_note + 1)
 
@@ -162,6 +166,12 @@ for file in sorted(os.listdir(scores_folder)):
                   if clef is not None:
                     staff_details = attributes.find('staff-details')
                     unpitched_clef = staff_details is not None and clef.find('sign').text == 'percussion' and staff_details.find('staff-lines') is not None
+
+                  key_element = attributes.find('key')
+                  if key_element is not None:
+                    key_element.attrib['print-object'] = 'no'
+                    key_element.find('fifths').text = '0'
+                    key_element.find('mode').text = 'major'
 
                 if full_score:
                   for direction in measure.findall('direction'):
@@ -215,49 +225,54 @@ for file in sorted(os.listdir(scores_folder)):
                     elif bongo_slap is None and instrument_name == 'Bongo Drums' and notehead.text == 'x':
                       bongo_slap = measure_number
 
-                  if full_score and not found_breath_mark:
-                    notations = note.find('notations')
-                    if notations is not None:
+                  notations = note.find('notations')
+                  if notations is not None:
+                    if full_score and not found_breath_mark:
                       articulations = notations.find('articulations')
                       if articulations is not None:
                         breath_mark = articulations.find('breath-mark')
                         if breath_mark is not None:
                           found_breath_mark = measure_number
 
-                  time_modification = note.find('time-modification')
-                  notations = note.find('notations')
-                  beams = note.findall('beam')
-                  if len(beams) == 3 and time_modification is not None and notations is not None:
-                    tuplet = notations.find('tuplet')
-                    tuplet_normal = tuplet.find('tuplet-normal')
-                    if tuplet_normal is not None:
-                      tuplet_number = tuplet_normal.find('tuplet-number').text
-                      tuplet_type = tuplet_normal.find('tuplet-type').text
+                    time_modification = note.find('time-modification')
+                    beams = note.findall('beam')
+                    if len(beams) == 3 and time_modification is not None:
+                      tuplet = notations.find('tuplet')
+                      tuplet_normal = tuplet.find('tuplet-normal')
+                      if tuplet_normal is not None:
+                        tuplet_number = tuplet_normal.find('tuplet-number').text
+                        tuplet_type = tuplet_normal.find('tuplet-type').text
 
-                    target_type = None
-                    if tuplet_number == '1' and tuplet_type == 'half' or tuplet_number == '3' and tuplet_type == 'quarter':
-                      target_type = 'half'
+                      target_type = None
+                      if tuplet_number == '1' and tuplet_type == 'half' or tuplet_number == '3' and tuplet_type == 'quarter':
+                        target_type = 'half'
 
-                    if target_type is not None:
-                      time_modification.find('actual-notes').text = '2'
-                      time_modification.find('normal-notes').text = '1'
-                      time_modification.remove(time_modification.find('normal-type'))
-                      note.find('type').text = target_type
-                      for beam in beams:
-                        note.remove(beam)
+                      if target_type is not None:
+                        time_modification.find('actual-notes').text = '2'
+                        time_modification.find('normal-notes').text = '1'
+                        time_modification.remove(time_modification.find('normal-type'))
+                        note.find('type').text = target_type
+                        for beam in beams:
+                          note.remove(beam)
 
-                      if beams[0].text == 'begin':
-                        tremolo_type = 'start'
-                      else:
-                        tremolo_type = 'stop'
-                      notations = note.find('notations')
-                      notations.remove(tuplet)
-                      ornaments = ElementTree.SubElement(notations, 'ornaments')
-                      tremolo = ElementTree.SubElement(ornaments, 'tremolo')
-                      tremolo.attrib['type'] = tremolo_type
-                      tremolo.text = '3'
-                    elif full_score and tuplet_number is not None:
-                      print('Found unknown tremolo {} {} in {}, measure {}.'.format(tuplet_number, tuplet_type, part_name, measure_number))
+                        if beams[0].text == 'begin':
+                          tremolo_type = 'start'
+                        else:
+                          tremolo_type = 'stop'
+                        notations = note.find('notations')
+                        notations.remove(tuplet)
+                        ornaments = ElementTree.SubElement(notations, 'ornaments')
+                        tremolo = ElementTree.SubElement(ornaments, 'tremolo')
+                        tremolo.attrib['type'] = tremolo_type
+                        tremolo.text = '3'
+                      elif full_score and tuplet_number is not None:
+                        print('Found unknown tremolo {} {} in {}, measure {}.'.format(tuplet_number, tuplet_type, part_name, measure_number))
+
+                    if full_score:
+                      tied = notations.find('tied')
+                      slur = notations.find('slur')
+                      if tied is not None and slur is not None and tied.attrib['type'] == 'start' and slur.attrib['type'] == 'start':
+                        print('Found combined slur/tie in {}, measure {}.'.format(part_name, measure_number))
 
                   cue = note.find('cue')
                   if cue is not None and note.find('grace') is None:

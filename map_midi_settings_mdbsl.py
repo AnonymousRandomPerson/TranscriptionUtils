@@ -1,5 +1,6 @@
 import os
 from general_midi import *
+from file_locations import *
 
 program_mapping = {
   1: {
@@ -213,4 +214,4 @@ percussion_parts = {
 
 percussion_programs = {49, 87, 91, 92, 95, 101, 109, 117, 127}
 
-parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Sf2', 'Pokémon Mystery Dungeon Blazing Light Stormy Adventure Squad')
+source_midi_folder = os.path.join(sf2_folder, 'Pokémon Mystery Dungeon Blazing Light Stormy Adventure Squad')

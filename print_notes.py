@@ -1,9 +1,9 @@
 from mido import MidiFile
 import os
+from file_locations import *
 
-midi_folder = os.path.join('.', 'Modified')
 file = 'HGSS Goldenrod City2.mid'
-midi_path = os.path.join(midi_folder, file)
+midi_path = os.path.join(modified_folder, file)
 channel = 9
 
 mid = MidiFile(midi_path)

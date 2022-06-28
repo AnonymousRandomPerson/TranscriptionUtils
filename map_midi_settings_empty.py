@@ -1,5 +1,5 @@
-import os
 from general_midi import *
+from file_locations import *
 
 program_mapping = {
 }
@@ -12,4 +12,4 @@ percussion_parts = {
 
 percussion_programs = {PERCUSSION}
 
-parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Sf2')
+source_midi_folder = sf2_folder

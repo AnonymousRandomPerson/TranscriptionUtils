@@ -1,11 +1,12 @@
 import os
+from file_locations import *
 
 combined_soundfont_name = 'combined.sfz'
-soundfont_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Kirby 64 The Crystal Shards')
+soundfont_folder = os.path.join(soundfont_banks_folder, 'Kirby 64 The Crystal Shards')
 soundfont_bank = 'Bank_00000000'
 
 soundfont_folder = os.path.join(soundfont_folder, soundfont_bank)
-combined_soundfont_path = os.path.join(soundfont_folder, combined_soundfont_name);
+combined_soundfont_path = os.path.join(soundfont_folder, combined_soundfont_name)
 
 combined_soundfont = None
 

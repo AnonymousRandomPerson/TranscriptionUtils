@@ -100,7 +100,7 @@ for track_name in track_names:
   unmapped_percussion_notes = set()
 
   file_name = '{}.mid'.format(track_name)
-  file_location = os.path.join(parts_folder, file_name)
+  file_location = os.path.join(source_midi_folder, file_name)
   new_file_name = file_name
   channels: Dict[int, Channel] = defaultdict(Channel)
   used_channels = set()

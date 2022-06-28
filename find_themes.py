@@ -2,8 +2,9 @@ from mido import MidiFile
 from dataclasses import dataclass
 from typing import List
 import os
+from file_locations import *
 
-midi_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Sf2', 'Pokémon Mystery Dungeon Explorers of Time and Darkness')
+midi_folder = os.path.join(sf2_folder, 'Pokémon Mystery Dungeon Explorers of Time and Darkness')
 theme = [55, 62, 60, 65, 62]
 # Amount of beat separation before discarding a sequence.
 separation_tolerance = 4

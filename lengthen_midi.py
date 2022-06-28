@@ -1,7 +1,8 @@
 from mido import MidiFile
 import os;
+from file_locations import *
 
-target_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Sf2', 'Pokémon Colosseum')
+target_folder = os.path.join(sf2_folder, 'Pokémon Colosseum')
 source_folder = os.path.join(target_folder, 'Original')
 for file in sorted(os.listdir(source_folder)):
   file_location = os.path.join(source_folder, file)

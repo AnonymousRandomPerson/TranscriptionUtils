@@ -1,5 +1,6 @@
 import os
 from general_midi import *
+from file_locations import *
 
 program_mapping = {
 }
@@ -34,4 +35,4 @@ percussion_programs = {
   39,
 }
 
-parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Sf2', 'Kirby\'s Dream Land 3')
+source_midi_folder = os.path.join(sf2_folder, 'Kirby\'s Dream Land 3')

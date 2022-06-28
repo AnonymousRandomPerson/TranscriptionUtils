@@ -3,8 +3,6 @@ import re
 from typing import Dict, List, Set
 from dataclasses import dataclass, field
 
-DEFAULT_TRACK = 'Default'
-
 midi_instruments = {
   'Piano': ACOUSTIC_GRAND_PIANO,
   'Electric Piano': ELECTRIC_PIANO_2,
@@ -172,6 +170,12 @@ mxl_percussion_override = {
   'Tsuzumi': HIGH_BONGO,
 }
 
+CRASH_CYMBAL_MAPPING = {
+  84: CRASH_CYMBAL_1,
+  87: CRASH_CYMBAL_1,
+  89: PEDAL_HI_HAT,
+}
+
 percussion_parts = {
   'Agogo Bells': {
     56: HIGH_AGOGO,
@@ -213,8 +217,8 @@ percussion_parts = {
     76: LOW_CONGA,
   },
   'Cowbell': COWBELL,
-  'Crash Cymbal': CRASH_CYMBAL_1,
-  'Crash Cymbals': CRASH_CYMBAL_1,
+  'Crash Cymbal': CRASH_CYMBAL_MAPPING,
+  'Crash Cymbals': CRASH_CYMBAL_MAPPING,
   'Cu\x92ca': OPEN_CUICA,
   'Cuíca': OPEN_CUICA,
   'Cymbal FX': CRASH_CYMBAL_1,
@@ -444,7 +448,12 @@ program_transpose = {
     XYLOPHONE: 12,
   },
   'BDSP': {
-    CHOIR_AAHS: 12,
+    CHOIR_AAHS: {
+      'Default': 12,
+      'Battle! (Ramanas Park - Major Legendary Pokemon)': 0,
+      'Battle! (Ramanas Park - Minor Legendary Pokemon)': 0,
+    },
+    TUBULAR_BELLS: 12,
   },
   'BIS': {
     ACCORDION: 12,
@@ -550,6 +559,7 @@ program_transpose = {
   },
   'DPP': {
     CHOIR_AAHS: 12,
+    TUBULAR_BELLS: 12
   },
   'EB': {
     CELESTA: 12,
@@ -735,13 +745,33 @@ program_transpose = {
     STEEL_DRUMS: 12,
     TUBA: -24,
   },
+  'Pt': {
+    LEAD_1_SQUARE: {
+      'Battle! (Regirock Regice Registeel)': {
+        'Synth Lead 1': 12,
+      },
+    },
+    TUBULAR_BELLS: 12,
+  },
 }
 
 midi_instrument_overrides = {
   'B2W2 Virbank City': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
+  'BDSP Fight Area (Day)': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'BDSP Fight Area (Night)': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
   'CS Cherry Lake': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'DPP Fight Area (Day)': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'DPP Fight Area (Night)': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
   'HGSS Azalea Town': {

@@ -1,10 +1,9 @@
 from finale_remap import *
 from game_acronyms import *
+from file_locations import *
 import os;
 import zipfile
 import xml.etree.ElementTree as ElementTree
-
-parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
 
 for folder in sorted(os.listdir(parts_folder)):
   folder = os.path.join(parts_folder, folder)

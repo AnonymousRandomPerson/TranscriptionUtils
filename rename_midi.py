@@ -1,7 +1,7 @@
 import os, shutil
+from file_locations import *
 
-drive_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
-for root, subdirs, files in os.walk(drive_folder):
+for root, subdirs, files in os.walk(parts_folder):
   for file in files:
     if file.endswith('.midi'):
       print('Renaming', file)

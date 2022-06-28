@@ -1,5 +1,6 @@
 import os
 from general_midi import *
+from file_locations import *
 
 program_mapping = {
   7: TRUMPET,
@@ -37,4 +38,4 @@ percussion_parts = {
 
 percussion_programs = {PERCUSSION}
 
-parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Sf2', 'Pokémon Mystery Dungeon Blue Rescue Team', 'Mapped')
+source_midi_folder = os.path.join(sf2_folder, 'Pokémon Mystery Dungeon Blue Rescue Team', 'Mapped')

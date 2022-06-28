@@ -2,31 +2,29 @@ from collections import defaultdict
 from mido import MidiFile
 from finale_remap import *
 from game_acronyms import *
+from file_locations import *
 import os;
 
 remap_channels = {
 }
 
-parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
-scores_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Scores')
-#scores_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Raw Exports')
 overwrite = False
 dry_run = False
-save_search = False
+save_search = True
 new_file_location = 'Modified'
 
 search_tracks = set()
-search_instruments = set([])
+search_instruments = set([TUBULAR_BELLS])
 search_percussion = set([
 ])
 
-for file in sorted(os.listdir(scores_folder)):
+for file in sorted(os.listdir(finale_scores_folder)):
   if file.endswith('.mid'):
     print('Fixing', file)
     full_file_name = file[:-4]
     game_acronym, track_name, game_name = split_track_name(full_file_name)
     combined_name = game_acronym + ' ' + track_name
-    file_location = os.path.join(scores_folder, file)
+    file_location = os.path.join(finale_scores_folder, file)
     remap_results = {}
     percussion_sequence_parts = defaultdict(PercussionSequencePart)
 

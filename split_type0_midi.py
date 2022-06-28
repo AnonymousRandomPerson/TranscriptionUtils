@@ -1,5 +1,6 @@
 from collections import defaultdict
 import mido, os
+from file_locations import *
 
 # https://stackoverflow.com/questions/62224396/python-convert-from-type-0-to-type-1-midi
 
@@ -50,9 +51,8 @@ def subdivide_midi_tracks(path):
   return m2
 
 if __name__ == '__main__':
-  midi_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Utility', 'Modified')
   file = 'dun_boss.mid'
   file2 = 'dun_boss.mid'
 
-  m2 = subdivide_midi_tracks(os.path.join(midi_folder, file))
-  m2.save(os.path.join(midi_folder, file2))
+  m2 = subdivide_midi_tracks(os.path.join(modified_folder, file))
+  m2.save(os.path.join(modified_folder, file2))

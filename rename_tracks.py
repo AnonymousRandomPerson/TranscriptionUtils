@@ -1,5 +1,6 @@
 import os, shutil
 from game_acronyms import *
+from file_locations import *
 
 rename_tracks = [
   ('CS Fight', 'Fight!'),
@@ -30,16 +31,13 @@ rename_tracks = [
   ('SMD Showdown with a Volcanic Entei', 'Showdown with a Volcanic Entei!'),
 ]
 
-parts_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Documents', 'Music', 'Transcription', 'Parts')
-scores_folder = os.path.join(os.sep, 'Volumes', 'GoogleDrive', 'My Drive', 'Transcribed Scores')
-
 for rename_track in rename_tracks:
   old_full_name, new_track_name = rename_track
   game_acronym, old_track_name, game_name = split_track_name(old_full_name)
   drive_track_name, drive_folder = get_drive_track_name(game_acronym, old_track_name)
-  drive_path = os.path.join(scores_folder, drive_folder, drive_track_name)
+  drive_path = os.path.join(scores_drive_folder, drive_folder, drive_track_name)
   parts_path = os.path.join(parts_folder, old_full_name)
-  scores_path = os.path.join(scores_folder, old_full_name)
+  scores_path = os.path.join(scores_drive_folder, old_full_name)
 
   if os.path.exists(parts_path):
     print('Renaming', old_full_name, 'in parts folder.')

@@ -1,9 +1,10 @@
 import os
 from typing import Set
 from mido import MidiFile
+from file_locations import *
 
-soundfont_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Pokémon FireRed and LeafGreen')
-midi_folder = os.path.join(os.sep, 'Users', 'chenghanngan', 'Library', 'Audio', 'Sounds', 'Banks', 'Sf2', 'Pokémon FireRed and LeafGreen')
+soundfont_folder = os.path.join(soundfont_banks_folder, 'Pokémon FireRed and LeafGreen')
+midi_folder = os.path.join(sf2_folder, 'Pokémon FireRed and LeafGreen')
 
 midi_file_name = 'Road to Fuschia City Leaving Lavender Town'
 
