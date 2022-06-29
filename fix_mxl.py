@@ -37,6 +37,9 @@ for file in sorted(os.listdir(finale_scores_folder)):
               program = None
               #print(item.filename, part_name)
 
+              if full_score and instrument_name in mxl_manual_remap:
+                print('Manually remap', instrument_name)
+
               midi_instruments = part_info.findall('midi-instrument')
               for midi_instrument in midi_instruments:
                 midi_instrument.find('volume').text = '80'
@@ -45,8 +48,8 @@ for file in sorted(os.listdir(finale_scores_folder)):
               if not percussion:
                 for midi_instrument in midi_instruments:
                   midi_unpitched = midi_instrument.find('midi-unpitched')
-                  if midi_instrument.find('midi-unpitched') is not None:
-                    if instrument_name in midi_instruments:
+                  if midi_unpitched is not None:
+                    if instrument_name in mxl_percussion_to_non_percussion:
                       percussion_to_non_percussion.add(instrument_name)
                       midi_instrument.remove(midi_unpitched)
                     else:
@@ -167,11 +170,12 @@ for file in sorted(os.listdir(finale_scores_folder)):
                     staff_details = attributes.find('staff-details')
                     unpitched_clef = staff_details is not None and clef.find('sign').text == 'percussion' and staff_details.find('staff-lines') is not None
 
-                  key_element = attributes.find('key')
-                  if key_element is not None:
-                    key_element.attrib['print-object'] = 'no'
-                    key_element.find('fifths').text = '0'
-                    key_element.find('mode').text = 'major'
+                  if instrument_name in percussion_to_non_percussion:
+                    key_element = attributes.find('key')
+                    if key_element is not None:
+                      key_element.attrib['print-object'] = 'no'
+                      key_element.find('fifths').text = '0'
+                      key_element.find('mode').text = 'major'
 
                 if full_score:
                   for direction in measure.findall('direction'):

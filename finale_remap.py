@@ -170,6 +170,15 @@ mxl_percussion_override = {
   'Tsuzumi': HIGH_BONGO,
 }
 
+mxl_percussion_to_non_percussion = set([
+  'Temple Blocks',
+])
+
+mxl_manual_remap = set([
+  'Bonang',
+  'Gend\x8er',
+])
+
 CRASH_CYMBAL_MAPPING = {
   84: CRASH_CYMBAL_1,
   87: CRASH_CYMBAL_1,
@@ -603,10 +612,13 @@ program_transpose = {
     }
   },
   'K64': {
-    GLOCKENSPIEL: 12,
     CELESTA: 12,
-    VIBRAPHONE: 12,
+    GLOCKENSPIEL: 12,
     TIMPANI: 12,
+    VIBRAPHONE: {
+      DEFAULT_TRACK: 12,
+      'Rock Star 3': -12,
+    },
   },
   'KSSt': {
     ELECTRIC_BASS_FINGER: -12,

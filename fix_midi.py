@@ -10,11 +10,11 @@ remap_channels = {
 
 overwrite = False
 dry_run = False
-save_search = True
+save_search = False
 new_file_location = 'Modified'
 
 search_tracks = set()
-search_instruments = set([TUBULAR_BELLS])
+search_instruments = set([])
 search_percussion = set([
 ])
 
