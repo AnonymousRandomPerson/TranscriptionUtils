@@ -177,6 +177,7 @@ mxl_percussion_to_non_percussion = set([
 mxl_manual_remap = set([
   'Bonang',
   'Gend\x8er',
+  'Wind Chimes',
 ])
 
 CRASH_CYMBAL_MAPPING = {
@@ -270,8 +271,9 @@ percussion_parts = {
   'Scratching': CABASA,
   'Shaker': SHAKER,
   'Shime-daiko': {
-    47: HIGH_TOM,
-    48: HI_MID_TOM,
+    45: LOW_MID_TOM,
+    47: HI_MID_TOM,
+    48: HIGH_TOM,
   },
   'Sleigh Bells': JINGLE_BELL,
   'Snap': HAND_CLAP,
@@ -376,6 +378,11 @@ percussion_sequence_mappings = {
   },
 }
 
+percussion_sequence_orders = {
+  'Bongo Drums': [47, 46, 45, 48, 49, 50, 60, 61],
+  'Conga Drums': [73, 76, 75, 54, 55, 57, 61, 63, 64]
+}
+
 percussion_parts_override = {
 }
 
@@ -457,46 +464,34 @@ program_transpose = {
     XYLOPHONE: 12,
   },
   'BDSP': {
-    CHOIR_AAHS: {
+    CHOIR_AAHS: 12,
+    TUBULAR_BELLS: {
       'Default': 12,
       'Battle! (Ramanas Park - Major Legendary Pokemon)': 0,
       'Battle! (Ramanas Park - Minor Legendary Pokemon)': 0,
     },
-    TUBULAR_BELLS: 12,
   },
   'BIS': {
     ACCORDION: 12,
     ACOUSTIC_GRAND_PIANO: 12,
     BANJO: 12,
     BASSOON: 12,
-    CELESTA: {
-      DEFAULT_TRACK: 12,
-      'Bowser\'s Stolen Castle': 0,
-    },
-    CHOIR_AAHS: {
-      DEFAULT_TRACK: 12,
-      'The Castle Depths (Inside Bowser)': 0,
-    },
+    CELESTA: 12,
+    CHOIR_AAHS: 12,
+    CHURCH_ORGAN: 12,
     CLARINET: 12,
     ELECTRIC_BASS_FINGER: {
       'Forever in the Plains': 12,
       'Meet Me at Wonder Woods (Inside Bowser)': -12,
     },
-    ELECTRIC_GUITAR_DISTORTION: {
-      DEFAULT_TRACK: 12,
-      'The Castle Depths (Inside Bowser)': 0,
-    },
+    ELECTRIC_GUITAR_CLEAN: 12,
+    ELECTRIC_GUITAR_DISTORTION: 12,
+    ELECTRIC_PIANO_2: 12,
     ENGLISH_HORN: 12,
     FLUTE: 12,
-    FRENCH_HORN: {
-      DEFAULT_TRACK: 12,
-      'The Castle Depths (Inside Bowser)': 0,
-    },
+    FRENCH_HORN: 12,
     GLOCKENSPIEL: 24,
-    HARPSICHORD: {
-      DEFAULT_TRACK: 12,
-      'The Castle Depths (Inside Bowser)': 0,
-    },
+    HARPSICHORD: 12,
     LEAD_1_SQUARE: {
       'A Gentle Breeze at Cavi Cape (Inside Bowser)': {
         'Synth Lead 1': 12,
@@ -507,21 +502,32 @@ program_transpose = {
       'Meet Me at Wonder Woods (Inside Bowser)': {
         'Synth Lead 1': 12,
       },
+      'The Castle Depths (Inside Bowser)': {
+        'Synth Lead 2': 12,
+      },
       'The Grand Finale': 12,
     },
     MARIMBA: 12,
     OBOE: 12,
     ORCHESTRA_HIT: 24,
     ORCHESTRAL_HARP: 12,
+    PAD_2_WARM: 12,
     PAN_FLUTE: 12,
     PERCUSSIVE_ORGAN: 24,
     PICCOLO: {
       DEFAULT_TRACK: 12,
-      'The Castle Depths (Inside Bowser)': 0,
+      'The Castle Depths (Inside Bowser)': 24,
     },
     PIZZICATO_STRINGS: 12,
+    SITAR: 12,
     STRING_ENSEMBLE_1: 12,
+    SYNTH_BASS_1: {
+      'BIS The Castle Depths (Inside Bowser)': 12,
+      'BIS Tough Guy Alert!': 12,
+    },
+    SYNTH_BRASS_1: 12,
     TRUMPET: 12,
+    VOICE_OOHS: 12,
   },
   'BW': {
     CHOIR_AAHS: {
@@ -614,11 +620,32 @@ program_transpose = {
   'K64': {
     CELESTA: 12,
     GLOCKENSPIEL: 12,
+    ORCHESTRA_HIT: {
+      'Studying the Factory': 12,
+    },
     TIMPANI: 12,
     VIBRAPHONE: {
       DEFAULT_TRACK: 12,
       'Rock Star 3': -12,
     },
+  },
+  'KSSq': {
+    ACOUSTIC_GUITAR_NYLON: 24,
+    BANJO: 24,
+    BLOWN_BOTTLE: 24,
+    CLARINET: 24,
+    ELECTRIC_BASS_FINGER: 24,
+    LEAD_1_SQUARE: 24,
+    MARIMBA: 24,
+    ORCHESTRA_HIT: 36,
+    PAD_1_NEW_AGE: 24,
+    PAN_FLUTE: 24,
+    STEEL_DRUMS: 36,
+    STRING_ENSEMBLE_1: 24,
+    SYNTH_BRASS_1: 24,
+    TIMPANI: 36,
+    TRUMPET: 36,
+    VOICE_OOHS: 24,
   },
   'KSSt': {
     ELECTRIC_BASS_FINGER: -12,
@@ -777,6 +804,22 @@ midi_instrument_overrides = {
   'BDSP Fight Area (Night)': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
+  'BIS Bowser\'s Stolen Castle': {
+    'Organ': CHURCH_ORGAN,
+  },
+  'BIS Meet Me at Wonder Woods (Inside Bowser)': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'BIS The Castle Depths (Inside Bowser)': {
+    'Choir': VOICE_OOHS,
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'BISBJJ Bowser\'s Stolen Castle': {
+    'Organ': CHURCH_ORGAN,
+  },
+  'BISBJJ Meet Me at Wonder Woods (Inside Bowser)': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
   'CS Cherry Lake': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
@@ -791,7 +834,6 @@ midi_instrument_overrides = {
   },
   'HGSS SS Aqua': {
     'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
-    'Electric Bass': SLAP_BASS_1,
   },
   'HGSS Viridian Forest': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
@@ -800,6 +842,9 @@ midi_instrument_overrides = {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
   'K64': {
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'KSSq': {
     'Synth Pad': PAD_1_NEW_AGE,
   },
   'MDB': {
@@ -866,6 +911,8 @@ def get_transpose_offset(game_acronym: str, current_program: int, track_name: st
           transpose_offset = 0
   if current_program == WOODBLOCK and transpose_offset == 0:
     return 12
+  if current_program == CHURCH_ORGAN:
+    transpose_offset -= 12
   return transpose_offset
 
 def get_percussion_mapping(game_acronym: str, track_name: str, instrument_name: str, current_note: str) -> int:
@@ -912,7 +959,11 @@ def map_percussion_sequence_note(instrument_name: str, current_note: int, sequen
       return get_percussion_mapping_from_parts(instrument_name, current_note, percussion_parts)
 
     percussion_sequence_mapping = percussion_sequence_mappings[instrument_name][num_notes]
-    sorted_notes = sorted(sequence_part.notes)
+    if instrument_name in percussion_sequence_orders:
+      percussion_sequence_order = percussion_sequence_orders[instrument_name]
+      sorted_notes = sorted(sequence_part.notes, key=percussion_sequence_order.index)
+    else:
+      sorted_notes = sorted(sequence_part.notes)
     for i, note in enumerate(sorted_notes):
       sequence_part.note_mapping[note] = percussion_sequence_mapping[i]
 

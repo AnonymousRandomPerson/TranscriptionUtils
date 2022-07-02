@@ -67,8 +67,9 @@ for file in sorted(os.listdir(finale_scores_folder)):
                     percussion_instrument_name = percussion_instruments[midi_instrument.attrib['id']]
                     midi_unpitched = midi_instrument.find('midi-unpitched')
                     if instrument_name in mxl_percussion_override:
-                      midi_unpitched = ElementTree.Element('midi-unpitched')
-                      midi_instrument.insert(2, midi_unpitched)
+                      if midi_unpitched is None:
+                        midi_unpitched = ElementTree.Element('midi-unpitched')
+                        midi_instrument.insert(2, midi_unpitched)
                       midi_unpitched.text = str(mxl_percussion_override[instrument_name] + 1)
                     elif midi_unpitched is None:
                       if full_score and not percussion_instrument_name in ignore_unmapped_percussion:
@@ -99,21 +100,22 @@ for file in sorted(os.listdir(finale_scores_folder)):
                     instrument_sound.text = mxl_instruments[program]
               parts[part_info.attrib['id']] = (part_name, instrument_name, program)
 
-              open_hi_hat = False
-              cross_stick = False
-              for midi_instrument in part_info.findall('midi-instrument'):
-                midi_unpitched = midi_instrument.find('midi-unpitched')
-                if midi_unpitched is not None:
-                  if midi_unpitched.text == str(OPEN_HI_HAT + 1):
-                    open_hi_hat = True
-                    open_hi_hat_ids.add(midi_instrument.attrib['id'])
-                  cross_stick = cross_stick or midi_unpitched.text == str(SIDE_STICK + 1)
+              if part_name.startswith('Snare') or part_name.startswith('Field') or part_name.endswith('Set'):
+                open_hi_hat = False
+                cross_stick = False
+                for midi_instrument in part_info.findall('midi-instrument'):
+                    midi_unpitched = midi_instrument.find('midi-unpitched')
+                    if midi_unpitched is not None:
+                      if midi_unpitched.text == str(OPEN_HI_HAT + 1):
+                        open_hi_hat = True
+                        open_hi_hat_ids.add(midi_instrument.attrib['id'])
+                      cross_stick = cross_stick or midi_unpitched.text == str(SIDE_STICK + 1)
 
-              if full_score:
-                if open_hi_hat:
-                  print('Found open hi-hat in', part_name)
-                if cross_stick:
-                  print('Found cross-stick in', part_name)
+                if full_score:
+                  if open_hi_hat:
+                    print('Found open hi-hat in', part_name)
+                  if cross_stick:
+                    print('Found cross-stick in', part_name)
 
             for instrument_name, sequence_part in percussion_sequence_parts.items():
               for msg in sequence_part.messages:
@@ -140,7 +142,6 @@ for file in sorted(os.listdir(finale_scores_folder)):
 
               found_breath_mark = None
               rim_shot = None
-              bongo_slap = None
               unpitched_clef = False
               for measure in part.findall('measure'):
                 measure_number = measure.attrib['number']
@@ -178,11 +179,16 @@ for file in sorted(os.listdir(finale_scores_folder)):
                       key_element.find('mode').text = 'major'
 
                 if full_score:
-                  for direction in measure.findall('direction'):
+                  directions = measure.findall('direction')
+                  for direction in directions:
                     direction_type = direction.find('direction-type')
                     if program == STRING_ENSEMBLE_1:
                       words = direction_type.find('words')
                       if words is not None and (words.text == 'pizz.' or words.text == 'arco'):
+                        print('Found {} in {}, measure {}'.format(words.text, part_name, measure_number))
+                    elif program == ELECTRIC_BASS_FINGER or program == SLAP_BASS_1:
+                      words = direction_type.find('words')
+                      if words is not None and ('Slap' in words.text or 'Pick' in words.text):
                         print('Found {} in {}, measure {}'.format(words.text, part_name, measure_number))
 
                     octave_shift = direction_type.find('octave-shift')
@@ -191,10 +197,24 @@ for file in sorted(os.listdir(finale_scores_folder)):
                       if shift_type == 'down' or shift_type == 'up':
                         print('Found ottava {} in {}, measure {}'.format(shift_type, part_name, measure_number))
 
-                  for direction in measure.findall('direction'):
-                    bracket = direction.find('direction-type').find('bracket')
+                    bracket = direction_type.find('bracket')
                     if bracket is not None and bracket.attrib['type'] == 'start':
                       print('Found bracket in {}, measure {}.'.format(part_name, measure_number))
+
+                  wedge_start = False
+                  for element in measure:
+                    if element.tag == 'direction':
+                      wedge = element.find('direction-type').find('wedge')
+                      if wedge is not None:
+                        wedge_type = wedge.attrib['type']
+                        if wedge_type == 'stop':
+                          if wedge_start:
+                            print('Found start/stop wedge in {}, measure {}.'.format(part_name, measure_number))
+                            wedge_start = False
+                        else:
+                          wedge_start = True
+                    elif element.tag == 'note':
+                      wedge_start = False
 
                 tuplet_number = None
                 tuplet_type = None
@@ -226,8 +246,6 @@ for file in sorted(os.listdir(finale_scores_folder)):
                   if full_score and notehead is not None:
                     if rim_shot is None and (instrument_name == 'Drum Set' or instrument_name == 'Snare Drum') and notehead.text == 'back slashed':
                       rim_shot = measure_number
-                    elif bongo_slap is None and instrument_name == 'Bongo Drums' and notehead.text == 'x':
-                      bongo_slap = measure_number
 
                   notations = note.find('notations')
                   if notations is not None:
@@ -305,8 +323,6 @@ for file in sorted(os.listdir(finale_scores_folder)):
                 print('Found breath mark in {}, measure {}.'.format(part_name, found_breath_mark))
               if rim_shot is not None:
                 print('Found rim shot in {}, measure {}.'.format(part_name, rim_shot))
-              if bongo_slap is not None:
-                print('Found bongo slap in {}, measure {}.'.format(part_name, bongo_slap))
 
             newZip.writestr(item, xml_header + ElementTree.tostring(xml_root))
           else:

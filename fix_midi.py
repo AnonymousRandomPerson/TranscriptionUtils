@@ -13,18 +13,20 @@ dry_run = False
 save_search = False
 new_file_location = 'Modified'
 
+search_folder = finale_scores_folder
+
 search_tracks = set()
 search_instruments = set([])
 search_percussion = set([
 ])
 
-for file in sorted(os.listdir(finale_scores_folder)):
+for file in sorted(os.listdir(search_folder)):
   if file.endswith('.mid'):
     print('Fixing', file)
     full_file_name = file[:-4]
     game_acronym, track_name, game_name = split_track_name(full_file_name)
     combined_name = game_acronym + ' ' + track_name
-    file_location = os.path.join(finale_scores_folder, file)
+    file_location = os.path.join(search_folder, file)
     remap_results = {}
     percussion_sequence_parts = defaultdict(PercussionSequencePart)
 
@@ -61,7 +63,7 @@ for file in sorted(os.listdir(finale_scores_folder)):
           if msg.type == 'program_change':
             remove_messages.append(msg)
         elif msg.type == 'program_change':
-          if msg.program != PIZZICATO_STRINGS:
+          if msg.program != PIZZICATO_STRINGS and not msg.program == SLAP_BASS_1:
             mapped_program = get_mapped_program(game_acronym, full_file_name, instrument_name, orig_instrument_name)
             if mapped_program is None:
               print('Encountered unmapped track:', instrument_name)
