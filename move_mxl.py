@@ -25,7 +25,7 @@ for file in sorted(os.listdir(modified_folder)):
         print('Moving', file_path, 'to', dest_path)
         shutil.move(file_path, dest_path)
     else:
-      print('No parts folder found for' + full_name)
+      print('No parts folder found for', full_name)
 
 for file in sorted(os.listdir(finale_scores_folder)):
   if file.endswith('.mxl'):

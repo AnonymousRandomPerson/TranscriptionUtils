@@ -92,7 +92,6 @@ drive_folders = {
 }
 
 special_track_names = {
-  'BBT Level Music 9': 'Level Music #9',
   'B2W2 Filming Underway at Pokestar Studios!': 'Filming Underway at Pokéstar Studios!',
   'B2W2 Pokestar Studios Battle': 'Pokéstar Studios: Battle',
   'B2W2 Pokestar Studios Horror': 'Pokéstar Studios: Horror',
@@ -102,11 +101,12 @@ special_track_names = {
   'DL3 Ripple Field Ocean Waves': 'Ripple Field: Ocean Waves',
   'DPP Mt Coronet': 'Mt. Coronet',
   'DR A CYBER\'S WORLD': 'A CYBER\'S WORLD?',
+  'DT Try Try Again': 'Try, Try Again',
+  'FL Burning Churning Power Plant': 'Burning, Churning Power Plant',
   'FRLG Road to Cerulean City Leaving Mt Moon': 'Road to Cerulean City: Leaving Mt. Moon',
   'FRLG Road to Fuschia City Leaving Lavender Town': 'Road to Fuschia City: Leaving Lavender Town',
   'HGSS Pokegear Radio Route 201': 'Pokégear Radio: Route 201',
   'HGSS SS Aqua': 'S.S. Aqua',
-  'IWBTG Hub': 'Home Sweet Grave',
   'LGPE Road to Cerulean City Leaving Mt Moon': 'Road to Cerulean City: Leaving Mt. Moon',
   'LGPE Road to Lavender Town Leaving Vermilion City': 'Road to Lavender Town: Leaving Vermilion City',
   'LGPE Road to Viridian City Leaving Pallet Town': 'Road to Viridian City: Leaving Pallet Town',

@@ -2,7 +2,7 @@ from mido import MidiFile
 import os
 from file_locations import *
 
-file = 'HGSS Goldenrod City2.mid'
+file = 'KSSq Forest Nature Area.mid'
 midi_path = os.path.join(modified_folder, file)
 channel = 9
 
@@ -23,4 +23,4 @@ for i, track in enumerate(mid.tracks):
       #print(msg.note, current_time / mid.ticks_per_beat)
       notes.append(msg.note)
 
-#print(notes)
+print(notes)

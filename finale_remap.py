@@ -5,11 +5,10 @@ from dataclasses import dataclass, field
 
 midi_instruments = {
   'Piano': ACOUSTIC_GRAND_PIANO,
-  'Electric Piano': ELECTRIC_PIANO_2,
+  'Electric Piano': ELECTRIC_PIANO_1,
   'Harpsichord': HARPSICHORD,
   'Clavinet': CLAVINET,
   'Celesta': CELESTA,
-  'Cowbell (Autotune)': CELESTA,
   'Glass Harmonica': CELESTA,
   'Crotales': GLOCKENSPIEL,
   'Glockenspiel': GLOCKENSPIEL,
@@ -37,7 +36,6 @@ midi_instruments = {
   'Electric Guitar': ELECTRIC_GUITAR_DISTORTION,
   'Electric Bass': ELECTRIC_BASS_FINGER,
   'Muted Electric Bass': ELECTRIC_BASS_FINGER,
-  'Electric Bass (Slap)': SLAP_BASS_1,
   'Slap Bass': SLAP_BASS_1,
   'Synth Bass': SYNTH_BASS_1,
   'Erhu': VIOLIN,
@@ -52,15 +50,12 @@ midi_instruments = {
   'Baritone': CHOIR_AAHS,
   'Bass': CHOIR_AAHS,
   'Bass Voice': CHOIR_AAHS,
-  'Choir': CHOIR_AAHS,
   'Choir Aahs': CHOIR_AAHS,
   'Contralto': CHOIR_AAHS,
-  'Laugh FX': CHOIR_AAHS,
   'Soprano': CHOIR_AAHS,
   'Tenor': CHOIR_AAHS,
   'Choir Oohs': VOICE_OOHS,
   'Kirby Voice': VOICE_OOHS,
-  'Voice': VOICE_OOHS,
   'Vocals': VOICE_OOHS,
   'Yoshi Voice': VOICE_OOHS,
   'Synth Voice': SYNTH_VOICE,
@@ -71,15 +66,12 @@ midi_instruments = {
   'Bass Trombone': TROMBONE,
   'Contrabass Trombone': TROMBONE,
   'Muted Trombone': TROMBONE,
-  'Tenor Trombone': TROMBONE,
   'Trombone': TROMBONE,
+  'Alto Horn': TUBA,
   'Euphonium': TUBA,
   'Tuba': TUBA,
   'Muted Trumpet': MUTED_TRUMPET,
-  'Trumpet (Muted)': MUTED_TRUMPET,
   'Flugelhorn': TRUMPET,
-  'Alto Horn': FRENCH_HORN,
-  'French Horn': FRENCH_HORN,
   'Horn': FRENCH_HORN,
   'Synth Brass': SYNTH_BRASS_1,
   'Soprano Sax': SOPRANO_SAX,
@@ -87,8 +79,8 @@ midi_instruments = {
   'Tenor Sax': TENOR_SAX,
   'Baritone Sax': BARITONE_SAX,
   'Oboe': OBOE,
-  'Pungi': OBOE,
-  'Rhaita': OBOE,
+  'Pungi': SHANAI,
+  'Rhaita': SHANAI,
   'English Horn': ENGLISH_HORN,
   'Bassoon': BASSOON,
   'Contrabassoon': BASSOON,
@@ -110,7 +102,6 @@ midi_instruments = {
   'Pan Flute': PAN_FLUTE,
   'Tin Whistle': PAN_FLUTE,
   'Blown Bottle': BLOWN_BOTTLE,
-  'Bottle Blow': BLOWN_BOTTLE,
   'Whistle': WHISTLE,
   'Ocarina': OCARINA,
   'Synth Lead': LEAD_1_SQUARE,
@@ -128,17 +119,20 @@ midi_instruments = {
   'Melodic Tom': MELODIC_TOM,
   'Compressed Air FX': BREATH_NOISE,
   'Fire FX': BREATH_NOISE,
+  'Laugh FX': BREATH_NOISE,
   'Noise FX': BREATH_NOISE,
   'Sound FX': BREATH_NOISE,
   'Whoosh FX': BREATH_NOISE,
   'Wind FX': BREATH_NOISE,
   'Bubble FX': SEASHORE,
   'Rustling FX': SEASHORE,
-  'Boing': BIRD_TWEET,
+  'Beep FX': BIRD_TWEET,
+  'Boing FX': BIRD_TWEET,
   'Laser FX': BIRD_TWEET,
+  'Scream FX': BIRD_TWEET,
   'Screech FX': BIRD_TWEET,
   'Squeak FX': BIRD_TWEET,
-  'Electric Bell': TELEPHONE_RING,
+  'Electric Bell FX': TELEPHONE_RING,
   'Drill FX': HELICOPTER,
   'Engine FX': HELICOPTER,
   'Machine FX': HELICOPTER,
@@ -146,9 +140,7 @@ midi_instruments = {
   'Zap FX': HELICOPTER,
   'Cymbal FX': GUNSHOT,
   'Gun Shot FX': GUNSHOT,
-  'Gunshot': GUNSHOT,
   'Metal Bang FX': GUNSHOT,
-  'Piano Slam': GUNSHOT,
   'Rock Hit FX': GUNSHOT,
 }
 
@@ -158,11 +150,17 @@ mxl_instruments = {
   ELECTRIC_GUITAR_DISTORTION: '',
   GUNSHOT: 'effect.gunshot',
   HELICOPTER: 'effect.helicopter',
+  LEAD_3_CALLIOPE: 'wind.flutes.calliope',
+  MUSIC_BOX: 'pitched-percussion.music-box',
+  PAD_1_NEW_AGE: 'synth.pad',
+  PAD_2_WARM: 'synth.pad.warm',
   PERCUSSIVE_ORGAN: 'keyboard.organ.percussive',
   SEASHORE: 'effect.seashore',
   SLAP_BASS_1: 'effect.bass-string-slap',
+  STRING_ENSEMBLE_1: 'strings.group',
   TELEPHONE_RING: 'effect.telephone-ring',
   VOICE_OOHS: 'voice.oo',
+  WHISTLE: 'wind.flutes.whistle',
   WOODBLOCK: '',
 }
 
@@ -175,16 +173,13 @@ mxl_percussion_to_non_percussion = set([
 ])
 
 mxl_manual_remap = set([
-  'Bonang',
   'Gend\x8er',
+  'Guiro',
+  'Muted Electric Bass',
+  'Muted Electric Guitar',
+  'Muted Trumpet',
   'Wind Chimes',
 ])
-
-CRASH_CYMBAL_MAPPING = {
-  84: CRASH_CYMBAL_1,
-  87: CRASH_CYMBAL_1,
-  89: PEDAL_HI_HAT,
-}
 
 percussion_parts = {
   'Agogo Bells': {
@@ -227,10 +222,15 @@ percussion_parts = {
     76: LOW_CONGA,
   },
   'Cowbell': COWBELL,
-  'Crash Cymbal': CRASH_CYMBAL_MAPPING,
-  'Crash Cymbals': CRASH_CYMBAL_MAPPING,
-  'Cu\x92ca': OPEN_CUICA,
-  'Cuíca': OPEN_CUICA,
+  'Crash Cymbal': {
+    49: CRASH_CYMBAL_1,
+    84: CRASH_CYMBAL_1,
+    87: CRASH_CYMBAL_1,
+    89: PEDAL_HI_HAT,
+    92: CRASH_CYMBAL_1,
+  },
+  'Cu\x92ca': MUTE_CUICA,
+  'Cuíca': MUTE_CUICA,
   'Cymbal FX': CRASH_CYMBAL_1,
   'Djembe': OPEN_HIGH_CONGA,
   'Drum Set': None,
@@ -246,7 +246,10 @@ percussion_parts = {
     58: LOW_CONGA,
     60: OPEN_HIGH_CONGA,
   },
-  'Guiro': LONG_GUIRO,
+  'Guiro': {
+    61: LONG_GUIRO,
+    62: SHORT_GUIRO,
+  },
   'Hand Castanets': CASTANETS,
   'Hand Drum': LOW_BONGO,
   'Hi-Hat Cymbal': {
@@ -268,7 +271,7 @@ percussion_parts = {
     93: RIDE_BELL,
   },
   'Sand Block': CABASA,
-  'Scratching': CABASA,
+  'Scratching FX': CABASA,
   'Shaker': SHAKER,
   'Shime-daiko': {
     45: LOW_MID_TOM,
@@ -288,8 +291,8 @@ percussion_parts = {
     87: CRASH_CYMBAL_1,
     91: RIDE_BELL,
     92: CRASH_CYMBAL_1,
-    93: CRASH_CYMBAL_1,
-    94: RIDE_BELL,
+    93: CLOSED_HI_HAT,
+    94: CRASH_CYMBAL_1,
   },
   'Tablas': {
     36: HIGH_BONGO,
@@ -347,23 +350,34 @@ percussion_parts = {
   }
 }
 
+BONGO_DRUMS_MAPPING = {
+  1: [HIGH_BONGO],
+  2: [LOW_BONGO, HIGH_BONGO],
+  3: [OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+  4: [LOW_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+  5: [LOW_CONGA, OPEN_HIGH_CONGA, MUTE_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+}
+
+CUICA_MAPPING = {
+  1: [MUTE_CUICA],
+  2: [OPEN_CUICA, MUTE_CUICA],
+  3: [OPEN_CUICA, MUTE_CUICA, MUTE_CUICA],
+}
+
 percussion_sequence_mappings = {
-  'Bongo Drums': {
-    1: [HIGH_BONGO],
-    2: [LOW_BONGO, HIGH_BONGO],
-    3: [OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
-    4: [LOW_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
-    5: [LOW_CONGA, MUTE_HIGH_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
-  },
+  'Bongo Drums': BONGO_DRUMS_MAPPING,
   'Conga Drums': {
     1: [OPEN_HIGH_CONGA],
     2: [LOW_CONGA, OPEN_HIGH_CONGA],
     3: [LOW_CONGA, OPEN_HIGH_CONGA, LOW_BONGO],
     4: [LOW_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
-    5: [LOW_CONGA, MUTE_HIGH_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
-    6: [LOW_CONGA, MUTE_HIGH_CONGA, OPEN_HIGH_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
-    7: [LOW_CONGA, LOW_CONGA, MUTE_HIGH_CONGA, OPEN_HIGH_CONGA, OPEN_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+    5: [LOW_CONGA, OPEN_HIGH_CONGA, MUTE_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+    6: [LOW_CONGA, OPEN_HIGH_CONGA, OPEN_HIGH_CONGA, MUTE_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
+    7: [LOW_CONGA, LOW_CONGA, OPEN_HIGH_CONGA, OPEN_HIGH_CONGA, MUTE_HIGH_CONGA, LOW_BONGO, HIGH_BONGO],
   },
+  'Cu\x92ca': CUICA_MAPPING,
+  'Cuíca': CUICA_MAPPING,
+  'Tablas': BONGO_DRUMS_MAPPING,
   'Toms': {
     1: [LOW_MID_TOM],
     2: [LOW_MID_TOM, HI_MID_TOM],
@@ -380,7 +394,8 @@ percussion_sequence_mappings = {
 
 percussion_sequence_orders = {
   'Bongo Drums': [47, 46, 45, 48, 49, 50, 60, 61],
-  'Conga Drums': [73, 76, 75, 54, 55, 57, 61, 63, 64]
+  'Conga Drums': [73, 76, 75, 54, 55, 57, 61, 63, 64],
+  'Tablas': [43, 47, 45, 61, 36, 37, 60, 48, 50],
 }
 
 percussion_parts_override = {
@@ -389,6 +404,7 @@ percussion_parts_override = {
 ignore_unmapped_percussion = set([
   'ARIA Player',
   'Drum Set',
+  'Drum Set (Brushes)',
 ])
 
 program_transpose = {
@@ -411,6 +427,10 @@ program_transpose = {
     STEEL_DRUMS: 12,
     STRING_ENSEMBLE_1: {
       DEFAULT_TRACK: 12,
+      'Forest Nature Area': {
+        'Violin I': 12,
+        'Violin II': 0,
+      },
       'Olive Ocean': 24,
     },
     SYNTH_BRASS_1: {
@@ -486,7 +506,7 @@ program_transpose = {
     },
     ELECTRIC_GUITAR_CLEAN: 12,
     ELECTRIC_GUITAR_DISTORTION: 12,
-    ELECTRIC_PIANO_2: 12,
+    ELECTRIC_PIANO_1: 12,
     ENGLISH_HORN: 12,
     FLUTE: 12,
     FRENCH_HORN: 12,
@@ -572,9 +592,24 @@ program_transpose = {
     },
     SLAP_BASS_1: -12,
   },
+  'CT': {
+    PAD_2_WARM: 12,
+    SYNTH_BASS_1: {
+      'World Revolution': -12,
+    },
+    TIMPANI: {
+      'Ocean Palace': -24,
+    },
+  },
   'DPP': {
     CHOIR_AAHS: 12,
-    TUBULAR_BELLS: 12
+    LEAD_1_SQUARE: {
+      'Battle! (Azelf Mesprit Uxie)': -12,
+    },
+    TUBULAR_BELLS: {
+      DEFAULT_TRACK: 12,
+      'Battle! (Azelf Mesprit Uxie)': 0,
+    }
   },
   'EB': {
     CELESTA: 12,
@@ -632,39 +667,31 @@ program_transpose = {
   'KSSq': {
     ACOUSTIC_GUITAR_NYLON: 24,
     BANJO: 24,
-    BLOWN_BOTTLE: 24,
+    BLOWN_BOTTLE: {
+      DEFAULT_TRACK: 24,
+      'Vegetable Valley': 12,
+    },
     CLARINET: 24,
     ELECTRIC_BASS_FINGER: 24,
+    FRENCH_HORN: 24,
+    GLOCKENSPIEL: 36,
     LEAD_1_SQUARE: 24,
     MARIMBA: 24,
     ORCHESTRA_HIT: 36,
     PAD_1_NEW_AGE: 24,
     PAN_FLUTE: 24,
+    PICCOLO: 24,
+    PIZZICATO_STRINGS: 24,
     STEEL_DRUMS: 36,
     STRING_ENSEMBLE_1: 24,
     SYNTH_BRASS_1: 24,
     TIMPANI: 36,
     TRUMPET: 36,
+    TUBA: 24,
     VOICE_OOHS: 24,
   },
   'KSSt': {
-    ELECTRIC_BASS_FINGER: -12,
-    LEAD_1_SQUARE: {
-      'Candy Mountain': 12,
-    },
     ORCHESTRA_HIT: 12,
-    PAN_FLUTE: 12,
-    PICCOLO: {
-      DEFAULT_TRACK: 12,
-      'Candy Mountain': 24,
-    },
-    STRING_ENSEMBLE_1: 12,
-    SYNTH_BASS_1: -12,
-    TRUMPET: 12,
-    VOICE_OOHS: {
-      DEFAULT_TRACK: 12,
-      'Candy Mountain': 0,
-    },
   },
   'LTTP': {
     TIMPANI: -12,
@@ -795,8 +822,15 @@ program_transpose = {
 }
 
 midi_instrument_overrides = {
+  'B2W2 Battle! (Colress)': {
+    'Vocals': BREATH_NOISE,
+  },
   'B2W2 Virbank City': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'BBT Buckle Your Pants (instrumental)': {
+    'Vocals 1': BREATH_NOISE,
+    'Vocals 2': BREATH_NOISE,
   },
   'BDSP Fight Area (Day)': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
@@ -811,23 +845,157 @@ midi_instrument_overrides = {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
   'BIS The Castle Depths (Inside Bowser)': {
-    'Choir': VOICE_OOHS,
+    'Soprano': VOICE_OOHS,
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
   'BISBJJ Bowser\'s Stolen Castle': {
     'Organ': CHURCH_ORGAN,
   },
+  'BISBJJ Forever in the Plains': {
+    'Alto': VOICE_OOHS,
+    'Soprano': VOICE_OOHS,
+  },
   'BISBJJ Meet Me at Wonder Woods (Inside Bowser)': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
-  'CS Cherry Lake': {
+  'BISBJJ The Castle Depths (Inside Bowser)': {
+    'Soprano': VOICE_OOHS,
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'COH Cliffs (Combat)': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'COH Forest (Combat)': {
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+    'Synth Lead 7': LEAD_2_SAWTOOTH,
+  },
+  'COH Grassland (Combat)': {
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+    'Synth Lead 5': LEAD_2_SAWTOOTH,
+  },
+  'COH Kakariko Crypt (Combat)': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'COH Lost Swamp (Combat)': {
+    'Electric Guitar 1': ELECTRIC_GUITAR_CLEAN,
+    'Violin I': VIOLIN,
+    'Violin II': VIOLIN,
+    'Viola': VIOLA,
+    'Cello': CELLO,
+  },
+  'CS Black Bowser\'s Castle': {
+    'Organ': CHURCH_ORGAN,
+  },
+  'CS Cherry Lake': {
+    'Electric Guitar 1': ELECTRIC_GUITAR_CLEAN,
+    'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
+  },
+  'CS': {
+    'Voice': BREATH_NOISE,
+  },
+  'CT Black Omen': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'CT Derelict Factory': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'CT World Revolution': {
+    'Organ': CHURCH_ORGAN,
+  },
+  'CW Round and Round': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'DL3': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'DL3 Cloudy Park': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'DL3 Gourmet Race': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'DL3 Grass Land 1': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'DL3 Grass Land 2': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'DL3 Grass Land 3': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'DL3 Grass Land 4': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'DL3 King Dedede\'s Theme': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'DL3 Minigame': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'DL3 Ripple Field Ocean Waves': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'DL3 Sand Canyon 1': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'DL3 Sand Canyon 3': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'DL3 The Last Iceberg': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'DPP Battle! (Azelf Mesprit Uxie)': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'DPP Battle! (Dialga Palkia)': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'DPP Battle! (Cyrus)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'DPP Fight Area (Day)': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
   'DPP Fight Area (Night)': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'DPP Stark Mountain': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'DR Pandora Palace': {
+    'Synth Voice': BREATH_NOISE,
+  },
+  'DR Rude Buster': {
+    'Electric Guitar 1': ELECTRIC_GUITAR_CLEAN,
+  },
+  'DR Smart Race': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'DR The World Revolving': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'DR WELCOME TO THE CITY': {
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'DT Neo Bowser Castle': {
+    'Violin I': VIOLIN,
+    'Organ': CHURCH_ORGAN,
+  },
+  'DT Rules on Dreamy Mountain': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'FL Northeast Frost Street': {
+    'Electric Guitar 1': ELECTRIC_GUITAR_CLEAN,
+    'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
   },
   'HGSS Azalea Town': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
@@ -846,6 +1014,22 @@ midi_instrument_overrides = {
   },
   'KSSq': {
     'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'KSSt Boss Battle Theme': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'KSSt Candy Mountain': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'KSSt Green Greens': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'KSSt Havoc Aboard the Halberd': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'KSSt Orange Ocean': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'MDB': {
     'Celesta': PAD_1_NEW_AGE,

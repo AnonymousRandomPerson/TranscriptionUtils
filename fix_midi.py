@@ -3,22 +3,11 @@ from mido import MidiFile
 from finale_remap import *
 from game_acronyms import *
 from file_locations import *
+from fix_config import *
 import os;
 
 remap_channels = {
 }
-
-overwrite = False
-dry_run = False
-save_search = False
-new_file_location = 'Modified'
-
-search_folder = finale_scores_folder
-
-search_tracks = set()
-search_instruments = set([])
-search_percussion = set([
-])
 
 for file in sorted(os.listdir(search_folder)):
   if file.endswith('.mid'):
@@ -94,11 +83,10 @@ for file in sorted(os.listdir(search_folder)):
       for i, entry in remap_results.items():
         print('Remapped track %d (%s) to %s' % (i, entry[0], entry[1]))
 
-    new_file_path = os.path.join(new_file_location, file)
     if not dry_run and (not save_search or combined_name in search_tracks):
+      new_file_path = os.path.join(modified_folder, file)
       print('Saving file to', new_file_path)
       mid.save(new_file_path)
-
 
 if len(search_tracks) > 0:
   print(list(sorted(search_tracks)))
