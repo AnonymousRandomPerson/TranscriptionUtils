@@ -3,7 +3,6 @@ from game_acronyms import *
 from file_locations import *
 
 copy_recent_files = True
-recent_threshold = time.time() - 60 * 60 * 12
 recent_threshold = time.time() - 60 * 60 * 1
 
 def move_parts(combined_name: str):

@@ -137,6 +137,7 @@ midi_instruments = {
   'Engine FX': HELICOPTER,
   'Machine FX': HELICOPTER,
   'Sweep FX': HELICOPTER,
+  'Wave FX': HELICOPTER,
   'Zap FX': HELICOPTER,
   'Cymbal FX': GUNSHOT,
   'Gun Shot FX': GUNSHOT,
@@ -147,6 +148,7 @@ midi_instruments = {
 mxl_instruments = {
   BIRD_TWEET: 'effect.bird.tweet',
   BREATH_NOISE: 'effect.breath',
+  DRAWBAR_ORGAN: 'keyboard.organ.drawbar',
   ELECTRIC_GUITAR_DISTORTION: '',
   GUNSHOT: 'effect.gunshot',
   HELICOPTER: 'effect.helicopter',
@@ -249,6 +251,7 @@ percussion_parts = {
   'Guiro': {
     61: LONG_GUIRO,
     62: SHORT_GUIRO,
+    74: LONG_GUIRO,
   },
   'Hand Castanets': CASTANETS,
   'Hand Drum': LOW_BONGO,
@@ -611,9 +614,6 @@ program_transpose = {
       'Battle! (Azelf Mesprit Uxie)': 0,
     }
   },
-  'EB': {
-    CELESTA: 12,
-  },
   'FL': {
     VIBRAPHONE: {
       'Burning, Churning Power Plant': -36,
@@ -638,12 +638,13 @@ program_transpose = {
     },
     TIMPANI: {
       DEFAULT_TRACK: -12,
+      'Battle! (Champion)': 0,
       'Battle! (Gym Leader - Kanto Version)': 0,
       'Battle! (Ho-Oh)': {
         'Timpani 1': 0,
         'Timpani 2': -12,
       },
-      'Battle! (Lugia))': {
+      'Battle! (Lugia)': {
         'Timpani 1': 0,
         'Timpani 2': -12,
       },
@@ -822,15 +823,48 @@ program_transpose = {
 }
 
 midi_instrument_overrides = {
+  'AM Space Area': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'B2W2 Battle! (Champion - Kanto Version)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'B2W2 Battle! (Champion - Sinnoh Version)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
   'B2W2 Battle! (Colress)': {
     'Vocals': BREATH_NOISE,
+  },
+  'B2W2 Driftveil City Gym': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
   },
   'B2W2 Virbank City': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
   'BBT Buckle Your Pants (instrumental)': {
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+    'Synth Lead 5': LEAD_2_SAWTOOTH,
     'Vocals 1': BREATH_NOISE,
     'Vocals 2': BREATH_NOISE,
+  },
+  'BBT Level Theme 9': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'BBT Panic Version': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'BDSP Battle! (Azelf Mesprit Uxie)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'BDSP Battle! (Dialga Palkia)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'BDSP Battle! (Giratina)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'BDSP Stark Mountain': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'BDSP Fight Area (Day)': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
@@ -845,8 +879,11 @@ midi_instrument_overrides = {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
   'BIS The Castle Depths (Inside Bowser)': {
-    'Soprano': VOICE_OOHS,
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Soprano': VOICE_OOHS,
+  },
+  'BIS The Grand Finale': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'BISBJJ Bowser\'s Stolen Castle': {
     'Organ': CHURCH_ORGAN,
@@ -861,6 +898,51 @@ midi_instrument_overrides = {
   'BISBJJ The Castle Depths (Inside Bowser)': {
     'Soprano': VOICE_OOHS,
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'BISBJJ The Grand Finale': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'BR Battle! (Sashay)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'BR Courtyard Colosseum': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'BR Crystal Colosseum': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'BR Magma Colosseum': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'BR Sunny Park Colosseum': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'BR Waterfall Colosseum': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'BW Battle! (Elite Four)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'BW Battle! (Gym Leader)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'BW Battle! (Legendary Pokemon)': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'C Battle! (Cipher)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'C Battle! (Trainer Battle 2)': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'C Battle! (Trainer Battle 3)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'COH Cliffs (Combat)': {
     'Synth Lead 2': LEAD_2_SAWTOOTH,
@@ -884,6 +966,9 @@ midi_instrument_overrides = {
     'Viola': VIOLA,
     'Cello': CELLO,
   },
+  'CS': {
+    'Vocals': BREATH_NOISE,
+  },
   'CS Black Bowser\'s Castle': {
     'Organ': CHURCH_ORGAN,
   },
@@ -891,8 +976,20 @@ midi_instrument_overrides = {
     'Electric Guitar 1': ELECTRIC_GUITAR_CLEAN,
     'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
   },
-  'CS': {
-    'Voice': BREATH_NOISE,
+  'CS Fight!': {
+    'Synth Lead': LEAD_2_SAWTOOTH
+  },
+  'CS Island in Violet': {
+    'Synth Lead': LEAD_2_SAWTOOTH
+  },
+  'CS Lemmy\'s Grand Finale': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'CS The Golden Coliseum': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'CS Toad Trainworks': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'CT Black Omen': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
@@ -900,8 +997,17 @@ midi_instrument_overrides = {
   'CT Derelict Factory': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
+  'CT Tyranno Lair': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
   'CT World Revolution': {
     'Organ': CHURCH_ORGAN,
+  },
+  'CTTT Drop-Road Dash': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'CTTT Piranha Creeper Creek': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
   },
   'CW Round and Round': {
     'Synth Lead 2': LEAD_2_SAWTOOTH,
@@ -993,6 +1099,24 @@ midi_instrument_overrides = {
     'Synth Lead 1': LEAD_2_SAWTOOTH,
     'Synth Lead 3': LEAD_2_SAWTOOTH,
   },
+  'E Battle! (Frontier Brain)': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'E Battle! (Mew)': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+    'Synth Lead 4': LEAD_2_SAWTOOTH,
+  },
+  'EB': {
+    'Organ': DRAWBAR_ORGAN,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'FL Invasion at the House of Horrors': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
   'FL Northeast Frost Street': {
     'Electric Guitar 1': ELECTRIC_GUITAR_CLEAN,
     'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
@@ -1002,9 +1126,11 @@ midi_instrument_overrides = {
   },
   'HGSS SS Aqua': {
     'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
+    'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'HGSS Viridian Forest': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'ITM Rem': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
@@ -1012,8 +1138,47 @@ midi_instrument_overrides = {
   'K64': {
     'Synth Pad': PAD_1_NEW_AGE,
   },
+  'K64 Above the Clouds': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'K64 Boss Battle Theme': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'K64 Gourmet Race': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'K64 Neo Star': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'K64 Pop Star 3': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'K64 Ripple Red': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'K64 Rock Star 1': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'K64 Rock Star 3': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'K64 Shiver Star 1': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'K64 Studying the Factory': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
   'KSSq': {
     'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'KSSq Prism Plains': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'KSSq Tower of Midbosses': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'KSSt Boss Battle Theme': {
     'Synth Lead': LEAD_2_SAWTOOTH,
@@ -1028,17 +1193,17 @@ midi_instrument_overrides = {
   'KSSt Havoc Aboard the Halberd': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
+  'KSSt King Dedede\'s Theme': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'KSSt Maize Hall': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
   'KSSt Orange Ocean': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'MDB': {
     'Celesta': PAD_1_NEW_AGE,
-  },
-  'MDB Stormy Sea': {
-    'Violin I': PIZZICATO_STRINGS,
-  },
-  'MDB Thunderwave Cave': {
-    'Violin I': PIZZICATO_STRINGS,
   },
   'MDR': {
     'Celesta': PAD_1_NEW_AGE,
@@ -1051,6 +1216,12 @@ midi_instrument_overrides = {
   },
   'MRKB': {
     'Organ': CHURCH_ORGAN,
+  },
+  'Pt Battle! (Frontier Brain)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'Pt Battle! (Giratina)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
   },
 }
 

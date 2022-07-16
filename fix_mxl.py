@@ -134,6 +134,8 @@ for file in sorted(os.listdir(search_folder)):
               transpose_offset = 0
             else:
               transpose_offset = get_transpose_offset(game_acronym, program, track_name, part_name)
+              if program == DRAWBAR_ORGAN:
+                transpose_offset += 12
               octave_change = 0
               if transpose_offset != 0:
                 octave_change = abs(transpose_offset) // 12
