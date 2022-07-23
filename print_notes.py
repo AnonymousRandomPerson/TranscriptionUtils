@@ -2,9 +2,9 @@ from mido import MidiFile
 import os
 from file_locations import *
 
-file = 'KSSq Forest Nature Area.mid'
+file = 'KSSt Sub-Tree.mid'
 midi_path = os.path.join(modified_folder, file)
-channel = 9
+channel = 15
 
 mid = MidiFile(midi_path)
 notes = []

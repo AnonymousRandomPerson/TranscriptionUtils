@@ -21,6 +21,7 @@ for file in sorted(os.listdir(search_folder)):
 
     mid = MidiFile(file_location)
     for i, track in enumerate(mid.tracks):
+      device_name = None
       orig_instrument_name = track.name
       if len(orig_instrument_name) == 0:
         continue
@@ -33,6 +34,8 @@ for file in sorted(os.listdir(search_folder)):
       current_program = None
       remove_messages = []
       for msg in track:
+        if msg.type == 'device_name':
+          device_name = msg
         if percussion and hasattr(msg, 'channel'):
           msg.channel = 9
           if msg.type == 'note_on' or msg.type == 'note_off':
@@ -72,6 +75,7 @@ for file in sorted(os.listdir(search_folder)):
               new_channel = remap_data[i]
           msg.channel = new_channel
           remap_results[i] = (instrument_name, new_channel)
+          device_name.name += '-' + str(i)
       for msg in remove_messages:
         track.remove(msg)
 
@@ -81,7 +85,7 @@ for file in sorted(os.listdir(search_folder)):
 
     if len(remap_results) > 0:
       for i, entry in remap_results.items():
-        print('Remapped track %d (%s) to %s' % (i, entry[0], entry[1]))
+        print('Remapped track %d (%s) to %s.' % (i, entry[0], entry[1]))
 
     if not dry_run and (not save_search or combined_name in search_tracks):
       new_file_path = os.path.join(modified_folder, file)

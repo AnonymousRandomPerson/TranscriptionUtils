@@ -160,6 +160,7 @@ mxl_instruments = {
   SEASHORE: 'effect.seashore',
   SLAP_BASS_1: 'effect.bass-string-slap',
   STRING_ENSEMBLE_1: 'strings.group',
+  SYNTH_BRASS_1: 'brass.group.synth',
   TELEPHONE_RING: 'effect.telephone-ring',
   VOICE_OOHS: 'voice.oo',
   WHISTLE: 'wind.flutes.whistle',
@@ -1121,6 +1122,24 @@ midi_instrument_overrides = {
     'Electric Guitar 1': ELECTRIC_GUITAR_CLEAN,
     'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
   },
+  'FL Running Through the New World': {
+    'Violin I': VIOLIN,
+  },
+  'FL Scattered Souls across Isolated Isles': {
+    'Violin': VIOLIN,
+    'Viola': VIOLA,
+    'Cello': CELLO,
+  },
+  'FO CC Level Theme 2': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'FO CC Level Theme 3': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'FO CC Level Theme 4': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
   'HGSS Azalea Town': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
@@ -1199,7 +1218,17 @@ midi_instrument_overrides = {
   'KSSt Maize Hall': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
+  'KSSt Mallow Castle': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Violin': VIOLIN,
+  },
   'KSSt Orange Ocean': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'KSSt Peanut Plain': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'KSSt Sub-Tree': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'MDB': {
