@@ -65,6 +65,8 @@ for file in sorted(os.listdir(search_folder)):
                   percussion_instruments[score_instrument.attrib['id']] = score_instrument.find('instrument-name').text
                 for midi_instrument in midi_instruments:
                   percussion_instrument_name = percussion_instruments[midi_instrument.attrib['id']]
+                  if percussion_instrument_name.startswith('MIDI'):
+                    continue
                   midi_unpitched = midi_instrument.find('midi-unpitched')
                   if instrument_name in mxl_percussion_override:
                     if midi_unpitched is None:
@@ -190,7 +192,7 @@ for file in sorted(os.listdir(search_folder)):
                 directions = measure.findall('direction')
                 for direction in directions:
                   direction_type = direction.find('direction-type')
-                  if program == STRING_ENSEMBLE_1:
+                  if program == STRING_ENSEMBLE_1 or program == VIOLIN or program == VIOLA or program == CELLO or program == CONTRABASS:
                     words = direction_type.find('words')
                     if words is not None and (words.text == 'pizz.' or words.text == 'arco'):
                       print('Found {} in {}, measure {}'.format(words.text, part_name, measure_number))

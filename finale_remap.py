@@ -696,7 +696,8 @@ program_transpose = {
     ORCHESTRA_HIT: 12,
   },
   'LTTP': {
-    TIMPANI: -12,
+    FLUTE: 12,
+    TIMPANI: 12,
   },
   'MDB': {
     BASSOON: -12,
@@ -1139,6 +1140,27 @@ midi_instrument_overrides = {
   'FO CC Level Theme 4': {
     'Synth Lead 1': LEAD_2_SAWTOOTH,
     'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'FO DB Fruit': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'FO DB Swab The Deks': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'FO EV Chilblains': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_5_CHARANG,
+    'Synth Lead 4': LEAD_2_SAWTOOTH,
+  },
+  'FO EV Ctrl-Alt-Escape': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_5_CHARANG,
+  },
+  'FO G Solarium': {
+    'Vocals': BREATH_NOISE,
   },
   'HGSS Azalea Town': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
