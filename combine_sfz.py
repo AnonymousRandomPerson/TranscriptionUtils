@@ -2,8 +2,8 @@ import os
 from file_locations import *
 
 combined_soundfont_name = 'combined.sfz'
-soundfont_folder = os.path.join(soundfont_banks_folder, 'Kirby 64 The Crystal Shards')
-soundfont_bank = 'Bank_00000000'
+soundfont_folder = os.path.join(soundfont_banks_folder, 'Donkey Kong Country 2', 'Stickerbush Symphony')
+soundfont_bank = '001'
 
 soundfont_folder = os.path.join(soundfont_folder, soundfont_bank)
 combined_soundfont_path = os.path.join(soundfont_folder, combined_soundfont_name)

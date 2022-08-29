@@ -14,7 +14,6 @@ midi_instruments = {
   'Glockenspiel': GLOCKENSPIEL,
   'Music Box': MUSIC_BOX,
   'Bonang': VIBRAPHONE,
-  'Cowbell (Auto-tune)': VIBRAPHONE,
   'Gend\x8er': VIBRAPHONE,
   'Handbells': VIBRAPHONE,
   'Vibraphone': VIBRAPHONE,
@@ -35,7 +34,7 @@ midi_instruments = {
   'Muted Electric Guitar': ELECTRIC_GUITAR_MUTED,
   'Electric Guitar': ELECTRIC_GUITAR_DISTORTION,
   'Electric Bass': ELECTRIC_BASS_FINGER,
-  'Muted Electric Bass': ELECTRIC_BASS_FINGER,
+  'Muted Electric Bass': ELECTRIC_GUITAR_MUTED,
   'Slap Bass': SLAP_BASS_1,
   'Synth Bass': SYNTH_BASS_1,
   'Erhu': VIOLIN,
@@ -114,14 +113,17 @@ midi_instruments = {
   'Koto': KOTO,
   'Kalimba': KALIMBA,
   'Bagpipes': BAGPIPE,
+  'Cowbell (Auto-tune)': AGOGO,
   'Steel Drums': STEEL_DRUMS,
   'Temple Blocks': WOODBLOCK,
   'Melodic Tom': MELODIC_TOM,
   'Compressed Air FX': BREATH_NOISE,
+  'Cymbal FX': BREATH_NOISE,
   'Fire FX': BREATH_NOISE,
   'Laugh FX': BREATH_NOISE,
   'Noise FX': BREATH_NOISE,
   'Sound FX': BREATH_NOISE,
+  'Vacuum FX': BREATH_NOISE,
   'Whoosh FX': BREATH_NOISE,
   'Wind FX': BREATH_NOISE,
   'Bubble FX': SEASHORE,
@@ -139,10 +141,10 @@ midi_instruments = {
   'Sweep FX': HELICOPTER,
   'Wave FX': HELICOPTER,
   'Zap FX': HELICOPTER,
-  'Cymbal FX': GUNSHOT,
   'Gun Shot FX': GUNSHOT,
   'Metal Bang FX': GUNSHOT,
   'Rock Hit FX': GUNSHOT,
+  'Swirl FX': GUNSHOT,
 }
 
 mxl_instruments = {
@@ -150,12 +152,16 @@ mxl_instruments = {
   BREATH_NOISE: 'effect.breath',
   DRAWBAR_ORGAN: 'keyboard.organ.drawbar',
   ELECTRIC_GUITAR_DISTORTION: '',
+  ELECTRIC_PIANO_2: '',
   GUNSHOT: 'effect.gunshot',
   HELICOPTER: 'effect.helicopter',
   LEAD_3_CALLIOPE: 'wind.flutes.calliope',
   MUSIC_BOX: 'pitched-percussion.music-box',
   PAD_1_NEW_AGE: 'synth.pad',
   PAD_2_WARM: 'synth.pad.warm',
+  PAD_6_METALLIC: 'synth.pad.metallic',
+  PAD_7_HALO: 'synth.pad.halo',
+  PAD_8_SWEEP: 'synth.pad.sweep',
   PERCUSSIVE_ORGAN: 'keyboard.organ.percussive',
   SEASHORE: 'effect.seashore',
   SLAP_BASS_1: 'effect.bass-string-slap',
@@ -180,6 +186,7 @@ mxl_manual_remap = set([
   'Guiro',
   'Muted Electric Bass',
   'Muted Electric Guitar',
+  'Muted Trombone',
   'Muted Trumpet',
   'Wind Chimes',
 ])
@@ -284,7 +291,11 @@ percussion_parts = {
   },
   'Sleigh Bells': JINGLE_BELL,
   'Snap': HAND_CLAP,
-  'Snare Drum': ACOUSTIC_SNARE,
+  'Snare Drum': {
+    59: SIDE_STICK,
+    60: ACOUSTIC_SNARE,
+    61: SIDE_STICK,
+  },
   'Snare Drum (Brushes)': ACOUSTIC_SNARE,
   'Splash Cymbal': SPLASH_CYMBAL,
   'Static FX': CASTANETS,
@@ -389,6 +400,7 @@ percussion_sequence_mappings = {
     4: [LOW_TOM, LOW_MID_TOM, HI_MID_TOM, HIGH_TOM],
     5: [HIGH_FLOOR_TOM, LOW_TOM, LOW_MID_TOM, HI_MID_TOM, HIGH_TOM],
     6: [LOW_FLOOR_TOM, HIGH_FLOOR_TOM, LOW_TOM, LOW_MID_TOM, HI_MID_TOM, HIGH_TOM],
+    8: [LOW_FLOOR_TOM, HIGH_FLOOR_TOM, LOW_TOM, LOW_MID_TOM, LOW_MID_TOM, HI_MID_TOM, HI_MID_TOM, HIGH_TOM],
   },
   'Triangle': {
     1: [OPEN_TRIANGLE],
@@ -407,6 +419,7 @@ percussion_parts_override = {
 
 ignore_unmapped_percussion = set([
   'ARIA Player',
+  'SmartMusicSoftSynth',
   'Drum Set',
   'Drum Set (Brushes)',
 ])
@@ -620,6 +633,13 @@ program_transpose = {
       'Burning, Churning Power Plant': -36,
     },
   },
+  'FRLG': {
+    LEAD_1_SQUARE: {
+      'Battle! (Deoxys)': {
+        'Synth Lead 2': 24,
+      }
+    }
+  },
   'HGSS': {
     ELECTRIC_BASS_FINGER: {
       DEFAULT_TRACK: -12,
@@ -701,7 +721,6 @@ program_transpose = {
   },
   'MDB': {
     BASSOON: -12,
-    CELESTA: 12,
     CHOIR_AAHS: {
       'Great Canyon': -12,
       'Mt Blaze': -12,
@@ -709,26 +728,62 @@ program_transpose = {
       'The Escape': -12,
     },
     PAN_FLUTE: 12,
-    PERCUSSIVE_ORGAN: {
-      DEFAULT_TRACK: 12,
-      'Battle With Rayquaza': 24,
+    PERCUSSIVE_ORGAN: 12,
+    PIZZICATO_STRINGS: {
+      'Sinister Woods': 12,
     },
     STRING_ENSEMBLE_1: {
       DEFAULT_TRACK: 12,
-      'It\'s a Thief': 0,
-      'Monster House': 0,
-      'Oddity Cave': 0,
-      'The Escape': 0,
+      'It\'s a Thief!': {
+        'Violin II': 12,
+        'Viola': 12,
+      },
+      'Lapis Cave': {
+        'Violin III': 12,
+        'Violin IV': 12,
+        'Cello': 12,
+        'Double Bass': 12,
+      },
+      'Makuhita Dojo': {
+        'Violin III': 12,
+        'Viola': 12,
+      },
+      'Monster House!': 0,
+      'Mt Freeze': {
+        'Violin III': 12,
+        'Violin IV': 12,
+        'Cello': 12,
+      },
+      'Mt Thunder': 0,
+      'Sky Tower': {
+        'Violin I': 12,
+        'Violin III': 12,
+        'Viola': 12,
+      },
+      'Stormy Sea': {
+        'Violin II': 12,
+        'Violin III': 12,
+      },
+      'The Escape': {
+        'Violin II': 12,
+        'Violin III': 12,
+        'Viola I': 12,
+      },
+      'Thunderwave Cave': {
+        'Violin II': 12,
+        'Viola I': 12,
+        'Viola II': 12,
+      },
+      'Tiny Woods': {
+        'Violin I': 12,
+        'Violin II': 12,
+      },
     },
-    SYNTH_BASS_1: {
-      'Lapis Cave': -12,
-      'Magma Cavern': -12,
-      'Makuhita Dojo': -24,
-      'Monster House': -12,
-      'Mt Freeze': -12,
-      'Mt Steel': -12,
-      'Silent Chasm': -12,
-      'Tiny Woods': -12,
+    SYNTH_BASS_1: -12,
+    TIMPANI: 12,
+    VIOLIN: {
+      'Sinister Woods': 12,
+      'Sky Tower': 12,
     },
   },
   'MDR': {
@@ -740,27 +795,115 @@ program_transpose = {
       'Sky Tower': -12,
       'The Escape': -12,
     },
+    LEAD_1_SQUARE: {
+      'Mt Thunder': {
+        'Synth Bass': -12,
+      },
+    },
+    LEAD_2_SAWTOOTH: {
+      'A New Adventure': -12,
+      'Boss Battle!': {
+        'Synth Bass': -12,
+      },
+      'Great Canyon': {
+        'Synth Bass': -12,
+      },
+      'It\'s a Thief!': {
+        'Synth Bass': -12,
+      },
+      'Lapis Cave': {
+        'Synth Bass': -12,
+      },
+      'Makuhita Dojo': {
+        'Synth Bass': -12,
+      },
+      'Monster House!': {
+        'Synth Bass': -12,
+      },
+      'Mt Blaze': {
+        'Synth Bass': -12,
+      },
+      'Mt Freeze': {
+        'Synth Bass': -12,
+      },
+      'Mt Steel': {
+        'Synth Bass': -12,
+      },
+      'Silent Chasm': {
+        'Synth Bass': -12,
+      },
+      'Sinister Woods': {
+        'Synth Bass': -12,
+      },
+      'Sky Tower': {
+        'Synth Bass': -12,
+      },
+      'Sky Tower Summit': {
+        'Synth Bass': -12,
+      },
+      'Stormy Sea': {
+        'Synth Bass': -12,
+      },
+      'The Escape': {
+        'Synth Bass': -12,
+      },
+    },
     PAN_FLUTE: 12,
-    PERCUSSIVE_ORGAN: {
-      DEFAULT_TRACK: 12,
-      'Battle With Rayquaza': 24,
+    PERCUSSIVE_ORGAN: 12,
+    PIZZICATO_STRINGS: {
+      'Sinister Woods': 12,
     },
     STRING_ENSEMBLE_1: {
       DEFAULT_TRACK: 12,
-      'It\'s a Thief': 0,
-      'Monster House': 0,
-      'Oddity Cave': 0,
-      'The Escape': 0,
+      'It\'s a Thief!': {
+        'Violin II': 12,
+        'Viola': 12,
+      },
+      'Lapis Cave': {
+        'Violin III': 12,
+        'Violin IV': 12,
+        'Cello': 12,
+        'Double Bass': 12,
+      },
+      'Makuhita Dojo': {
+        'Violin III': 12,
+        'Viola': 12,
+      },
+      'Monster House!': 0,
+      'Mt Freeze': {
+        'Violin III': 12,
+        'Violin IV': 12,
+        'Cello': 12,
+      },
+      'Mt Thunder': 0,
+      'Sky Tower': {
+        'Violin I': 12,
+        'Viola I': 12,
+        'Viola II': 12,
+      },
+      'Stormy Sea': {
+        'Violin II': 12,
+        'Violin III': 12,
+      },
+      'The Escape': {
+        'Violin II': 12,
+        'Violin III': 12,
+        'Viola I': 12,
+      },
+      'Thunderwave Cave': {
+        'Violin II': 12,
+        'Viola I': 12,
+        'Viola II': 12,
+      },
+      'Tiny Woods': {
+        'Violin I': 12,
+        'Violin II': 12,
+      },
     },
-    SYNTH_BASS_1: {
-      'Lapis Cave': -12,
-      'Magma Cavern': -12,
-      'Makuhita Dojo': -24,
-      'Monster House': -12,
-      'Mt Freeze': -12,
-      'Mt Steel': -12,
-      'Silent Chasm': -12,
-      'Tiny Woods': -12,
+    SYNTH_BASS_1: -12,
+    VIOLIN: {
+      'Sinister Woods': 12,
+      'Sky Tower': 12,
     },
   },
   'MDRTDX': {
@@ -772,22 +915,64 @@ program_transpose = {
       'The Escape': -12,
     },
     PERCUSSIVE_ORGAN: 12,
+    PIZZICATO_STRINGS: {
+      'Sinister Woods': 12,
+    },
     STRING_ENSEMBLE_1: {
       DEFAULT_TRACK: 12,
-      'It\'s a Thief': 0,
-      'Monster House': 0,
+      'Frosty Forest': {
+        'Violin I': 12,
+        'Violin II': 12,
+      },
+      'Lapis Cave': {
+        'Violin III': 12,
+        'Violin IV': 12,
+        'Cello': 12,
+        'Double Bass': 12,
+      },
+      'Makuhita Dojo': {
+        'Violin III': 12,
+        'Viola': 12,
+        'Cello': 12,
+      },
+      'Monster House!': 0,
+      'Mt Thunder': 0,
       'Oddity Cave': 0,
-      'The Escape': 0,
+      'Sky Tower': {
+        'Violin I': 12,
+        'Violin III': 12,
+        'Viola': 12,
+      },
+      'Stormy Sea': {
+        'Violin II': 12,
+        'Violin III': 12,
+      },
+      'The Escape': {
+        'Violin II': 12,
+        'Violin III': 12,
+        'Viola I': 12,
+      },
+      'Thunderwave Cave': {
+        'Violin II': 12,
+        'Viola I': 12,
+        'Viola II': 12,
+      },
+      'Tiny Woods': {
+        'Violin I': 12,
+        'Violin II': 12,
+      },
     },
-    SYNTH_BASS_1: {
-      'Lapis Cave': -12,
-      'Magma Cavern': -12,
-      'Makuhita Dojo': -24,
-      'Monster House': -12,
-      'Mt Freeze': -12,
-      'Mt Steel': -12,
-      'Silent Chasm': -12,
-      'Tiny Woods': -12,
+    SYNTH_BASS_1:{
+      DEFAULT_TRACK: -12,
+      'Sinister Woods': 0,
+    },
+    TIMPANI: {
+      DEFAULT_TRACK: 12,
+      'Oddity Cave': 0,
+    },
+    VIOLIN: {
+      'Sinister Woods': 12,
+      'Sky Tower': 12,
     },
   },
   'MDS': {
@@ -1131,6 +1316,10 @@ midi_instrument_overrides = {
     'Viola': VIOLA,
     'Cello': CELLO,
   },
+  'FL The Battle of Blizzard Bridge': {
+    'Electric Piano 1': ELECTRIC_PIANO_2,
+    'Electric Piano 2': ELECTRIC_PIANO_2,
+  },
   'FO CC Level Theme 2': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
@@ -1162,6 +1351,99 @@ midi_instrument_overrides = {
   'FO G Solarium': {
     'Vocals': BREATH_NOISE,
   },
+  'FO MD Miner Details': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Organ': DRAWBAR_ORGAN,
+  },
+  'FO OD Alienate': {
+    'Synth Lead 1': SYNTH_BASS_1,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'FO OD Gridlock 1': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'FO OD Gridlock 2': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': SYNTH_BASS_1,
+  },
+  'FO OD Journey to the Center of the Orb': {
+    'Synth Lead 1': SYNTH_BASS_1,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'FO OD Stronghold': {
+    'Synth Lead 1': SYNTH_BASS_1,
+  },
+  'FO OD Wait Theme 1': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'FO OD Wait Theme 2': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Synth Lead 1': SYNTH_BASS_1,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'FO OD Wait Theme 3': {
+    'Synth Lead 1': SYNTH_BASS_1,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'FO OD Wave Theme 3': {
+    'Synth Lead 1': SYNTH_BASS_1,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+    'Synth Lead 4': LEAD_2_SAWTOOTH,
+  },
+  'FO SC Level Theme 1': {
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+    'Synth Pad 1': PAD_6_METALLIC,
+    'Zap FX': GUNSHOT,
+  },
+  'FO SC Space Race': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': SYNTH_BASS_1,
+    'Synth Lead 5': LEAD_5_CHARANG,
+    'Zap FX 1': GUNSHOT,
+    'Zap FX 2': BREATH_NOISE,
+    'Zap FX 3': GUNSHOT,
+  },
+  'FRLG Battle! (Deoxys)': {
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'FRLG Battle! (Gym Leader Battle)': {
+    'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'FRLG Battle! (Legendary Pokemon)': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'FRLG Battle! (Mewtwo)': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'FRLG Battle! (Trainer Battle)': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'FRLG Battle! (Wild Pokemon)': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'FRLG Final Battle! (Rival)': {
+    'Electric Guitar 1': ELECTRIC_GUITAR_CLEAN,
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'FRLG Road to Cerulean City Leaving Mt Moon': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'FRLG Road to Fuschia City Leaving Lavender Town': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
   'HGSS Azalea Town': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
@@ -1172,6 +1454,12 @@ midi_instrument_overrides = {
   'HGSS Viridian Forest': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
     'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'IWBTG Home Sweet Grave': {
+    'Synth Lead 1': LEAD_3_CALLIOPE,
+    'Synth Lead 2': LEAD_5_CHARANG,
+    'Synth Pad 2': PAD_1_NEW_AGE,
+    'Vocals': BREATH_NOISE,
   },
   'ITM Rem': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
@@ -1253,11 +1541,339 @@ midi_instrument_overrides = {
   'KSSt Sub-Tree': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
+  'LF2': {
+    'Organ': CHURCH_ORGAN,
+  },
+  'LF2 Future Reloaded': {
+    'Laser FX': MELODIC_TOM,
+  },
+  'LF2 Transformed Psycotolonic': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'LGPE Battle! (Master Trainer Battle)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MBG': {
+    'Organ': DRAWBAR_ORGAN,
+  },
+  'MBG Beach Party': {
+    'Vocals': BREATH_NOISE,
+  },
+  'MBP Astrolabe': {
+    'Synth Lead': LEAD_5_CHARANG,
+  },
+  'MBP Endurance': {
+    'Synth Lead': LEAD_5_CHARANG,
+  },
+  'MBP Grudge': {
+    'Synth Lead 1': SYNTH_BASS_1,
+  },
+  'MBP Rising Temper': {
+    'Synth Lead 2': SYNTH_BASS_1,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'MBP The Race': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Zap FX': BREATH_NOISE,
+  },
   'MDB': {
-    'Celesta': PAD_1_NEW_AGE,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'MDB A New Adventure': {
+    'Synth Bass': LEAD_1_SQUARE,
+  },
+  'MDB Battle With Rayquaza': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDB Boss Battle!': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDB Great Canyon': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDB It\'s a Thief!': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'MDB Magma Cavern': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'MDB Makuhita Dojo': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'MDB Monster House!': {
+    'Violin': VIOLIN,
+  },
+  'MDB Mt Blaze': {
+    'Electric Piano': ELECTRIC_PIANO_2,
+    'Synth Bass': LEAD_1_SQUARE,
+  },
+  'MDB Mt Steel': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'MDB Mt Thunder': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDB Silent Chasm': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'MDB Sinister Woods': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Violin I': VIOLIN,
+  },
+  'MDB Sky Tower': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Violin I': VIOLIN,
+  },
+  'MDB Sky Tower Summit': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDB Stormy Sea': {
+    'Synth Bass': LEAD_1_SQUARE,
+  },
+  'MDB The Escape': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Violin I': VIOLIN,
+  },
+  'MDB Thunderwave Cave': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'MDB Tiny Woods': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'MDBSL Grassy Dungeon 1': {
+    'Viola': VIOLA,
+  },
+  'MDGTI': {
+    'Organ': DRAWBAR_ORGAN,
+  },
+  'MDGTI Battling the Boss': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'MDGTI Come on in to Post Town': {
+    'Violin I': VIOLIN,
+  },
+  'MDGTI Glacial Underpass': {
+    'Electric Piano 2': ELECTRIC_PIANO_2,
+    'Synth Lead 1': PAD_7_HALO,
+    'Synth Lead 2': PAD_6_METALLIC,
+  },
+  'MDGTI Glacier Palace (Western Spire)': {
+    'Synth Pad 2': PAD_8_SWEEP,
+  },
+  'MDGTI Holehills': {
+    'Synth Lead': LEAD_5_CHARANG,
+  },
+  'MDGTI It\'s a Monster House!': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDGTI Kilionea Road': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDGTI Ragged Mountain': {
+    'Violin I': VIOLIN,
+    'Viola I': VIOLA,
+  },
+  'MDGTI Star Cave': {
+    'Violin I': VIOLIN,
+  },
+  'MDGTI Stirrings of Hope': {
+    'Electric Piano': ELECTRIC_PIANO_2,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'MDGTI Stompstump Peak': {
+    'Viola I': VIOLA,
+  },
+  'MDGTI Stony Cave': {
+    'Violin': VIOLIN,
+  },
+  'MDGTI Stop Thief!': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDGTI Telluric Path': {
+    'Synth Lead 3': PAD_7_HALO,
+  },
+  'MDGTI The Bittercold (First Battle)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDGTI Tyrian Maze': {
+    'Electric Piano': ELECTRIC_PIANO_2,
+    'Synth Lead 1': PAD_7_HALO,
+    'Synth Lead 2': PAD_7_HALO,
+  },
+  'MDGTI Tyrian Maze (Inner Chamber)': {
+    'Synth Lead 1': PAD_7_HALO,
+    'Synth Lead 2': PAD_7_HALO,
+    'Synth Lead 4': PAD_7_HALO,
+  },
+  'MDGTI Unlimited Dungeon 1': {
+    'Synth Lead': SYNTH_BASS_1,
   },
   'MDR': {
-    'Celesta': PAD_1_NEW_AGE,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'MDR A New Adventure': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDR Battle With Rayquaza': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDR Boss Battle!': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDR Great Canyon': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDR It\'s a Thief!': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'MDR Lapis Cave': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDR Magma Cavern': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'MDR Makuhita Dojo': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'MDR Monster House!': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Violin': VIOLIN,
+  },
+  'MDR Mt Blaze': {
+    'Electric Piano': ELECTRIC_PIANO_2,
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDR Mt Freeze': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDR Mt Steel': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'MDR Mt Thunder': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDR Silent Chasm': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'MDR Sinister Woods': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Violin I': VIOLIN,
+  },
+  'MDR Sky Tower': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Violin I': VIOLIN,
+  },
+  'MDR Sky Tower Summit': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDR Stormy Sea': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDR The Escape': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Violin I': VIOLIN,
+  },
+  'MDR Thunderwave Cave': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'MDR Tiny Woods': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX': {
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'MDRTDX A New Adventure': {
+    'Synth Bass': LEAD_1_SQUARE,
+  },
+  'MDRTDX Battle With Rayquaza': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX Boss Battle!': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX Frosty Forest': {
+    'Synth Pad 2': PAD_2_WARM,
+  },
+  'MDRTDX Great Canyon': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX It\'s a Thief!': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX Magma Cavern': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX Makuhita Dojo': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX Monster House!': {
+    'Violin': VIOLIN,
+  },
+  'MDRTDX Mt Blaze': {
+    'Synth Bass': LEAD_1_SQUARE,
+  },
+  'MDRTDX Mt Steel': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX Mt Thunder': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX Oddity Cave': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX Sinister Woods': {
+    'Violin I': VIOLIN,
+  },
+  'MDRTDX Sky Tower': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Violin I': VIOLIN,
+  },
+  'MDRTDX Sky Tower Summit': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDRTDX Stormy Sea': {
+    'Synth Bass': LEAD_1_SQUARE,
+  },
+  'MDRTDX The Escape': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Violin I': VIOLIN,
+  },
+  'MDRTDX Thunderwave Cave': {
+    'Synth Bass': LEAD_1_SQUARE,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
   },
   'MDS': {
     'Celesta': PAD_1_NEW_AGE,

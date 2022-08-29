@@ -4,6 +4,7 @@ from finale_remap import *
 from game_acronyms import *
 from file_locations import *
 from fix_config import *
+from fix_midi_custom import fix_custom
 import os;
 
 remap_channels = {
@@ -31,7 +32,7 @@ for file in sorted(os.listdir(search_folder)):
         search_tracks.add(combined_name)
 
       percussion = instrument_name in percussion_parts
-      current_program = None
+      current_program: int = None
       remove_messages = []
       for msg in track:
         if msg.type == 'device_name':
@@ -76,6 +77,7 @@ for file in sorted(os.listdir(search_folder)):
           msg.channel = new_channel
           remap_results[i] = (instrument_name, new_channel)
           device_name.name += '-' + str(i)
+        fix_custom(combined_name, msg, instrument_name)
       for msg in remove_messages:
         track.remove(msg)
 

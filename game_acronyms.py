@@ -34,7 +34,7 @@ game_acronyms = {
   'FRLG': 'Pokemon FireRed LeafGreen',
   'HGSS': 'Pokemon HeartGold SoulSilver',
   'ITM': 'Sid & Al\'s Incredible Toons',
-  'IWBTG': 'I Wanna Be the Guy',
+  'IWBTG': 'Guilty Gear Isuka',
   'K64': 'Kirby 64 The Crystal Shards',
   'KSSq': 'Kirby Squeak Squad',
   'KSSt': 'Kirby Super Star',

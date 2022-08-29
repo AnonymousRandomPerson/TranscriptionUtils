@@ -104,9 +104,12 @@ for file in sorted(os.listdir(search_folder)):
                 if program in search_instruments:
                   search_tracks.add(full_file_name)
 
+            if instrument_name in search_instruments:
+              search_tracks.add(full_file_name)
+
             parts[part_info.attrib['id']] = (part_name, instrument_name, program)
 
-            if part_name.startswith('Snare') or part_name.startswith('Field') or part_name.startswith('Drum Set'):
+            if part_name.startswith('Snare') or part_name.startswith('Field') or part_name.startswith('Drum Set') or part_name.startswith('Hi-Hat'):
               open_hi_hat = False
               cross_stick = False
               for midi_instrument in part_info.findall('midi-instrument'):
@@ -129,7 +132,7 @@ for file in sorted(os.listdir(search_folder)):
               mapped_note = map_percussion_sequence_note(instrument_name, current_note, sequence_part)
               msg.text = str(mapped_note + 1)
 
-          for part in xml_root.findall('part'):
+          for i, part in enumerate(xml_root.findall('part')):
             part_name, instrument_name, program = parts[part.attrib['id']]
 
             if program is None:
@@ -266,6 +269,13 @@ for file in sorted(os.listdir(search_folder)):
                       if breath_mark is not None:
                         found_breath_mark = measure_number
 
+                  ornaments = notations.find('ornaments')
+                  if ornaments is not None:
+                    tremolo = ornaments.find('tremolo')
+                    if tremolo is not None and tremolo.attrib['type'] == 'unmeasured':
+                      tremolo.attrib['type'] = 'single'
+                      tremolo.text = '3'
+
                   time_modification = note.find('time-modification')
                   beams = note.findall('beam')
                   if len(beams) == 3 and time_modification is not None:
@@ -291,7 +301,6 @@ for file in sorted(os.listdir(search_folder)):
                         tremolo_type = 'start'
                       else:
                         tremolo_type = 'stop'
-                      notations = note.find('notations')
                       notations.remove(tuplet)
                       ornaments = ElementTree.SubElement(notations, 'ornaments')
                       tremolo = ElementTree.SubElement(ornaments, 'tremolo')
@@ -335,6 +344,11 @@ for file in sorted(os.listdir(search_folder)):
                   if note.find('duration') is None:
                     duration = ElementTree.SubElement(note, 'duration')
                     duration.text = '1'
+
+              for barline in measure.findall('barline'):
+                ending = barline.find('ending')
+                if ending is not None and i > 0:
+                  barline.remove(ending)
 
             if found_breath_mark is not None:
               print('Found breath mark in {}, measure {}.'.format(part_name, found_breath_mark))
