@@ -155,6 +155,7 @@ mxl_instruments = {
   ELECTRIC_PIANO_2: '',
   GUNSHOT: 'effect.gunshot',
   HELICOPTER: 'effect.helicopter',
+  LEAD_2_SAWTOOTH: 'synth.tone.sawtooth',
   LEAD_3_CALLIOPE: 'wind.flutes.calliope',
   MUSIC_BOX: 'pitched-percussion.music-box',
   PAD_1_NEW_AGE: 'synth.pad',
@@ -162,18 +163,22 @@ mxl_instruments = {
   PAD_6_METALLIC: 'synth.pad.metallic',
   PAD_7_HALO: 'synth.pad.halo',
   PAD_8_SWEEP: 'synth.pad.sweep',
+  PAN_FLUTE: 'wind.flutes.panpipes',
   PERCUSSIVE_ORGAN: 'keyboard.organ.percussive',
+  ROCK_ORGAN: 'keyboard.organ.rotary',
   SEASHORE: 'effect.seashore',
   SLAP_BASS_1: 'effect.bass-string-slap',
   STRING_ENSEMBLE_1: 'strings.group',
   SYNTH_BRASS_1: 'brass.group.synth',
   TELEPHONE_RING: 'effect.telephone-ring',
+  VIBRAPHONE: 'pitched-percussion.vibraphone',
   VOICE_OOHS: 'voice.oo',
   WHISTLE: 'wind.flutes.whistle',
   WOODBLOCK: '',
 }
 
 mxl_percussion_override = {
+  'Bodhrán': LOW_BONGO,
   'Tsuzumi': HIGH_BONGO,
 }
 
@@ -184,6 +189,7 @@ mxl_percussion_to_non_percussion = set([
 mxl_manual_remap = set([
   'Gend\x8er',
   'Guiro',
+  'Melodic Tom',
   'Muted Electric Bass',
   'Muted Electric Guitar',
   'Muted Trombone',
@@ -201,6 +207,7 @@ percussion_parts = {
   'Bass Drum': ACOUSTIC_BASS_DRUM,
   'Bell': RIDE_BELL,
   'Bell Tree': BELL_TREE,
+  'Bodhrán': LOW_BONGO,
   'Bodhr\x87n': LOW_BONGO,
   'Bongo Drums': {
     45: LOW_BONGO,
@@ -219,7 +226,7 @@ percussion_parts = {
   'Clap': HAND_CLAP,
   'Claves': CLAVES,
   'Click FX': CASTANETS,
-  'Clock Tick': SIDE_STICK,
+  'Clock Tick FX': SIDE_STICK,
   'Conga Drums': {
     54: LOW_CONGA,
     55: OPEN_HIGH_CONGA,
@@ -251,7 +258,6 @@ percussion_parts = {
     42: LOW_FLOOR_TOM,
     66: LOW_FLOOR_TOM,
   },
-  'Frame Drum': LOW_BONGO,
   'Goblet Drum': {
     58: LOW_CONGA,
     60: OPEN_HIGH_CONGA,
@@ -262,7 +268,6 @@ percussion_parts = {
     74: LONG_GUIRO,
   },
   'Hand Castanets': CASTANETS,
-  'Hand Drum': LOW_BONGO,
   'Hi-Hat Cymbal': {
     42: CLOSED_HI_HAT,
     44: PEDAL_HI_HAT,
@@ -273,6 +278,8 @@ percussion_parts = {
   'Machine Castanets': CASTANETS,
   'Maracas': MARACAS,
   'O-daiko': {
+    12: LOW_TOM,
+    13: LOW_MID_TOM,
     41: LOW_TOM,
     48: LOW_MID_TOM,
   },
@@ -423,6 +430,239 @@ ignore_unmapped_percussion = set([
   'Drum Set',
   'Drum Set (Brushes)',
 ])
+
+PMD_EXPLORERS_PROGRAM_TRANSPOSE = {
+  ACOUSTIC_GRAND_PIANO: -12,
+  BAGPIPE: -12,
+  BANJO: {
+    'Aegis Cave': -12,
+  },
+  BASSOON: -12,
+  CELESTA: {
+    DEFAULT_TRACK: -12,
+    'Time Gear': 0,
+  },
+  CELLO: -12,
+  CHOIR_AAHS: {
+    DEFAULT_TRACK: -12,
+    'Dark Ice Mountain': 0,
+    'Murky Forest': 0,
+  },
+  CONTRABASS: -12,
+  ELECTRIC_BASS_FINGER: -12,
+  ELECTRIC_PIANO_2: {
+    'Amp Plains': -12,
+    'Brine Cave': -12,
+    'Far Amp Plains': -12,
+    'Hidden Highland': -12,
+  },
+  ENGLISH_HORN: -12,
+  FLUTE: {
+    DEFAULT_TRACK: -12,
+    'Blizzard Island Rescue Team Medley': 0,
+  },
+  FRENCH_HORN: {
+    DEFAULT_TRACK: -12,
+    'Foggy Forest': 0,
+  },
+  GLOCKENSPIEL: {
+    DEFAULT_TRACK: -12,
+    'Crystal Cave': 0,
+  },
+  HARMONICA: -12,
+  HARPSICHORD: {
+    'Dialga\'s Fight to the Finish!': -12,
+  },
+  LEAD_1_SQUARE: {
+    'Blizzard Island Rescue Team Medley': {
+      'Synth Lead 1': 12,
+    },
+    'Mt Travail': -12,
+  },
+  LEAD_2_SAWTOOTH: {
+    'Blizzard Island Rescue Team Medley': {
+      'Synth Lead 3': -12,
+    },
+    'Boss Battle!': -12,
+    'Far Amp Plains': {
+      'Synth Lead 2': -12,
+    },
+  },
+  MELODIC_TOM: -12,
+  MUSIC_BOX: -12,
+  OBOE: {
+    DEFAULT_TRACK: -12,
+    'Wigglytuff\'s Guild': 0,
+  },
+  ORCHESTRAL_HARP: -12,
+  PAD_1_NEW_AGE: -12,
+  PICCOLO: -12,
+  PIZZICATO_STRINGS: {
+    DEFAULT_TRACK: -12,
+    'Blizzard Island Rescue Team Medley': {
+      'Cello II': -12,
+    },
+    'Dialga\'s Fight to the Finish!': {
+      'Violin III': -12,
+    },
+    'Dusk Forest': {
+      'Cello II': -12,
+      'Double Bass I': -12,
+      'Violin II': -12,
+    },
+    'Foggy Forest': {
+      'Cello II': -12,
+    },
+    'In the Nightmare': {
+      'Violin III': -12,
+      'Violin IV': -12,
+    },
+    'Mt Travail': {
+      'Violin I': -12,
+      'Violin II': -12,
+    },
+  },
+  SITAR: -12,
+  SLAP_BASS_1: -12,
+  STEEL_DRUMS: -12,
+  STRING_ENSEMBLE_1: {
+    'Beach Cave': {
+      'Cello': -12,
+      'Viola I': -12,
+      'Violin I': -12,
+      'Violin II': -12,
+    },
+    'Blizzard Island Rescue Team Medley': {
+      'Cello II': -12,
+    },
+    'Boulder Quarry': -12,
+    'Crystal Cave': {
+      'Viola': -12,
+      'Violin IV': -12,
+      'Violin V': -12,
+    },
+    'Crystal Crossing': -12,
+    'Dark Ice Mountain': -12,
+    'Dark Wasteland': -12,
+    'Deep Dusk Forest': {
+      'Double Bass': -12,
+    },
+    'Dialga\'s Fight to the Finish!': {
+      'Violin III': -12,
+    },
+    'Dusk Forest': {
+      'Cello II': -12,
+      'Double Bass I': -12,
+      'Violin II': -12,
+    },
+    'Foggy Forest': {
+      'Cello II': -12,
+    },
+    'Guildmaster Wigglytuff': -12,
+    'Hidden Highland': -12,
+    'In the Nightmare': {
+      'Violin III': -12,
+      'Violin IV': -12,
+    },
+    'Mt Travail': {
+      'Violin I': -12,
+      'Violin II': -12,
+    },
+    'Murky Forest': {
+      'Cello': -12,
+      'Violin III': -12,
+      'Violin IV': -12,
+    },
+    'Mystifying Forest': {
+      'Cello': -12,
+      'Viola': -12,
+      'Violin I': -12,
+    },
+    'Sky Peak Coast': {
+      'Violin I': -12,
+    },
+    'Sky Peak Forest': {
+      'Double Bass I': -12,
+      'Violin IV': -12,
+      'Violin V': -12,
+      'Violin VI': -12,
+    },
+    'Sky Peak Prairie': {
+      'Double Bass': -12,
+      'Viola II': -12,
+      'Violin I': -12,
+      'Violin III': -12,
+    },
+    'Star Cave': {
+      'Cello': -12,
+      'Violin I': -12,
+      'Violin II': -12,
+      'Violin IV': -12,
+      'Violin V': -12,
+      'Violin VI': -12,
+      'Violin VII': -12,
+    },
+    'Surrounded Sea': {
+      'Cello II': -12,
+      'Violin II': -12,
+      'Violin III': -12,
+    },
+    'The Gatekeepers': {
+      'Double Bass': -12,
+      'Violin II': -12,
+      'Violin III': -12,
+    },
+    'Vast Ice Mountain': {
+      'Violin I': -12,
+    },
+  },
+  SYNTH_BASS_1: -24,
+  SYNTH_BRASS_1: {
+    'Boss Battle!': -12,
+    'Boulder Quarry': -12,
+    'Craggy Coast': -12,
+    'Dark Hill': -12,
+  },
+  SYNTH_STRINGS_1: {
+    DEFAULT_TRACK: -12,
+    'Spring Cave': {
+      'Synth Strings 2': -12,
+    },
+  },
+  TIMPANI: -12,
+  TROMBONE: {
+    'Battle against Dusknoir': -12,
+    'Concealed Ruins': -12,
+    'Defy the Legends': -12,
+    'Random Dungeon Theme 3': -12,
+  },
+  TRUMPET: {
+    'Bass Trumpet': -12,
+    'Flugelhorn': -12,
+    'Defy the Legends': -12,
+    'Dialga\'s Fight to the Finish!': -12,
+    'Monster House!': 0,
+    'Mt Horn': -12,
+    'Random Dungeon Theme 3': {
+      'Bass Trumpet': -12,
+      'Flugelhorn': -12,
+      'Trombone': -12,
+      'Trumpet 3': -12,
+      'Trumpet 4': -12,
+      'Trumpet 5': -12,
+    }
+  },
+  TUBA: {
+    'Wigglytuff\'s Guild': -12,
+  },
+  TUBULAR_BELLS: -12,
+  VIBRAPHONE: -12,
+  VIOLA: {
+    DEFAULT_TRACK: -12,
+    'Barren Valley': 0,
+  },
+  VIOLIN: -12,
+}
 
 program_transpose = {
   'AM': {
@@ -847,6 +1087,12 @@ program_transpose = {
       'The Escape': {
         'Synth Bass': -12,
       },
+      'Thunderwave Cave': {
+        'Synth Bass': -12,
+      },
+      'Tiny Woods': {
+        'Synth Bass': -12,
+      },
     },
     PAN_FLUTE: 12,
     PERCUSSIVE_ORGAN: 12,
@@ -901,6 +1147,7 @@ program_transpose = {
       },
     },
     SYNTH_BASS_1: -12,
+    SYNTH_BRASS_1: 12,
     VIOLIN: {
       'Sinister Woods': 12,
       'Sky Tower': 12,
@@ -975,20 +1222,28 @@ program_transpose = {
       'Sky Tower': 12,
     },
   },
-  'MDS': {
-    STRING_ENSEMBLE_1: {
-      'Murky Forest': 12,
-      'Sky Peak Cave': 12,
-      'Sky Peak Coast': 12,
-      'Spring Cave': 12,
+  'MDS': PMD_EXPLORERS_PROGRAM_TRANSPOSE,
+  'MDTDS': PMD_EXPLORERS_PROGRAM_TRANSPOSE,
+  'MK8D': {
+    PERCUSSIVE_ORGAN: {
+      'Choco Mountain': 12,
+      'Choco Mountain (Final Lap)': 12,
     },
-    SYNTH_BASS_1: {
-      'Dark Wasteland': -12,
-    },
+  },
+  'MKDS': {
+    PERCUSSIVE_ORGAN: 12,
   },
   'MLSS': {
     ELECTRIC_BASS_FINGER: -12,
+    PIZZICATO_STRINGS: -12,
     STEEL_DRUMS: 12,
+    STRING_ENSEMBLE_1: {
+      'Decisive Battleground': {
+        'Cello': -12,
+      }
+    },
+    SYNTH_BASS_1: -24,
+    TIMPANI: -12,
     TUBA: -24,
   },
   'MLSSBM': {
@@ -996,7 +1251,16 @@ program_transpose = {
       DEFAULT_TRACK: -12,
       'Sweet Surfin\'': 0,
     },
+    PIZZICATO_STRINGS: {
+      'Decisive Battleground': -12,
+    },
+    STRING_ENSEMBLE_1: {
+      'Decisive Battleground': {
+        'Cello I': -12,
+      }
+    },
     STEEL_DRUMS: 12,
+    TIMPANI: -12,
     TUBA: -24,
   },
   'Pt': {
@@ -1007,6 +1271,11 @@ program_transpose = {
     },
     TUBULAR_BELLS: 12,
   },
+}
+
+PMD_EXPLORERS_MIDI_INSTRUMENT_OVERRIDES = {
+  'Electric Piano': ELECTRIC_PIANO_2,
+  'Synth Pad': PAD_1_NEW_AGE,
 }
 
 midi_instrument_overrides = {
@@ -1317,6 +1586,10 @@ midi_instrument_overrides = {
     'Cello': CELLO,
   },
   'FL The Battle of Blizzard Bridge': {
+    'Electric Piano 1': ELECTRIC_PIANO_2,
+    'Electric Piano 2': ELECTRIC_PIANO_2,
+  },
+  'FL The Battle of Blizzard Bridge (Version 2)': {
     'Electric Piano 1': ELECTRIC_PIANO_2,
     'Electric Piano 2': ELECTRIC_PIANO_2,
   },
@@ -1800,12 +2073,13 @@ midi_instrument_overrides = {
     'Violin I': VIOLIN,
   },
   'MDR Thunderwave Cave': {
-    'Synth Bass': LEAD_1_SQUARE,
+    'Synth Bass': LEAD_2_SAWTOOTH,
     'Synth Lead 2': LEAD_2_SAWTOOTH,
     'Synth Lead 3': LEAD_2_SAWTOOTH,
   },
   'MDR Tiny Woods': {
-    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
   },
   'MDRTDX': {
     'Synth Pad': PAD_1_NEW_AGE,
@@ -1875,11 +2149,186 @@ midi_instrument_overrides = {
     'Synth Bass': LEAD_1_SQUARE,
     'Synth Lead 2': LEAD_2_SAWTOOTH,
   },
-  'MDS': {
-    'Celesta': PAD_1_NEW_AGE,
+  'MDS': PMD_EXPLORERS_MIDI_INSTRUMENT_OVERRIDES,
+  'MDS Barren Valley': {
+    'Violin': VIOLIN,
+    'Viola': VIOLA,
   },
-  'MDTDS': {
-    'Celesta': PAD_1_NEW_AGE,
+  'MDS Dark Ice Mountain': {
+    'Violin I': VIOLIN,
+  },
+  'MDS Dark Wasteland': {
+    'Violin I': VIOLIN,
+  },
+  'MDS Fortune Ravine': {
+    'Violin I': VIOLIN,
+  },
+  'MDS Murky Forest': {
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'MDS Random Dungeon Theme 3': {
+    'Trombone': TRUMPET,
+  },
+  'MDS Sky Peak Cave': {
+    'Synth Bass': LEAD_1_SQUARE,
+  },
+  'MDS Sky Peak Coast': {
+    'Synth Bass': LEAD_1_SQUARE,
+  },
+  'MDS Sky Peak Forest': {
+    'Violin I': VIOLIN,
+  },
+  'MDS Sky Peak Prairie': {
+    'Violin I': VIOLIN,
+  },
+  'MDS Spacial Cliffs': {
+    'Violin I': VIOLIN,
+    'Viola I': VIOLA,
+    'Cello': CELLO,
+  },
+  'MDS Spring Cave': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'MDS Star Cave': {
+    'Violin I': VIOLIN,
+  },
+  'MDS Vast Ice Mountain': {
+    'Violin I': VIOLIN,
+  },
+  'MDTDS': PMD_EXPLORERS_MIDI_INSTRUMENT_OVERRIDES,
+  'MDTDS Aegis Cave': {
+    'Violin I': VIOLIN,
+  },
+  'MDTDS Amp Plains': {
+    'Synth Pad': LEAD_2_SAWTOOTH,
+  },
+  'MDTDS Battle against Dusknoir': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDTDS Beach Cave': {
+    'Synth Pad': PAD_2_WARM,
+  },
+  'MDTDS Blizzard Island Rescue Team Medley': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'MDTDS Boss Battle!': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDTDS Chasm Cave': {
+    'Violin I': VIOLIN,
+  },
+  'MDTDS Dialga\'s Fight to the Finish!': {
+    'Double Bass': CONTRABASS,
+    'Violin I': VIOLIN,
+  },
+  'MDTDS Far Amp Plains': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Pad': LEAD_2_SAWTOOTH,
+  },
+  'MDTDS Guildmaster Wigglytuff': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDTDS Hidden Highland': {
+    'Viola I': VIOLA,
+  },
+  'MDTDS Monster House!': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDTDS Mt Horn': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDTDS Northern Desert': {
+    'Cello': CELLO,
+    'Viola': VIOLA,
+    'Violin III': VIOLIN,
+  },
+  'MDTDS Palkia\'s Onslaught!': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDTDS Temporal Spire': {
+    'Cello II': CELLO,
+    'Double Bass': CONTRABASS,
+  },
+  'MDTDS Through the Sea of Time': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MDTDS Time Gear': {
+    'Violin': VIOLIN,
+  },
+  'MDTDS Wigglytuff\'s Guild': {
+    'Violin I': VIOLIN,
+  },
+  'MK8 Big Blue': {
+    'Organ': ROCK_ORGAN,
+  },
+  'MK8 Big Blue (Final Lap)': {
+    'Organ': ROCK_ORGAN,
+  },
+  'MK8 Tick Tock Clock': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Zap FX': BREATH_NOISE,
+  },
+  'MK8 Tick Tock Clock (Final Lap)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Zap FX': BREATH_NOISE,
+  },
+  'MK8 Wild Woods': {
+    'Violin': VIOLIN,
+  },
+  'MK8 Wild Woods (Final Lap)': {
+    'Violin': VIOLIN,
+  },
+  'MK8D Choco Mountain': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Violin I': VIOLIN,
+    'Violin II': VIOLIN,
+  },
+  'MK8D Choco Mountain (Final Lap)': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Violin I': VIOLIN,
+    'Violin II': VIOLIN,
+  },
+  'MK8D Sky Garden': {
+    'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
+  },
+  'MK8D Sky Garden (Final Lap)': {
+    'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
+  },
+  'MKDS': {
+    'Electric Piano': ELECTRIC_PIANO_2,
+  },
+  'MKDS Choco Mountain': {
+    'Violin I': VIOLIN,
+    'Violin II': VIOLIN,
+  },
+  'MKDS Choco Mountain (Final Lap)': {
+    'Violin I': VIOLIN,
+    'Violin II': VIOLIN,
+  },
+  'MKDS Tick Tock Clock': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Zap FX': BREATH_NOISE,
+  },
+  'MKDS Tick Tock Clock (Final Lap)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Zap FX': BREATH_NOISE,
+  },
+  'MKDS Waluigi Pinball': {
+    'Organ': ROCK_ORGAN,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MKDS Waluigi Pinball (Final Lap)': {
+    'Organ': ROCK_ORGAN,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'MLSSBM Decisive Battleground': {
+    'Violin I': VIOLIN,
+  },
+  'MPDS': {
+    'Electric Piano': ELECTRIC_PIANO_2,
+    'Organ': ROCK_ORGAN,
   },
   'MRKB': {
     'Organ': CHURCH_ORGAN,
@@ -1913,7 +2362,7 @@ def get_mapped_program(game_acronym: str, full_file_name: str, instrument_name: 
     return midi_instruments[instrument_name]
   return None
 
-def get_transpose_offset(game_acronym: str, current_program: int, track_name: str, orig_instrument_name: str):
+def get_transpose_offset(game_acronym: str, current_program: int, track_name: str, instrument_name: str, orig_instrument_name: str):
   transpose_offset = 0
   if game_acronym in program_transpose:
     current_program_transpose = program_transpose[game_acronym]
@@ -1927,6 +2376,8 @@ def get_transpose_offset(game_acronym: str, current_program: int, track_name: st
               transpose_offset = transpose_offset[orig_instrument_name]
             else:
               transpose_offset = 0
+        elif instrument_name in transpose_offset:
+          transpose_offset = transpose_offset[instrument_name]
         elif DEFAULT_TRACK in transpose_offset:
           transpose_offset = transpose_offset[DEFAULT_TRACK]
         else:

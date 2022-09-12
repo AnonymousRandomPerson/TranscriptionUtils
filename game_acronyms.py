@@ -51,6 +51,7 @@ game_acronyms = {
   'MDS': 'Pokemon Mystery Dungeon Explorers of Sky',
   'MDTDS': 'Pokemon Mystery Dungeon Explorers of Time Darkness',
   'MK8': 'Mario Kart 8',
+  'MK8D': 'Mario Kart 8 Deluxe',
   'MKDS': 'Mario Kart DS',
   'MLSS': 'Mario & Luigi Superstar Saga',
   'MLSSBM': 'Mario & Luigi Superstar Saga Bowser\'s Minions',

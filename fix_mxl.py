@@ -138,7 +138,7 @@ for file in sorted(os.listdir(search_folder)):
             if program is None:
               transpose_offset = 0
             else:
-              transpose_offset = get_transpose_offset(game_acronym, program, track_name, part_name)
+              transpose_offset = get_transpose_offset(game_acronym, program, track_name, instrument_name, part_name)
               if program == DRAWBAR_ORGAN:
                 transpose_offset += 12
               octave_change = 0
@@ -169,8 +169,12 @@ for file in sorted(os.listdir(search_folder)):
                     transpose = ElementTree.SubElement(attributes, 'transpose')
                   octave_change_tag = transpose.find('octave-change')
                   if octave_change_tag is None:
-                    ElementTree.SubElement(transpose, 'diatonic').text = '0'
-                    ElementTree.SubElement(transpose, 'chromatic').text = '0'
+                    if transpose.find('diatonic') is None:
+                      ElementTree.SubElement(transpose, 'diatonic').text = '0'
+
+                    if transpose.find('chromatic') is None:
+                      ElementTree.SubElement(transpose, 'chromatic').text = '0'
+
                     octave_change_tag = ElementTree.SubElement(transpose, 'octave-change')
                     octave_change_text = '0'
                   else:
@@ -268,6 +272,8 @@ for file in sorted(os.listdir(search_folder)):
                       breath_mark = articulations.find('breath-mark')
                       if breath_mark is not None:
                         found_breath_mark = measure_number
+                      if articulations.find('staccato') is not None and articulations.find('accent') is not None:
+                        print('Found accent and staccato in {}, measure {}.'.format(part_name, measure_number))
 
                   ornaments = notations.find('ornaments')
                   if ornaments is not None:

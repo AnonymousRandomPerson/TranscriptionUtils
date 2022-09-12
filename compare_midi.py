@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Tuple
 from dataclasses import dataclass
 import editdistance
 
-track_name = 'The Escape'
+track_name = 'Tiny Woods'
 
 midi_file_1 = track_name + '.mid'
 midi_file_2 = midi_file_1
@@ -16,6 +16,7 @@ midi_path_2 = os.path.join(sf2_folder, 'Pokémon Mystery Dungeon Blue Rescue Tea
 
 equal_programs = {
   11: 12,
+  16: 17,
   25: 29,
   26: 41,
   32: 37,
@@ -29,12 +30,12 @@ equal_percussion = {
   38: 40,
 }
 
-midi_file_1 = track_name + ' (Pokemon Mystery Dungeon Red Rescue Team).mid'
-midi_file_2 = track_name + ' (Pokemon Mystery Dungeon Blue Rescue Team).mid'
-midi_path_1 = os.path.join(parts_folder, 'MDR ' + track_name, midi_file_1)
-midi_path_2 = os.path.join(parts_folder, 'MDB ' + track_name, midi_file_2)
-equal_programs = {}
-equal_percussion = {}
+# midi_file_1 = track_name + ' (Pokemon Mystery Dungeon Red Rescue Team).mid'
+# midi_file_2 = track_name + ' (Pokemon Mystery Dungeon Blue Rescue Team).mid'
+# midi_path_1 = os.path.join(parts_folder, 'MDR ' + track_name, midi_file_1)
+# midi_path_2 = os.path.join(parts_folder, 'MDB ' + track_name, midi_file_2)
+# equal_programs = {}
+# equal_percussion = {}
 
 @dataclass
 class Note:
@@ -82,7 +83,8 @@ def get_midi_data(midi_path: str) -> Dict[str, List[Note]]:
         same_time_notes.sort(key = lambda note: note.note)
 
         for note in same_time_notes:
-          program_data.append(note)
+          #if len(program_data) == 0 or program_data[-1].note != note.note:
+            program_data.append(note)
 
   return midi_data
 

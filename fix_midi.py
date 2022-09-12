@@ -66,8 +66,13 @@ for file in sorted(os.listdir(search_folder)):
           if current_program in search_instruments:
             search_tracks.add(combined_name)
         elif msg.type == 'note_on' or msg.type == 'note_off':
-          transpose_offset = get_transpose_offset(game_acronym, current_program, track_name, orig_instrument_name)
-          msg.note = msg.note + transpose_offset
+          transpose_offset = get_transpose_offset(game_acronym, current_program, track_name, instrument_name, orig_instrument_name)
+          transposed_note = msg.note + transpose_offset
+          if transposed_note < 0:
+            print('Removed tranposed note out of range for', instrument_name)
+            remove_messages.append(msg)
+          else:
+            msg.note = transposed_note
         if not percussion and hasattr(msg, 'channel') and msg.channel == 9:
           new_channel = 15
           if track_name in remap_channels:
