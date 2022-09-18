@@ -80,6 +80,7 @@ midi_instruments = {
   'Oboe': OBOE,
   'Pungi': SHANAI,
   'Rhaita': SHANAI,
+  'Shehnai': SHANAI,
   'English Horn': ENGLISH_HORN,
   'Bassoon': BASSOON,
   'Contrabassoon': BASSOON,
@@ -117,6 +118,7 @@ midi_instruments = {
   'Steel Drums': STEEL_DRUMS,
   'Temple Blocks': WOODBLOCK,
   'Melodic Tom': MELODIC_TOM,
+  'Breath FX': BREATH_NOISE,
   'Compressed Air FX': BREATH_NOISE,
   'Cymbal FX': BREATH_NOISE,
   'Fire FX': BREATH_NOISE,
@@ -158,6 +160,7 @@ mxl_instruments = {
   LEAD_2_SAWTOOTH: 'synth.tone.sawtooth',
   LEAD_3_CALLIOPE: 'wind.flutes.calliope',
   MUSIC_BOX: 'pitched-percussion.music-box',
+  MUTED_TRUMPET: '',
   PAD_1_NEW_AGE: 'synth.pad',
   PAD_2_WARM: 'synth.pad.warm',
   PAD_6_METALLIC: 'synth.pad.metallic',
@@ -187,6 +190,7 @@ mxl_percussion_to_non_percussion = set([
 ])
 
 mxl_manual_remap = set([
+  'Click FX',
   'Gend\x8er',
   'Guiro',
   'Melodic Tom',
@@ -194,6 +198,7 @@ mxl_manual_remap = set([
   'Muted Electric Guitar',
   'Muted Trombone',
   'Muted Trumpet',
+  'Static FX',
   'Wind Chimes',
 ])
 
@@ -1593,6 +1598,9 @@ midi_instrument_overrides = {
     'Electric Piano 1': ELECTRIC_PIANO_2,
     'Electric Piano 2': ELECTRIC_PIANO_2,
   },
+  'FL The Wondaria Dream Parade': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
   'FO CC Level Theme 2': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
@@ -2338,6 +2346,49 @@ midi_instrument_overrides = {
   },
   'Pt Battle! (Giratina)': {
     'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'SMD Abyssal Badlands': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Violin': VIOLIN,
+  },
+  'SMD Air Continent Baram Town': {
+    'Cello': CELLO,
+    'Violin': VIOLIN,
+  },
+  'SMD Amp Plains': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'SMD Boss Battle Children\'s Adventure!': {
+    'Synth Bass': LEAD_1_SQUARE,
+  },
+  'SMD Boss Battle Expedition Society Fight': {
+    'Organ': ROCK_ORGAN,
+    'Synth Pad': SYNTH_BRASS_1,
+  },
+  'SMD Boss Battle with Great Powers!': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'SMD Fire Island Volcano': {
+    'Violin I': VIOLIN,
+    'Violin II': VIOLIN,
+    'Viola I': VIOLA,
+  },
+  'SMD Legendary Boss Battle Rock Version!': {
+    'Synth Lead': LEAD_5_CHARANG,
+  },
+  'SMD Oh No! This is Bad!': {
+    'Cello': CELLO,
+  },
+  'SMD Sand Dune of Spirits': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'SMD Second Dark Matter Battle': {
+    'Violin': VIOLIN,
+  },
+  'SMD Showdown with a Volcanic Entei!': {
+    'Violin': VIOLIN,
   },
 }
 

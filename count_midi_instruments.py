@@ -73,9 +73,9 @@ for file in sorted(os.listdir(search_folder)):
             if name.endswith('_1') or name.endswith('_2'):
               name = name[:-2]
             instruments.add(name)
-        elif msg.type == 'note_on' and msg.channel == PERCUSSION_CHANNEL and msg.note in GENERAL_MIDI_PERCUSSION_NAMES:
+        elif msg.type == 'note_on' and msg.channel == PERCUSSION_CHANNEL:
           if msg.note in percussion_remap_names:
-            instruments.add(name)
+            instruments.add(percussion_remap_names[msg.note])
           elif msg.note in GENERAL_MIDI_PERCUSSION_NAMES:
             name = GENERAL_MIDI_PERCUSSION_NAMES[msg.note]
             if name.endswith('_1') or name.endswith('_2'):
