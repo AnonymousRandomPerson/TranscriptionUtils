@@ -9,6 +9,8 @@ for file in sorted(os.listdir(modified_folder)):
     file_path = os.path.join(modified_folder, file)
     full_name = file[:-4]
     game_acronym, track_name, game_name = split_track_name(full_name)
+    if game_acronym is None:
+      continue
     long_name = '{} ({}).mid'.format(track_name, game_name)
 
     parts_dir = os.path.join(parts_folder, full_name)

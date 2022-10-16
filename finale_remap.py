@@ -108,6 +108,7 @@ midi_instruments = {
   'Calliope': LEAD_3_CALLIOPE,
   'Theremin': LEAD_6_SPACE_VOICE,
   'Synth Pad': PAD_2_WARM,
+  'Crystal FX': FX_3_CRYSTAL,
   'Sitar': SITAR,
   'Banjo': BANJO,
   'Shamisen': SHAMISEN,
@@ -191,6 +192,7 @@ mxl_percussion_to_non_percussion = set([
 
 mxl_manual_remap = set([
   'Click FX',
+  'Crotales',
   'Gend\x8er',
   'Guiro',
   'Melodic Tom',
@@ -304,6 +306,7 @@ percussion_parts = {
   'Sleigh Bells': JINGLE_BELL,
   'Snap': HAND_CLAP,
   'Snare Drum': {
+    38: ACOUSTIC_SNARE,
     59: SIDE_STICK,
     60: ACOUSTIC_SNARE,
     61: SIDE_STICK,
@@ -424,6 +427,7 @@ percussion_sequence_orders = {
   'Bongo Drums': [47, 46, 45, 48, 49, 50, 60, 61],
   'Conga Drums': [73, 76, 75, 54, 55, 57, 61, 63, 64],
   'Tablas': [43, 47, 45, 61, 36, 37, 60, 48, 50],
+  'Toms': [43, 65, 66, 41, 48, 52, 42, 68, 55, 59, 44, 70, 62, 65, 46, 69, 72]
 }
 
 percussion_parts_override = {
@@ -460,6 +464,8 @@ PMD_EXPLORERS_PROGRAM_TRANSPOSE = {
     'Brine Cave': -12,
     'Far Amp Plains': -12,
     'Hidden Highland': -12,
+    'Steam Cave': -12,
+    'Upper Steam Cave': -12,
   },
   ENGLISH_HORN: -12,
   FLUTE: {
@@ -1598,8 +1604,10 @@ midi_instrument_overrides = {
     'Electric Piano 1': ELECTRIC_PIANO_2,
     'Electric Piano 2': ELECTRIC_PIANO_2,
   },
-  'FL The Wondaria Dream Parade': {
-    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  'FL Welcome to Wondaria': {
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+    'Electric Guitar 1': ELECTRIC_GUITAR_CLEAN,
+    'Organ': DRAWBAR_ORGAN
   },
   'FO CC Level Theme 2': {
     'Synth Lead': LEAD_2_SAWTOOTH,
@@ -1821,6 +1829,12 @@ midi_instrument_overrides = {
   },
   'KSSt Sub-Tree': {
     'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'LA Alabaster Icelands 1': {
+    'Electric Piano': ELECTRIC_PIANO_2
+  },
+  'LA Alabaster Icelands 1 (Version 2)': {
+    'Electric Piano': ELECTRIC_PIANO_2
   },
   'LF2': {
     'Organ': CHURCH_ORGAN,
@@ -2407,6 +2421,8 @@ def get_mapped_program(game_acronym: str, full_file_name: str, instrument_name: 
 
   if orig_instrument_name in instrument_overrides:
     return instrument_overrides[orig_instrument_name]
+  elif instrument_name in instrument_overrides:
+    return instrument_overrides[instrument_name]
   elif instrument_name in game_instrument_overrides:
     return game_instrument_overrides[instrument_name]
   elif instrument_name in midi_instruments:

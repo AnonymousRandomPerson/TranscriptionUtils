@@ -38,6 +38,7 @@ game_acronyms = {
   'K64': 'Kirby 64 The Crystal Shards',
   'KSSq': 'Kirby Squeak Squad',
   'KSSt': 'Kirby Super Star',
+  'LA': 'Pokemon Legends Arceus',
   'LF2': 'Little Fighter 2',
   'LGPE': 'Pokemon Let\'s Go Pikachu Eevee',
   'LTTP': 'The Legend of Zelda A Link to the Past',
@@ -78,6 +79,7 @@ drive_folders = {
   'IWBTG': 'Guilty Gear Isuka',
   'K64': 'Kirby 64: The Crystal Shards',
   'KSSq': 'Kirby: Squeak Squad',
+  'LA': 'Pokemon Legends: Arceus',
   'LGPE': 'Pokemon: Let\'s Go, Pikachu Eevee!',
   'LTTP': 'The Legend of Zelda: A Link to the Past',
   'MDB': 'Pokemon Mystery Dungeon: Blue Rescue Team',
@@ -150,6 +152,8 @@ def split_track_name(track_name: str):
     track_name = split[2]
   else:
     split = track_name.split(' ', 1)
+    if len(split) < 2:
+      return (None, None, None)
     game_acronym = split[0]
     track_name = split[1]
   return (game_acronym, track_name, game_acronyms[game_acronym])
