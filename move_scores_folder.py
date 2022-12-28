@@ -1,6 +1,10 @@
-import os, shutil, sys, time
-from game_acronyms import *
+import os
+import shutil
+import sys
+import time
+
 from file_locations import *
+from game_acronyms import *
 
 copy_recent_files = True
 recent_threshold = time.time() - 60 * 60 * 1

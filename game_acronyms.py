@@ -110,6 +110,7 @@ special_track_names = {
   'FRLG Road to Fuschia City Leaving Lavender Town': 'Road to Fuschia City: Leaving Lavender Town',
   'HGSS Pokegear Radio Route 201': 'Pokégear Radio: Route 201',
   'HGSS SS Aqua': 'S.S. Aqua',
+  'LA Mt Coronet': 'Mt. Coronet',
   'LGPE Road to Cerulean City Leaving Mt Moon': 'Road to Cerulean City: Leaving Mt. Moon',
   'LGPE Road to Lavender Town Leaving Vermilion City': 'Road to Lavender Town: Leaving Vermilion City',
   'LGPE Road to Viridian City Leaving Pallet Town': 'Road to Viridian City: Leaving Pallet Town',

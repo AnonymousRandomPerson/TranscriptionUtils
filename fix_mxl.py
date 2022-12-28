@@ -35,7 +35,6 @@ for file in sorted(os.listdir(search_folder)):
             part_name = part_info.find('part-name').text
             instrument_name = get_instrument_name(part_name)
             program = None
-            #print(item.filename, part_name)
 
             if full_score and instrument_name in mxl_manual_remap:
               print('Manually remap', instrument_name)
@@ -59,6 +58,9 @@ for file in sorted(os.listdir(search_folder)):
               for score_instrument in part_info.findall('score-instrument'):
                 instrument_name_element = score_instrument.find('instrument-name')
                 instrument_name_element.text = instrument_name_element.text.strip().replace('%g', '')
+                instrument_sound_element = score_instrument.find('instrument-sound')
+                if instrument_sound_element is not None:
+                  instrument_sound_element.text = 'drum.group.set'
               if not instrument_name in ignore_unmapped_percussion:
                 percussion_instruments = {}
                 for score_instrument in part_info.findall('score-instrument'):

@@ -23,6 +23,7 @@ midi_instruments = {
   'Xylophone': XYLOPHONE,
   'Chimes': TUBULAR_BELLS,
   'Dulcimer': DULCIMER,
+  'Santoor': DULCIMER,
   'Organ': PERCUSSIVE_ORGAN,
   'Accordion': ACCORDION,
   'Harmonica': HARMONICA,
@@ -90,6 +91,7 @@ midi_instruments = {
   'Contrabass Clarinet': CLARINET,
   'Piccolo': PICCOLO,
   'Alto Flute': FLUTE,
+  'Bansuri': FLUTE,
   'Bass Flute': FLUTE,
   'Flute': FLUTE,
   'Alto Recorder': RECORDER,
@@ -125,6 +127,7 @@ midi_instruments = {
   'Fire FX': BREATH_NOISE,
   'Laugh FX': BREATH_NOISE,
   'Noise FX': BREATH_NOISE,
+  'Roar FX': BREATH_NOISE,
   'Sound FX': BREATH_NOISE,
   'Vacuum FX': BREATH_NOISE,
   'Whoosh FX': BREATH_NOISE,
@@ -174,6 +177,7 @@ mxl_instruments = {
   SLAP_BASS_1: 'effect.bass-string-slap',
   STRING_ENSEMBLE_1: 'strings.group',
   SYNTH_BRASS_1: 'brass.group.synth',
+  SYNTH_VOICE: 'synth.pad.choir',
   TELEPHONE_RING: 'effect.telephone-ring',
   VIBRAPHONE: 'pitched-percussion.vibraphone',
   VOICE_OOHS: 'voice.oo',
@@ -192,7 +196,6 @@ mxl_percussion_to_non_percussion = set([
 
 mxl_manual_remap = set([
   'Click FX',
-  'Crotales',
   'Gend\x8er',
   'Guiro',
   'Melodic Tom',
@@ -269,6 +272,7 @@ percussion_parts = {
     58: LOW_CONGA,
     60: OPEN_HIGH_CONGA,
   },
+  'Gongs': RIDE_BELL,
   'Guiro': {
     61: LONG_GUIRO,
     62: SHORT_GUIRO,
@@ -287,6 +291,8 @@ percussion_parts = {
   'O-daiko': {
     12: LOW_TOM,
     13: LOW_MID_TOM,
+    14: SIDE_STICK,
+    15: SIDE_STICK,
     41: LOW_TOM,
     48: LOW_MID_TOM,
   },
@@ -426,7 +432,7 @@ percussion_sequence_mappings = {
 percussion_sequence_orders = {
   'Bongo Drums': [47, 46, 45, 48, 49, 50, 60, 61],
   'Conga Drums': [73, 76, 75, 54, 55, 57, 61, 63, 64],
-  'Tablas': [43, 47, 45, 61, 36, 37, 60, 48, 50],
+  'Tablas': [43, 44, 47, 45, 61, 36, 37, 60, 48, 50, 41, 40],
   'Toms': [43, 65, 66, 41, 48, 52, 42, 68, 55, 59, 44, 70, 62, 65, 46, 69, 72]
 }
 
@@ -1831,10 +1837,71 @@ midi_instrument_overrides = {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'LA Alabaster Icelands 1': {
-    'Electric Piano': ELECTRIC_PIANO_2
+    'Electric Piano': ELECTRIC_PIANO_2,
   },
   'LA Alabaster Icelands 1 (Version 2)': {
-    'Electric Piano': ELECTRIC_PIANO_2
+    'Electric Piano': ELECTRIC_PIANO_2,
+  },
+  'LA Arceus': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Synth Pad': PAD_7_HALO,
+  },
+  'LA Battle! (Alpha Pokemon)': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'LA Battle! (Giratina)': {
+    'Organ': CHURCH_ORGAN,
+    'Synth Bass 2': LEAD_1_SQUARE,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'LA Battle! (Legendary Pokemon)': {
+    'Organ': CHURCH_ORGAN,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Synth Pad': PAD_6_METALLIC,
+  },
+  'LA Battle! (Trainer Battle)': {
+    'Synth Lead': LEAD_5_CHARANG,
+  },
+  'LA Battle! (Warden)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'LA Battle! (Wild Pokemon)': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'LA Cobalt Coastlands 1': {
+    'Electric Piano 2': ELECTRIC_PIANO_2,
+    'Synth Pad 1': PAD_7_HALO,
+    'Synth Pad 2': PAD_1_NEW_AGE,
+  },
+  'LA Cobalt Coastlands 1 (Version 2)': {
+    'Electric Piano 2': ELECTRIC_PIANO_2,
+    'Synth Pad 1': PAD_7_HALO,
+    'Synth Pad 2': PAD_1_NEW_AGE,
+  },
+  'LA Crimson Mirelands 1': {
+    'Cello': CELLO,
+    'Electric Piano': ELECTRIC_PIANO_2,
+    'Organ': DRAWBAR_ORGAN,
+    'Synth Lead': LEAD_5_CHARANG,
+    'Viola': VIOLA,
+    'Violin': VIOLIN,
+  },
+  'LA Crimson Mirelands 1 (Version 2)': {
+    'Cello': CELLO,
+    'Electric Piano': ELECTRIC_PIANO_2,
+    'Organ': DRAWBAR_ORGAN,
+    'Synth Lead': LEAD_5_CHARANG,
+    'Viola': VIOLA,
+    'Violin': VIOLIN,
+  },
+  'LA Mt Coronet': {
+    'Cello': CELLO,
+    'Double Bass': CONTRABASS,
+    'Electric Piano': ELECTRIC_PIANO_2,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Synth Pad': PAD_1_NEW_AGE,
+    'Viola': VIOLA,
+    'Violin': VIOLIN,
   },
   'LF2': {
     'Organ': CHURCH_ORGAN,
