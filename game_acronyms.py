@@ -3,6 +3,7 @@ import os
 game_acronyms = {
   'AM': 'Kirby & the Amazing Mirror',
   'B2W2': 'Pokemon Black White 2',
+  'BB': 'Kirby\'s Blowout Blast',
   'BBT': 'BattleBlock Theater',
   'BDSP': 'Pokemon Brilliant Diamond Shining Pearl',
   'BIS': 'Mario & Luigi Bowser\'s Inside Story',
@@ -58,6 +59,8 @@ game_acronyms = {
   'MLSSBM': 'Mario & Luigi Superstar Saga Bowser\'s Minions',
   'MPDS': 'Mario Party DS',
   'MRKB': 'Mario Rabbids Kingdom Battle',
+  'MRSOH': 'Mario Rabbids Sparks of Hope',
+  'NID': 'Kirby Nightmare in Dream Land',
   'Pt': 'Pokemon Platinum',
   'SMD': 'Pokemon Super Mystery Dungeon',
 }
@@ -92,6 +95,8 @@ drive_folders = {
   'MLSS': 'Mario & Luigi: Superstar Saga',
   'MLSSBM': 'Mario & Luigi: Superstar Saga + Bowser\'s Minions',
   'MRKB': 'Mario + Rabbids: Kingdom Battle',
+  'MRSOH': 'Mario + Rabbids: Sparks of Hope',
+  'NID': 'Kirby: Nightmare in Dream Land',
 }
 
 special_track_names = {
@@ -137,6 +142,12 @@ special_track_names = {
   'MDTDS Mt Travail': 'Mt. Travail',
   'MRKB Cold Start Hot Finish': 'Cold Start, Hot Finish',
   'MRKB Hot Start Cold Finish': 'Hot Start, Cold Finish',
+  'MRSOH Cold Dark Mask of the Mountain Pt I': 'Cold, Dark Mask of the Mountain, Pt. I',
+  'MRSOH Daphne\'s Trap Pt I': 'Daphne\'s Trap, Pt. I',
+  'MRSOH For the Galaxy! Pt I': 'For the Galaxy! Pt. I',
+  'MRSOH For the Galaxy! Pt II': 'For the Galaxy! Pt. II',
+  'MRSOH Root of Corruption Pt I': 'Root of Corruption, Pt. I',
+  'MRSOH Root of Corruption Pt II': 'Root of Corruption, Pt. II',
   'SMD Air Continent Baram Town': 'Air Continent: Baram Town',
   'SMD Boss Battle Children\'s Adventure!': 'Boss Battle: Children\'s Adventure!',
   'SMD Boss Battle Expedition Society Fight': 'Boss Battle: Expedition Society Fight',
@@ -174,4 +185,3 @@ def get_drive_track_name(game_acronym: str, track_name: str):
   drive_folder = drive_folder.replace('Pokemon', 'Pokémon')
 
   return drive_track_name, drive_folder
-

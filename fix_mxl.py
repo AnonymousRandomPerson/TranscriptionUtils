@@ -178,10 +178,10 @@ for file in sorted(os.listdir(search_folder)):
                       ElementTree.SubElement(transpose, 'chromatic').text = '0'
 
                     octave_change_tag = ElementTree.SubElement(transpose, 'octave-change')
-                    octave_change_text = '0'
+                    octave_change_tag.text = str(octave_change)
                   else:
                     octave_change_text = octave_change_tag.text
-                  octave_change_tag.text = str(int(octave_change_text) + octave_change)
+                    octave_change_tag.text = str(int(octave_change_text) + octave_change)
 
                 clef = attributes.find('clef')
                 percussion_clef = False

@@ -158,7 +158,6 @@ mxl_instruments = {
   BREATH_NOISE: 'effect.breath',
   DRAWBAR_ORGAN: 'keyboard.organ.drawbar',
   ELECTRIC_GUITAR_DISTORTION: '',
-  ELECTRIC_PIANO_2: '',
   GUNSHOT: 'effect.gunshot',
   HELICOPTER: 'effect.helicopter',
   LEAD_2_SAWTOOTH: 'synth.tone.sawtooth',
@@ -195,7 +194,7 @@ mxl_percussion_to_non_percussion = set([
 ])
 
 mxl_manual_remap = set([
-  'Click FX',
+  'Bass Drum',
   'Gend\x8er',
   'Guiro',
   'Melodic Tom',
@@ -203,7 +202,6 @@ mxl_manual_remap = set([
   'Muted Electric Guitar',
   'Muted Trombone',
   'Muted Trumpet',
-  'Static FX',
   'Wind Chimes',
 ])
 
@@ -276,6 +274,7 @@ percussion_parts = {
   'Guiro': {
     61: LONG_GUIRO,
     62: SHORT_GUIRO,
+    73: SHORT_GUIRO,
     74: LONG_GUIRO,
   },
   'Hand Castanets': CASTANETS,
@@ -1288,6 +1287,24 @@ program_transpose = {
     },
     TUBULAR_BELLS: 12,
   },
+  'NID': {
+    CLARINET: 12,
+    DRAWBAR_ORGAN: 12,
+    ELECTRIC_BASS_FINGER: -24,
+    LEAD_1_SQUARE: {
+      'Butter Building': 12,
+    },
+    LEAD_2_SAWTOOTH: -24,
+    PAD_1_NEW_AGE: 24,
+    SYNTH_BRASS_1: {
+      DEFAULT_TRACK: 12,
+      'Boss Battle Theme': {
+        'Synth Brass 1': 0,
+      },
+    },
+    ORCHESTRA_HIT: 12,
+    TRUMPET: 12,
+  },
 }
 
 PMD_EXPLORERS_MIDI_INSTRUMENT_OVERRIDES = {
@@ -1313,6 +1330,18 @@ midi_instrument_overrides = {
   },
   'B2W2 Virbank City': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'BB Castle Lololo': {
+    'Synth Lead': LEAD_5_CHARANG,
+  },
+  'BB Float Islands': {
+    'Organ': DRAWBAR_ORGAN,
+  },
+  'BB King Dedede\'s Theme': {
+    'Synth Lead': LEAD_4_CHIFF,
+  },
+  'BB King Dedede\'s Theme 2': {
+    'Synth Lead': LEAD_4_CHIFF,
   },
   'BBT Buckle Your Pants (instrumental)': {
     'Synth Lead 3': LEAD_2_SAWTOOTH,
@@ -1903,6 +1932,19 @@ midi_instrument_overrides = {
     'Viola': VIOLA,
     'Violin': VIOLIN,
   },
+  'LA Obsidian Fieldlands 2': {
+    'Violin I': VIOLIN,
+  },
+  'LA Obsidian Fieldlands 2 (Version 2)': {
+    'Violin I': VIOLIN,
+  },
+  'LA Route 209': {
+    'Cello': CELLO,
+    'Double Bass': CONTRABASS,
+    'Synth Pad': PAD_8_SWEEP,
+    'Viola': VIOLA,
+    'Violin': VIOLIN,
+  },
   'LF2': {
     'Organ': CHURCH_ORGAN,
   },
@@ -2421,6 +2463,17 @@ midi_instrument_overrides = {
   },
   'MRKB': {
     'Organ': CHURCH_ORGAN,
+  },
+  'MRSOH Ballad of Barrendale Mesa': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Electric Piano 2': ELECTRIC_PIANO_2,
+  },
+  'MRSOH Dancing in the Sand': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'NID': {
+    'Organ': ROCK_ORGAN,
+    'Synth Bass': LEAD_2_SAWTOOTH,
   },
   'Pt Battle! (Frontier Brain)': {
     'Synth Lead': LEAD_2_SAWTOOTH,
