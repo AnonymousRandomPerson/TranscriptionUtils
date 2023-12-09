@@ -23,7 +23,7 @@ final_name_delayed=/Users/chenghanngan/Documents/Music/Transcription/Videos/"$fi
 
 fade_out_time=3
 
-fade=true
+fade=false
 if [ $fade_out_time = 0 ]; then
     fade=false
 fi

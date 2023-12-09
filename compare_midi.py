@@ -7,35 +7,28 @@ from typing import Any, Dict, List, Tuple
 from dataclasses import dataclass
 import editdistance
 
-track_name = 'Tiny Woods'
+track_name = 'Attack I'
 
 midi_file_1 = track_name + '.mid'
-midi_file_2 = midi_file_1
-midi_path_1 = os.path.join(sf2_folder, 'Pokémon Mystery Dungeon Red Rescue Team', midi_file_1)
-midi_path_2 = os.path.join(sf2_folder, 'Pokémon Mystery Dungeon Blue Rescue Team', midi_file_2)
+midi_file_2 = 'Attack 1.mid'
+midi_path_1 = os.path.join(sf2_folder, 'RuneScape', 'RuneScape HD', midi_file_1)
+midi_path_2 = os.path.join(sf2_folder, 'RuneScape', 'Old School RuneScape', midi_file_2)
 
-equal_programs = {
-  11: 12,
-  16: 17,
-  25: 29,
-  26: 41,
-  32: 37,
-  53: 52,
-  87: 89,
-  91: 37,
-  94: 95,
-}
-
+equal_programs = {}
 equal_percussion = {
-  38: 40,
+  1: 24,
+  3: 27,
+  7: 28,
+  8: 32,
+  10: 34,
+  11: 35,
+  12: 36,
+  13: 24,
+  24: 37,
+  25: 24,
 }
-
-# midi_file_1 = track_name + ' (Pokemon Mystery Dungeon Red Rescue Team).mid'
-# midi_file_2 = track_name + ' (Pokemon Mystery Dungeon Blue Rescue Team).mid'
-# midi_path_1 = os.path.join(parts_folder, 'MDR ' + track_name, midi_file_1)
-# midi_path_2 = os.path.join(parts_folder, 'MDB ' + track_name, midi_file_2)
-# equal_programs = {}
-# equal_percussion = {}
+percussion_program = 0
+transpose = 0
 
 @dataclass
 class Note:
@@ -63,8 +56,8 @@ def get_midi_data(midi_path: str) -> Dict[str, List[Note]]:
         same_time_notes: List[Note] = []
         same_note = False
         msg_note = msg.note
-        if channel_programs[msg.channel] == PERCUSSION and msg_note in equal_percussion:
-          msg_note = equal_percussion[msg_note]
+        if channel_programs[msg.channel] == percussion_program and msg_note in equal_percussion:
+            msg_note = equal_percussion[msg_note]
         for note in reversed(program_data):
           if note.time == current_time:
             if note.note == msg_note:
@@ -122,9 +115,12 @@ def find_differences(offset):
       if program_1 not in differences or differences[program_1].num_differences > num_differences:
         differences[program_1] = Difference(program_2, num_differences, track_1, track_2)
 
-find_differences(0)
-find_differences(12)
-find_differences(-12)
+for i in range(0, 5):
+  if i == 0 and transpose == 0:
+    find_differences(i)
+  else:
+    find_differences(i * 12 + transpose)
+    find_differences(-i * 12 + transpose)
 
 for program, difference in get_sorted_data(differences):
   if difference.num_differences > 0:

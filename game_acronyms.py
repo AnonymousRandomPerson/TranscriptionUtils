@@ -61,7 +61,14 @@ game_acronyms = {
   'MRKB': 'Mario Rabbids Kingdom Battle',
   'MRSOH': 'Mario Rabbids Sparks of Hope',
   'NID': 'Kirby Nightmare in Dream Land',
+  'NSLT': 'New Super Lucky\'s Tale',
+  'NSMBU': 'New Super Mario Bros U',
+  'NSMBW': 'New Super Mario Bros Wii',
+  'ORAS': 'Pokemon Omega Ruby Alpha Sapphire',
+  'OSRS': 'Old School RuneScape',
   'Pt': 'Pokemon Platinum',
+  'RS': 'RuneScape',
+  'RSE': 'Pokemon Ruby Sapphire',
   'SMD': 'Pokemon Super Mystery Dungeon',
 }
 
@@ -97,6 +104,8 @@ drive_folders = {
   'MRKB': 'Mario + Rabbids: Kingdom Battle',
   'MRSOH': 'Mario + Rabbids: Sparks of Hope',
   'NID': 'Kirby: Nightmare in Dream Land',
+  'NSMBU': 'New Super Mario Bros. U',
+  'NSMBW': 'New Super Mario Bros. Wii',
 }
 
 special_track_names = {
@@ -146,8 +155,14 @@ special_track_names = {
   'MRSOH Daphne\'s Trap Pt I': 'Daphne\'s Trap, Pt. I',
   'MRSOH For the Galaxy! Pt I': 'For the Galaxy! Pt. I',
   'MRSOH For the Galaxy! Pt II': 'For the Galaxy! Pt. II',
+  'MRSOH Phantom Razzmatazz': 'Phantom, Razzmatazz',
+  'MRSOH Phantom The Diva Delivers': 'Phantom, The Diva Delivers',
   'MRSOH Root of Corruption Pt I': 'Root of Corruption, Pt. I',
   'MRSOH Root of Corruption Pt II': 'Root of Corruption, Pt. II',
+  'ORAS Mt Pyre': 'Mt. Pyre',
+  'ORAS Mt Pyre Exterior': 'Mt. Pyre Exterior',
+  'RSE Mt Chimney': 'Mt. Chimney',
+  'RSE Mt Pyre Exterior': 'Mt. Pyre Exterior',
   'SMD Air Continent Baram Town': 'Air Continent: Baram Town',
   'SMD Boss Battle Children\'s Adventure!': 'Boss Battle: Children\'s Adventure!',
   'SMD Boss Battle Expedition Society Fight': 'Boss Battle: Expedition Society Fight',
@@ -157,18 +172,37 @@ special_track_names = {
   'SMD Tree of Life Roots': 'Tree of Life: Roots',
 }
 
-def split_track_name(track_name: str):
-  if track_name.startswith('FO '):
-    split = track_name.split(' ', 2)
+special_track_game_names = {
+  'NSLT Fretting Yeti': 'Super Lucky\'s Tale',
+  'OSRS Assault and Battery': 'RuneScape 2',
+  'RS A Pirate\'s Life for Me': 'RuneScape 3',
+  'RS Alone': 'RuneScape 3',
+  'RS Assault and Battery': 'RuneScape 3',
+  'RS Assault and Battery (original)': 'RuneScape HD',
+}
+
+def get_game_name(game_acronym: str, full_track_name: str):
+  if full_track_name in special_track_game_names:
+    return special_track_game_names[full_track_name]
+  if game_acronym == 'RS' and full_track_name.endswith('(original)'):
+    return 'RuneScape 2'
+  return game_acronyms[game_acronym]
+
+def split_track_name(full_track_name: str):
+  if full_track_name.startswith('FO '):
+    split = full_track_name.split(' ', 2)
     game_acronym = split[0] + ' ' + split[1]
     track_name = split[2]
   else:
-    split = track_name.split(' ', 1)
+    split = full_track_name.split(' ', 1)
     if len(split) < 2:
       return (None, None, None)
     game_acronym = split[0]
     track_name = split[1]
-  return (game_acronym, track_name, game_acronyms[game_acronym])
+
+    if game_acronym == 'RS' and track_name.endswith('(original)'):
+      track_name = track_name.replace(' (original)', '')
+  return (game_acronym, track_name, get_game_name(game_acronym, full_track_name))
 
 def get_drive_track_name(game_acronym: str, track_name: str):
   full_name = game_acronym + ' ' + track_name
@@ -181,7 +215,9 @@ def get_drive_track_name(game_acronym: str, track_name: str):
   if game_acronym in drive_folders:
     drive_folder = drive_folders[game_acronym]
   else:
-    drive_folder = game_acronyms[game_acronym]
+    drive_folder = get_game_name(game_acronym, full_name)
   drive_folder = drive_folder.replace('Pokemon', 'Pokémon')
+  if drive_folder.startswith('RuneScape'):
+    drive_folder = 'RuneScape'
 
   return drive_track_name, drive_folder

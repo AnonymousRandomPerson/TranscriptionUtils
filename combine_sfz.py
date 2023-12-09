@@ -2,8 +2,8 @@ import os
 from file_locations import *
 
 combined_soundfont_name = 'combined.sfz'
-soundfont_folder = os.path.join(soundfont_banks_folder, 'Mario Kart DS')
-soundfont_bank = 'Choco Mountain'
+soundfont_folder = os.path.join(soundfont_banks_folder, 'Pokémon Emerald')
+soundfont_bank = '112'
 
 soundfont_folder = os.path.join(soundfont_folder, soundfont_bank)
 combined_soundfont_path = os.path.join(soundfont_folder, combined_soundfont_name)

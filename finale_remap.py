@@ -30,8 +30,10 @@ midi_instruments = {
   'Melodica': HARMONICA,
   'Acoustic Guitar': ACOUSTIC_GUITAR_NYLON,
   'Kora': ACOUSTIC_GUITAR_NYLON,
+  'Lute': ACOUSTIC_GUITAR_NYLON,
   'Mandolin': ACOUSTIC_GUITAR_NYLON,
   'Ukulele': ACOUSTIC_GUITAR_NYLON,
+  'Steel Guitar': ACOUSTIC_GUITAR_STEEL,
   'Muted Electric Guitar': ELECTRIC_GUITAR_MUTED,
   'Electric Guitar': ELECTRIC_GUITAR_DISTORTION,
   'Electric Bass': ELECTRIC_BASS_FINGER,
@@ -76,9 +78,11 @@ midi_instruments = {
   'Synth Brass': SYNTH_BRASS_1,
   'Soprano Sax': SOPRANO_SAX,
   'Alto Sax': ALTO_SAX,
+  'Kazoo': ALTO_SAX,
   'Tenor Sax': TENOR_SAX,
   'Baritone Sax': BARITONE_SAX,
   'Oboe': OBOE,
+  'Jaw Harp': OBOE,
   'Pungi': SHANAI,
   'Rhaita': SHANAI,
   'Shehnai': SHANAI,
@@ -120,6 +124,8 @@ midi_instruments = {
   'Cowbell (Auto-tune)': AGOGO,
   'Steel Drums': STEEL_DRUMS,
   'Temple Blocks': WOODBLOCK,
+  'Taiko Drums': TAIKO_DRUM,
+  'Beat FX': MELODIC_TOM,
   'Melodic Tom': MELODIC_TOM,
   'Breath FX': BREATH_NOISE,
   'Compressed Air FX': BREATH_NOISE,
@@ -134,6 +140,7 @@ midi_instruments = {
   'Wind FX': BREATH_NOISE,
   'Bubble FX': SEASHORE,
   'Rustling FX': SEASHORE,
+  'Seashore FX': SEASHORE,
   'Beep FX': BIRD_TWEET,
   'Boing FX': BIRD_TWEET,
   'Laser FX': BIRD_TWEET,
@@ -185,7 +192,7 @@ mxl_instruments = {
 }
 
 mxl_percussion_override = {
-  'Bodhrán': LOW_BONGO,
+  'Bodhrán': LOW_CONGA,
   'Tsuzumi': HIGH_BONGO,
 }
 
@@ -195,6 +202,8 @@ mxl_percussion_to_non_percussion = set([
 
 mxl_manual_remap = set([
   'Bass Drum',
+  'Cabasa',
+  'Drum Set',
   'Gend\x8er',
   'Guiro',
   'Melodic Tom',
@@ -202,6 +211,11 @@ mxl_manual_remap = set([
   'Muted Electric Guitar',
   'Muted Trombone',
   'Muted Trumpet',
+  'Orchestra Hit',
+  'Slap Bass',
+  'Sleigh Bells',
+  'Temple Blocks',
+  'Toms',
   'Wind Chimes',
 ])
 
@@ -215,8 +229,8 @@ percussion_parts = {
   'Bass Drum': ACOUSTIC_BASS_DRUM,
   'Bell': RIDE_BELL,
   'Bell Tree': BELL_TREE,
-  'Bodhrán': LOW_BONGO,
-  'Bodhr\x87n': LOW_BONGO,
+  'Bodhrán': LOW_CONGA,
+  'Bodhr\x87n': LOW_CONGA,
   'Bongo Drums': {
     45: LOW_BONGO,
     46: LOW_BONGO,
@@ -285,6 +299,10 @@ percussion_parts = {
     89: CLOSED_HI_HAT,
   },
   'Kick Drum': ACOUSTIC_BASS_DRUM,
+  'Log Drum': {
+    36: LOW_CONGA,
+    37: OPEN_HIGH_CONGA,
+  },
   'Machine Castanets': CASTANETS,
   'Maracas': MARACAS,
   'O-daiko': {
@@ -432,7 +450,7 @@ percussion_sequence_orders = {
   'Bongo Drums': [47, 46, 45, 48, 49, 50, 60, 61],
   'Conga Drums': [73, 76, 75, 54, 55, 57, 61, 63, 64],
   'Tablas': [43, 44, 47, 45, 61, 36, 37, 60, 48, 50, 41, 40],
-  'Toms': [43, 65, 66, 41, 48, 52, 42, 68, 55, 59, 44, 70, 62, 65, 46, 69, 72]
+  'Toms': [43, 65, 66, 41, 52, 42, 68, 55, 59, 44, 70, 62, 65, 46, 69, 72, 48, 76]
 }
 
 percussion_parts_override = {
@@ -1243,7 +1261,6 @@ program_transpose = {
   'MK8D': {
     PERCUSSIVE_ORGAN: {
       'Choco Mountain': 12,
-      'Choco Mountain (Final Lap)': 12,
     },
   },
   'MKDS': {
@@ -1279,6 +1296,72 @@ program_transpose = {
     TIMPANI: -12,
     TUBA: -24,
   },
+  'NID': {
+    BANJO: 12,
+    BLOWN_BOTTLE: 12,
+    CELESTA: {
+      'Mountain Stage': 12,
+    },
+    CLARINET: 12,
+    CLAVINET: -24,
+    ELECTRIC_BASS_FINGER: {
+      DEFAULT_TRACK: -24,
+      'Forest Stage': -12,
+      'Green Greens': {
+        'Electric Bass 1': -12,
+        'Electric Bass 2': -24,
+      },
+    },
+    ELECTRIC_BASS_PICKED: -24,
+    GLOCKENSPIEL: 36,
+    LEAD_1_SQUARE: {
+      'Butter Building': 12,
+      'Grape Garden': 24,
+      'Green Greens': 12,
+      'Ice Cream Island': 12,
+      'Mountain Stage': {
+        'Synth Lead 1': 12,
+        'Synth Lead 3': 24,
+      },
+      'Nightmare Battle Theme 2': 12,
+      'Orange Ocean': 12,
+      'Rainbow Resort': 12,
+    },
+    LEAD_2_SAWTOOTH: {
+      DEFAULT_TRACK: -24,
+      'Ice Cream Island': 0,
+    },
+    MARIMBA: {
+      'Nightmare Battle Theme 2': 12,
+      'Orange Ocean': 12,
+    },
+    ORCHESTRA_HIT: 12,
+    PAD_1_NEW_AGE: 24,
+    PAN_FLUTE: 12,
+    PICCOLO: 24,
+    ROCK_ORGAN: 12,
+    STEEL_DRUMS: 12,
+    SYNTH_BRASS_1: {
+      DEFAULT_TRACK: 12,
+      'Boss Battle Theme': {
+        'Synth Brass 1': 0,
+      },
+      'Ice Cream Island': {
+        'Synth Brass 1': 0,
+        'Synth Brass 2': 12,
+      },
+      'Mountain Stage': 0,
+      'Tower of Midbosses': {
+        'Synth Brass 1': 12,
+        'Synth Brass 2': 0,
+      },
+    },
+    SYNTH_STRINGS_1: 12,
+    TRUMPET: 12,
+    VIBRAPHONE: 12,
+    VOICE_OOHS: 12,
+    WHISTLE: 24,
+  },
   'Pt': {
     LEAD_1_SQUARE: {
       'Battle! (Regirock Regice Registeel)': {
@@ -1287,23 +1370,12 @@ program_transpose = {
     },
     TUBULAR_BELLS: 12,
   },
-  'NID': {
-    CLARINET: 12,
-    DRAWBAR_ORGAN: 12,
-    ELECTRIC_BASS_FINGER: -24,
-    LEAD_1_SQUARE: {
-      'Butter Building': 12,
-    },
-    LEAD_2_SAWTOOTH: -24,
-    PAD_1_NEW_AGE: 24,
-    SYNTH_BRASS_1: {
-      DEFAULT_TRACK: 12,
-      'Boss Battle Theme': {
-        'Synth Brass 1': 0,
+  'RSE': {
+    LEAD_2_SAWTOOTH: {
+      'Battle! (Regirock Regice Registeel)': {
+        'Synth Lead 1': -12,
       },
     },
-    ORCHESTRA_HIT: 12,
-    TRUMPET: 12,
   },
 }
 
@@ -2401,14 +2473,7 @@ midi_instrument_overrides = {
     'Synth Lead': LEAD_2_SAWTOOTH,
     'Zap FX': BREATH_NOISE,
   },
-  'MK8 Tick Tock Clock (Final Lap)': {
-    'Synth Lead': LEAD_2_SAWTOOTH,
-    'Zap FX': BREATH_NOISE,
-  },
   'MK8 Wild Woods': {
-    'Violin': VIOLIN,
-  },
-  'MK8 Wild Woods (Final Lap)': {
     'Violin': VIOLIN,
   },
   'MK8D Choco Mountain': {
@@ -2416,15 +2481,7 @@ midi_instrument_overrides = {
     'Violin I': VIOLIN,
     'Violin II': VIOLIN,
   },
-  'MK8D Choco Mountain (Final Lap)': {
-    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
-    'Violin I': VIOLIN,
-    'Violin II': VIOLIN,
-  },
   'MK8D Sky Garden': {
-    'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
-  },
-  'MK8D Sky Garden (Final Lap)': {
     'Electric Guitar 2': ELECTRIC_GUITAR_CLEAN,
   },
   'MKDS': {
@@ -2434,23 +2491,11 @@ midi_instrument_overrides = {
     'Violin I': VIOLIN,
     'Violin II': VIOLIN,
   },
-  'MKDS Choco Mountain (Final Lap)': {
-    'Violin I': VIOLIN,
-    'Violin II': VIOLIN,
-  },
   'MKDS Tick Tock Clock': {
     'Synth Lead': LEAD_2_SAWTOOTH,
     'Zap FX': BREATH_NOISE,
   },
-  'MKDS Tick Tock Clock (Final Lap)': {
-    'Synth Lead': LEAD_2_SAWTOOTH,
-    'Zap FX': BREATH_NOISE,
-  },
   'MKDS Waluigi Pinball': {
-    'Organ': ROCK_ORGAN,
-    'Synth Lead': LEAD_2_SAWTOOTH,
-  },
-  'MKDS Waluigi Pinball (Final Lap)': {
     'Organ': ROCK_ORGAN,
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
@@ -2471,14 +2516,257 @@ midi_instrument_overrides = {
   'MRSOH Dancing in the Sand': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
   },
+  'MRSOH Melosphere Melodrama': {
+    'Electric Piano': ELECTRIC_PIANO_2,
+    'Synth Lead 1': PAD_7_HALO,
+    'Synth Pad': PAD_6_METALLIC,
+  },
+  'MRSOH Phantom Razzmatazz': {
+    'Organ': ROCK_ORGAN,
+  },
+  'MRSOH Slay the Dragon': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Voice': BREATH_NOISE,
+  },
+  'MRSOH The March of the Golems': {
+    'Synth Pad': PAD_3_POLYSYNTH,
+  },
   'NID': {
     'Organ': ROCK_ORGAN,
     'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'NID Butter Building': {
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+  },
+  'NID Grape Garden 2': {
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+  },
+  'NID Nightmare Battle Theme 2': {
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+  },
+  'NID Orange Ocean': {
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+  },
+  'NID Rainbow Resort': {
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+  },
+  'NID Vegetable Valley': {
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+  },
+  'NSLT Foxhole Groove of Gilly Island': {
+    'Electric Bass 2': ELECTRIC_BASS_PICKED,
+  },
+  'NSLT Pungent Paths': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Violin': VIOLIN,
+  },
+  'NSLT Spooky Train': {
+    'Cello': CELLO,
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+    'Viola': VIOLA,
+  },
+  'NSMBU Athletic Theme': {
+    'Viola': VIOLA,
+    'Violin': VIOLIN,
+  },
+  'NSMBU Athletic Theme (Yoshi)': {
+    'Viola': VIOLA,
+    'Violin': VIOLIN,
+  },
+  'NSMBU Ground Theme': {
+    'Electric Piano 2': ELECTRIC_PIANO_2,
+  },
+  'NSMBU Ground Theme (Yoshi)': {
+    'Electric Piano 2': ELECTRIC_PIANO_2,
+  },
+  'NSMBW Airship Theme': {
+    'Organ': DRAWBAR_ORGAN,
+  },
+  'NSMBW Athletic Theme': {
+    'Double Bass': PIZZICATO_STRINGS,
+    'Electric Guitar': ELECTRIC_GUITAR_OVERDRIVEN,
+  },
+  'NSMBW Ground Theme': {
+    'Electric Piano 1': ELECTRIC_PIANO_2,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'NSMBW Ground Theme (Yoshi)': {
+    'Electric Piano 1': ELECTRIC_PIANO_2,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'NSMBW Snow Theme': {
+    'Electric Piano 1': ELECTRIC_PIANO_2,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'NSMBW Snow Theme (Yoshi)': {
+    'Electric Piano 1': ELECTRIC_PIANO_2,
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'ORAS Battle! (Brendan May)': {
+    'Synth Lead': LEAD_4_CHIFF,
+  },
+  'ORAS Battle! (Deoxys)': {
+    'Organ': CHURCH_ORGAN,
+  },
+  'ORAS Battle! (Regirock Regice Registeel)': {
+    'Organ': DRAWBAR_ORGAN,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'ORAS Battle! (Steven)': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'ORAS Battle! (Team Aqua Team Magma)': {
+    'Organ': CHURCH_ORGAN,
+  },
+  'ORAS Hideout': {
+    'Organ': ROCK_ORGAN,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'ORAS Mt Pyre': {
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'ORAS Mt Pyre Exterior': {
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+    'Electric Piano': ELECTRIC_PIANO_2,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'OSRS Assault and Battery': {
+    'Organ': REED_ORGAN,
   },
   'Pt Battle! (Frontier Brain)': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'Pt Battle! (Giratina)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'RS': {
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+  },
+  'RS Adorno III': {
+    'Synth Pad': PAD_8_SWEEP,
+  },
+  'RS All\'s Fairy in Love and War': {
+    'Glockenspiel': FX_3_CRYSTAL,
+    'Synth Lead': FX_4_ATMOSPHERE,
+  },
+  'RS Altar Ego': {
+    'Synth Pad': FX_3_CRYSTAL,
+  },
+  'RS Assault and Battery': {
+    'Organ': REED_ORGAN,
+  },
+  'RS Assault and Battery (original)': {
+    'Organ': REED_ORGAN,
+  },
+  'RS Attack I (original)': {
+    'Synth Pad': PAD_3_POLYSYNTH,
+  },
+  'RSE': {
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+    'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'RSE Battle! (Brendan May)': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'RSE Battle! (Elite Four)': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'RSE Battle! (Gym Leader)': {
+    'Synth Lead 4': LEAD_2_SAWTOOTH,
+  },
+  'RSE Battle! (Regirock Regice Registeel)': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'RSE Battle! (Steven)': {
+    'Synth Lead 2': LEAD_4_CHIFF,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'RSE Battle! (Team Aqua Team Magma Leaders)': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'RSE Battle! (Super-Ancient Pokemon)': {
+    'Synth Lead': LEAD_4_CHIFF,
+  },
+  'RSE Battle! (Super-Ancient Pokemon)': {
+    'Synth Lead': LEAD_4_CHIFF,
+  },
+  'RSE Battle! (Team Aqua Team Magma Leaders)': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'RSE Battle! (Team Aqua Team Magma)': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_4_CHIFF,
+    'Synth Bass 2': LEAD_2_SAWTOOTH,
+  },
+  'RSE Battle! (Trainer Battle)': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_4_CHIFF,
+  },
+  'RSE Battle! (Wild Pokemon)': {
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'RSE Dewford Town': {
+    'Electric Bass': ELECTRIC_BASS_FINGER,
+    'Synth Bass': LEAD_4_CHIFF,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'RSE Hideout': {
+    'Electric Bass': None,
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_4_CHIFF,
+  },
+  'RSE Introductions': {
+    'Synth Bass': LEAD_2_SAWTOOTH,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'RSE Lilycove City': {
+    'Synth Lead 1': LEAD_4_CHIFF,
+  },
+  'RSE Mt Chimney': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_2_SAWTOOTH,
+  },
+  'RSE Mt Pyre Exterior': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_4_CHIFF,
+  },
+  'RSE Oldale Town': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'RSE Route 104': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_4_CHIFF,
+  },
+  'RSE Route 110': {
+    'Synth Lead 2': LEAD_4_CHIFF,
+    'Synth Lead 3': LEAD_2_SAWTOOTH,
+  },
+  'RSE Route 110': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 2': LEAD_4_CHIFF,
+  },
+  'RSE Route 119': {
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+    'Synth Lead 3': LEAD_4_CHIFF,
+  },
+  'RSE Route 120': {
+    'Synth Bass': LEAD_4_CHIFF,
+    'Synth Lead 1': LEAD_2_SAWTOOTH,
+  },
+  'RSE The Trick House': {
+    'Synth Bass': LEAD_4_CHIFF,
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'RSE Verdanturf Town': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
   'SMD Abyssal Badlands': {
@@ -2502,6 +2790,9 @@ midi_instrument_overrides = {
   },
   'SMD Boss Battle with Great Powers!': {
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
+  },
+  'SMD Cave of the Deep': {
+    'Violin II': PIZZICATO_STRINGS,
   },
   'SMD Fire Island Volcano': {
     'Violin I': VIOLIN,

@@ -274,8 +274,6 @@ for file in sorted(os.listdir(search_folder)):
                       breath_mark = articulations.find('breath-mark')
                       if breath_mark is not None:
                         found_breath_mark = measure_number
-                      if articulations.find('staccato') is not None and articulations.find('accent') is not None:
-                        print('Found accent and staccato in {}, measure {}.'.format(part_name, measure_number))
 
                   ornaments = notations.find('ornaments')
                   if ornaments is not None:

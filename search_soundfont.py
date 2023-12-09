@@ -3,10 +3,10 @@ from typing import Set
 from mido import MidiFile
 from file_locations import *
 
-soundfont_folder = os.path.join(soundfont_banks_folder, 'Pokémon FireRed and LeafGreen')
-midi_folder = os.path.join(sf2_folder, 'Pokémon FireRed and LeafGreen')
+soundfont_folder = os.path.join(soundfont_banks_folder, 'Pokémon Emerald')
+midi_folder = os.path.join(sf2_folder, 'Pokémon Emerald')
 
-midi_file_name = 'Road to Fuschia City Leaving Lavender Town'
+midi_file_name = 'Victory Road'
 
 midi_file = os.path.join(midi_folder, midi_file_name + '.mid')
 search_programs: Set[int] = set()

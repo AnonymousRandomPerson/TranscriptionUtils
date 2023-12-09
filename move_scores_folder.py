@@ -14,6 +14,13 @@ def move_parts(combined_name: str):
   game_acronym, track_name, game_name = split_track_name(combined_name)
   drive_track_name, drive_folder = get_drive_track_name(game_acronym, track_name)
   drive_path = os.path.join(scores_drive_folder, drive_folder, drive_track_name)
+  if game_acronym == 'RS' or game_acronym == 'OSRS':
+    if combined_name in special_track_game_names:
+      path_suffix = special_track_game_names[combined_name]
+      if path_suffix != 'RuneScape 3':
+        drive_path += f' ({path_suffix})'
+    elif combined_name.endswith('(original)'):
+      drive_path += ' (RuneScape 2)'
   drive_pdfs = os.path.join(drive_path, 'PDFs')
   full_name = '{} ({})'.format(track_name, game_name)
 
