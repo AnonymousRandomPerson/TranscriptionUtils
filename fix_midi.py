@@ -19,12 +19,17 @@ for file in sorted(os.listdir(search_folder)):
     file_location = os.path.join(search_folder, file)
     remap_results = {}
     percussion_sequence_parts = defaultdict(PercussionSequencePart)
+    remove_tracks = []
 
     mid = MidiFile(file_location)
     for i, track in enumerate(mid.tracks):
       device_name = None
       orig_instrument_name = track.name
       if len(orig_instrument_name) == 0:
+        continue
+
+      if track.name.endswith('(hidden)'):
+        remove_tracks.append(track)
         continue
 
       instrument_name = get_instrument_name(orig_instrument_name)
@@ -37,7 +42,8 @@ for file in sorted(os.listdir(search_folder)):
       for msg in track:
         if msg.type == 'device_name':
           device_name = msg
-        if percussion and hasattr(msg, 'channel'):
+        mapped_program = get_mapped_program(game_acronym, full_file_name, instrument_name, orig_instrument_name)
+        if percussion and hasattr(msg, 'channel') and mapped_program != MELODIC_TOM:
           msg.channel = 9
           if msg.type == 'note_on' or msg.type == 'note_off':
             if percussion_parts[instrument_name] is not None:
@@ -57,7 +63,6 @@ for file in sorted(os.listdir(search_folder)):
             remove_messages.append(msg)
         elif msg.type == 'program_change':
           if msg.program != PIZZICATO_STRINGS and not msg.program == SLAP_BASS_1:
-            mapped_program = get_mapped_program(game_acronym, full_file_name, instrument_name, orig_instrument_name)
             if mapped_program is None:
               print('Encountered unmapped track:', instrument_name)
             else:
@@ -95,6 +100,10 @@ for file in sorted(os.listdir(search_folder)):
     for instrument_name, sequence_part in percussion_sequence_parts.items():
       for msg in sequence_part.messages:
         msg.note = map_percussion_sequence_note(instrument_name, msg.note, sequence_part)
+
+    for track in remove_tracks:
+      print('Removing track:', track.name)
+      mid.tracks.remove(track)
 
     if len(remap_results) > 0:
       for i, entry in remap_results.items():

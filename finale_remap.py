@@ -10,7 +10,7 @@ midi_instruments = {
   'Clavinet': CLAVINET,
   'Celesta': CELESTA,
   'Glass Harmonica': CELESTA,
-  'Crotales': GLOCKENSPIEL,
+  'Bells': GLOCKENSPIEL,
   'Glockenspiel': GLOCKENSPIEL,
   'Music Box': MUSIC_BOX,
   'Bonang': VIBRAPHONE,
@@ -32,6 +32,7 @@ midi_instruments = {
   'Kora': ACOUSTIC_GUITAR_NYLON,
   'Lute': ACOUSTIC_GUITAR_NYLON,
   'Mandolin': ACOUSTIC_GUITAR_NYLON,
+  'Oud': ACOUSTIC_GUITAR_NYLON,
   'Ukulele': ACOUSTIC_GUITAR_NYLON,
   'Steel Guitar': ACOUSTIC_GUITAR_STEEL,
   'Muted Electric Guitar': ELECTRIC_GUITAR_MUTED,
@@ -44,14 +45,20 @@ midi_instruments = {
   'Harp': ORCHESTRAL_HARP,
   'Timpani': TIMPANI,
   'Violin': STRING_ENSEMBLE_1,
+  'Violins': STRING_ENSEMBLE_1,
   'Viola': STRING_ENSEMBLE_1,
+  'Violas': STRING_ENSEMBLE_1,
   'Cello': STRING_ENSEMBLE_1,
+  'Cellos': STRING_ENSEMBLE_1,
   'Double Bass': STRING_ENSEMBLE_1,
+  'Double Basses': STRING_ENSEMBLE_1,
+  'Strings': STRING_ENSEMBLE_1,
   'Synth Strings': SYNTH_STRINGS_1,
   'Alto': CHOIR_AAHS,
   'Baritone': CHOIR_AAHS,
   'Bass': CHOIR_AAHS,
   'Bass Voice': CHOIR_AAHS,
+  'Choir': CHOIR_AAHS,
   'Choir Aahs': CHOIR_AAHS,
   'Contralto': CHOIR_AAHS,
   'Soprano': CHOIR_AAHS,
@@ -64,41 +71,58 @@ midi_instruments = {
   'Orchestra Hit': ORCHESTRA_HIT,
   'Bass Trumpet': TRUMPET,
   'Trumpet': TRUMPET,
+  'Trumpets': TRUMPET,
   'Alto Trombone': TROMBONE,
   'Bass Trombone': TROMBONE,
+  'Bass Trombones': TROMBONE,
   'Contrabass Trombone': TROMBONE,
+  'Contrabass Trombones': TROMBONE,
   'Muted Trombone': TROMBONE,
   'Trombone': TROMBONE,
+  'Trombones': TROMBONE,
   'Alto Horn': TUBA,
   'Euphonium': TUBA,
   'Tuba': TUBA,
+  'Tubas': TUBA,
   'Muted Trumpet': MUTED_TRUMPET,
   'Flugelhorn': TRUMPET,
+  'Flugelhorns': TRUMPET,
   'Horn': FRENCH_HORN,
+  'Horns': FRENCH_HORN,
   'Synth Brass': SYNTH_BRASS_1,
   'Soprano Sax': SOPRANO_SAX,
   'Alto Sax': ALTO_SAX,
   'Kazoo': ALTO_SAX,
   'Tenor Sax': TENOR_SAX,
+  'Tenor Saxes': TENOR_SAX,
   'Baritone Sax': BARITONE_SAX,
+  'Baritone Saxes': BARITONE_SAX,
+  'Contrabass Sax': BARITONE_SAX,
+  'Contrabass Saxes': BARITONE_SAX,
   'Oboe': OBOE,
   'Jaw Harp': OBOE,
-  'Pungi': SHANAI,
-  'Rhaita': SHANAI,
-  'Shehnai': SHANAI,
   'English Horn': ENGLISH_HORN,
+  'English Horns': ENGLISH_HORN,
+  'Shawm': ENGLISH_HORN,
+  'Bass Oboe': ENGLISH_HORN,
   'Bassoon': BASSOON,
+  'Bassoons': BASSOON,
   'Contrabassoon': BASSOON,
+  'Contrabassoons': BASSOON,
   'Didgeridoo': BASSOON,
   'Bass Clarinet': CLARINET,
   'Clarinet': CLARINET,
+  'Clarinets': CLARINET,
   'Contrabass Clarinet': CLARINET,
   'Piccolo': PICCOLO,
+  'Piccolos': PICCOLO,
   'Alto Flute': FLUTE,
   'Bansuri': FLUTE,
   'Bass Flute': FLUTE,
   'Flute': FLUTE,
+  'Flutes': FLUTE,
   'Alto Recorder': RECORDER,
+  'Alto Recorders': RECORDER,
   'Bass Recorder': RECORDER,
   'Contrabass Recorder': RECORDER,
   'Sopranino Recorder': RECORDER,
@@ -106,21 +130,38 @@ midi_instruments = {
   'Tenor Recorder': RECORDER,
   'Fife': PAN_FLUTE,
   'Pan Flute': PAN_FLUTE,
-  'Tin Whistle': PAN_FLUTE,
+  'Pan Flutes': PAN_FLUTE,
+  'Tin Whistle': WHISTLE,
+  'Tin Whistles': WHISTLE,
   'Blown Bottle': BLOWN_BOTTLE,
+  'Blown Bottles': BLOWN_BOTTLE,
   'Whistle': WHISTLE,
   'Ocarina': OCARINA,
+  'Ocarinas': OCARINA,
   'Synth Lead': LEAD_1_SQUARE,
   'Calliope': LEAD_3_CALLIOPE,
   'Theremin': LEAD_6_SPACE_VOICE,
+  'New Age Pad': PAD_1_NEW_AGE,
   'Synth Pad': PAD_2_WARM,
+  'Metallic Pad': PAD_6_METALLIC,
+  'Rain FX': FX_1_RAIN,
+  'Soundtrack FX': FX_2_SOUNDTRACK,
   'Crystal FX': FX_3_CRYSTAL,
+  'Atmosphere FX': FX_4_ATMOSPHERE,
+  'Brightness FX': FX_5_BRIGHTNESS,
+  'Goblins FX': FX_6_GOBLINS,
+  'Echo FX': FX_7_ECHOES,
   'Sitar': SITAR,
   'Banjo': BANJO,
   'Shamisen': SHAMISEN,
   'Koto': KOTO,
   'Kalimba': KALIMBA,
   'Bagpipes': BAGPIPE,
+  'Pungi': SHANAI,
+  'Rhaita': SHANAI,
+  'Shehnai': SHANAI,
+  'Crotales': TINKLE_BELL,
+  'Brake Drums': AGOGO,
   'Cowbell (Auto-tune)': AGOGO,
   'Steel Drums': STEEL_DRUMS,
   'Temple Blocks': WOODBLOCK,
@@ -142,6 +183,7 @@ midi_instruments = {
   'Rustling FX': SEASHORE,
   'Seashore FX': SEASHORE,
   'Beep FX': BIRD_TWEET,
+  'Bird Tweet FX': BIRD_TWEET,
   'Boing FX': BIRD_TWEET,
   'Laser FX': BIRD_TWEET,
   'Scream FX': BIRD_TWEET,
@@ -197,25 +239,45 @@ mxl_percussion_override = {
 }
 
 mxl_percussion_to_non_percussion = set([
-  'Temple Blocks',
 ])
 
 mxl_manual_remap = set([
+  'Atmosphere FX',
   'Bass Drum',
-  'Cabasa',
+  'Bird Tweet FX',
+  'Brightness FX',
+  'Brake Drums',
+  'Calliope',
+  'Crystal FX',
+  'Cuíca',
   'Drum Set',
+  'Echo FX',
+  'Electric Guitar',
   'Gend\x8er',
+  'Goblins FX',
   'Guiro',
   'Melodic Tom',
   'Muted Electric Bass',
   'Muted Electric Guitar',
   'Muted Trombone',
   'Muted Trumpet',
+  'O-daiko'
   'Orchestra Hit',
+  'Organ',
+  'Rain FX',
+  'Seashore FX',
+  'Shawm',
+  'Shime-daiko',
   'Slap Bass',
   'Sleigh Bells',
+  'Suspended Cymbal',
+  'Synth Lead',
+  'Synth Pad',
   'Temple Blocks',
   'Toms',
+  'Triangle',
+  'VibraSlap',
+  'Whistle',
   'Wind Chimes',
 ])
 
@@ -276,13 +338,12 @@ percussion_parts = {
   'Drum Set (Brushes)': None,
   'Field Drum': ACOUSTIC_SNARE,
   'Finger Cymbals': OPEN_TRIANGLE,
-  'Floor Tom': {
-    42: LOW_FLOOR_TOM,
-    66: LOW_FLOOR_TOM,
-  },
+  'Floor Tom': LOW_FLOOR_TOM,
   'Goblet Drum': {
     58: LOW_CONGA,
     60: OPEN_HIGH_CONGA,
+    69: LOW_CONGA,
+    70: OPEN_HIGH_CONGA,
   },
   'Gongs': RIDE_BELL,
   'Guiro': {
@@ -315,6 +376,10 @@ percussion_parts = {
   },
   'Ratchet': LONG_GUIRO,
   'Ride Cymbal': {
+    51: RIDE_CYMBAL_1,
+    53: RIDE_BELL,
+    59: RIDE_CYMBAL_2,
+    84: RIDE_CYMBAL_1,
     92: RIDE_CYMBAL_1,
     93: RIDE_BELL,
   },
@@ -325,6 +390,8 @@ percussion_parts = {
     45: LOW_MID_TOM,
     47: HI_MID_TOM,
     48: HIGH_TOM,
+    84: LOW_MID_TOM,
+    85: HI_MID_TOM,
   },
   'Sleigh Bells': JINGLE_BELL,
   'Snap': HAND_CLAP,
@@ -338,8 +405,13 @@ percussion_parts = {
   'Splash Cymbal': SPLASH_CYMBAL,
   'Static FX': CASTANETS,
   'Stick Click': DRUM_STICKS,
+  'Surdo': {
+    86: MUTE_SURDO,
+    87: OPEN_SURDO,
+  },
   'Suspended Cymbal': {
     49: CRASH_CYMBAL_1,
+    84: OPEN_HI_HAT,
     85: CRASH_CYMBAL_1,
     87: CRASH_CYMBAL_1,
     91: RIDE_BELL,
@@ -383,7 +455,7 @@ percussion_parts = {
   },
   'Triangle': {
     80: MUTE_TRIANGLE,
-    81: MUTE_TRIANGLE,
+    81: OPEN_TRIANGLE,
     82: OPEN_TRIANGLE,
   },
   'Tsuzumi': {
@@ -398,8 +470,10 @@ percussion_parts = {
   'Wind Chimes': BELL_TREE,
   'Wood Block': HIGH_WOODBLOCK,
   'Wood Blocks': {
-    63: HIGH_WOODBLOCK,
     62: LOW_WOODBLOCK,
+    63: HIGH_WOODBLOCK,
+    76: HIGH_WOODBLOCK,
+    77: LOW_WOODBLOCK,
   }
 }
 
@@ -447,10 +521,14 @@ percussion_sequence_mappings = {
 }
 
 percussion_sequence_orders = {
-  'Bongo Drums': [47, 46, 45, 48, 49, 50, 60, 61],
+  'Bongo Drums': [47, 46, 45, 48, 49, 50, 61, 60],
   'Conga Drums': [73, 76, 75, 54, 55, 57, 61, 63, 64],
   'Tablas': [43, 44, 47, 45, 61, 36, 37, 60, 48, 50, 41, 40],
-  'Toms': [43, 65, 66, 41, 52, 42, 68, 55, 59, 44, 70, 62, 65, 46, 69, 72, 48, 76]
+  'Toms': [43, 65, 66, 41, 52, 42, 68, 55, 59, 44, 70, 62, 65, 46, 69, 72, 48, 74, 76]
+}
+
+percussion_sequence_name_orders = {
+  'Bongo Drums': ['Low Bongo Slap', 'Low Bongo', 'High Bongo', 'High Bongo Mute', 'High Bongo Slap']
 }
 
 percussion_parts_override = {
@@ -1370,6 +1448,25 @@ program_transpose = {
     },
     TUBULAR_BELLS: 12,
   },
+  'RS': {
+    CHOIR_AAHS: {
+      'Glacialis I': 12,
+      'Glacialis III': 12,
+    },
+    PAD_2_WARM: {
+      'Darkmeyer': {
+        'Synth Pad 1': -12,
+      },
+      'Glacialis I': -12,
+      'Glacialis III': -12,
+      'Glacialis IV': -12,
+      'Glacialis IX': -12,
+      'Glacialis VI': -12,
+      'Glacialis VIII': -12,
+      'Glacialis X': -12,
+      'Icy Bones': -12,
+    },
+  },
   'RSE': {
     LEAD_2_SAWTOOTH: {
       'Battle! (Regirock Regice Registeel)': {
@@ -1382,6 +1479,11 @@ program_transpose = {
 PMD_EXPLORERS_MIDI_INSTRUMENT_OVERRIDES = {
   'Electric Piano': ELECTRIC_PIANO_2,
   'Synth Pad': PAD_1_NEW_AGE,
+}
+
+mxl_remove_instruments = {
+  'RS Bal\'lak the Pummeller': set(['Soprano 1', 'Soprano 2', 'Alto', 'Tenor 1', 'Tenor 2', 'Tenor 3', 'Baritone 1', 'Baritone 2', 'Bass 1', 'Bass 2', 'Bass 3', 'Bass 4', 'Violin I', 'Violin II', 'Violin III', 'Violin IV', 'Violin V', 'Violin VI', 'Viola I', 'Viola II', 'Viola III', 'Viola IV', 'Cello I', 'Cello II', 'Cello III', 'Cello IV', 'Cello V', 'Double Bass I', 'Double Bass II', 'Double Bass III', 'Double Bass IV', 'Double Bass V']),
+  'RS Born to Do This': set(['Horn 1', 'Horn 2', 'Horn 3', 'Soprano 1', 'Soprano 2', 'Alto 1', 'Alto 2', 'Tenor 1', 'Tenor 2', 'Bass 1', 'Bass 2', 'Violin I', 'Violin II', 'Violin III', 'Viola III', 'Double Bass I', 'Double Bass II']),
 }
 
 midi_instrument_overrides = {
@@ -1934,52 +2036,52 @@ midi_instrument_overrides = {
   'KSSt Peanut Plain': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
-  'KSSt Sub-Tree': {
+  'KSSt Underground Tree Area': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
-  'LA Alabaster Icelands 1': {
+  'LA Alabaster Icelands 1-1': {
     'Electric Piano': ELECTRIC_PIANO_2,
   },
-  'LA Alabaster Icelands 1 (Version 2)': {
+  'LA Alabaster Icelands 1-2': {
     'Electric Piano': ELECTRIC_PIANO_2,
-  },
-  'LA Arceus': {
-    'Synth Lead': LEAD_2_SAWTOOTH,
-    'Synth Pad': PAD_7_HALO,
   },
   'LA Battle! (Alpha Pokemon)': {
     'Synth Bass': LEAD_2_SAWTOOTH,
+  },
+  'LA Battle! (Arceus)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+    'Synth Pad': PAD_7_HALO,
   },
   'LA Battle! (Giratina)': {
     'Organ': CHURCH_ORGAN,
     'Synth Bass 2': LEAD_1_SQUARE,
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
-  'LA Battle! (Legendary Pokemon)': {
+  'LA Battle! (People of Hisui)': {
+    'Synth Lead': LEAD_5_CHARANG,
+  },
+  'LA Battle! (People of Hisui 2)': {
+    'Synth Lead': LEAD_2_SAWTOOTH,
+  },
+  'LA Battle! (Remarkable Pokemon)': {
     'Organ': CHURCH_ORGAN,
     'Synth Lead': LEAD_2_SAWTOOTH,
     'Synth Pad': PAD_6_METALLIC,
   },
-  'LA Battle! (Trainer Battle)': {
-    'Synth Lead': LEAD_5_CHARANG,
-  },
-  'LA Battle! (Warden)': {
-    'Synth Lead': LEAD_2_SAWTOOTH,
-  },
   'LA Battle! (Wild Pokemon)': {
     'Synth Bass': LEAD_2_SAWTOOTH,
   },
-  'LA Cobalt Coastlands 1': {
+  'LA Cobalt Coastlands 1-1': {
     'Electric Piano 2': ELECTRIC_PIANO_2,
     'Synth Pad 1': PAD_7_HALO,
     'Synth Pad 2': PAD_1_NEW_AGE,
   },
-  'LA Cobalt Coastlands 1 (Version 2)': {
+  'LA Cobalt Coastlands 1-2': {
     'Electric Piano 2': ELECTRIC_PIANO_2,
     'Synth Pad 1': PAD_7_HALO,
     'Synth Pad 2': PAD_1_NEW_AGE,
   },
-  'LA Crimson Mirelands 1': {
+  'LA Crimson Mirelands 1-1': {
     'Cello': CELLO,
     'Electric Piano': ELECTRIC_PIANO_2,
     'Organ': DRAWBAR_ORGAN,
@@ -1987,7 +2089,7 @@ midi_instrument_overrides = {
     'Viola': VIOLA,
     'Violin': VIOLIN,
   },
-  'LA Crimson Mirelands 1 (Version 2)': {
+  'LA Crimson Mirelands 1-2': {
     'Cello': CELLO,
     'Electric Piano': ELECTRIC_PIANO_2,
     'Organ': DRAWBAR_ORGAN,
@@ -1995,25 +2097,25 @@ midi_instrument_overrides = {
     'Viola': VIOLA,
     'Violin': VIOLIN,
   },
-  'LA Mt Coronet': {
+  'LA Ending Theme': {
+    'Cello': CELLO,
+    'Double Bass': CONTRABASS,
+    'Synth Pad': PAD_8_SWEEP,
+    'Viola': VIOLA,
+    'Violin': VIOLIN,
+  },
+  'LA Obsidian Fieldlands 2-1': {
+    'Violin I': VIOLIN,
+  },
+  'LA Obsidian Fieldlands 2-2': {
+    'Violin I': VIOLIN,
+  },
+  'LA Stone Portal': {
     'Cello': CELLO,
     'Double Bass': CONTRABASS,
     'Electric Piano': ELECTRIC_PIANO_2,
     'Synth Lead': LEAD_2_SAWTOOTH,
     'Synth Pad': PAD_1_NEW_AGE,
-    'Viola': VIOLA,
-    'Violin': VIOLIN,
-  },
-  'LA Obsidian Fieldlands 2': {
-    'Violin I': VIOLIN,
-  },
-  'LA Obsidian Fieldlands 2 (Version 2)': {
-    'Violin I': VIOLIN,
-  },
-  'LA Route 209': {
-    'Cello': CELLO,
-    'Double Bass': CONTRABASS,
-    'Synth Pad': PAD_8_SWEEP,
     'Viola': VIOLA,
     'Violin': VIOLIN,
   },
@@ -2633,8 +2735,16 @@ midi_instrument_overrides = {
     'Electric Piano': ELECTRIC_PIANO_2,
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
+  'OSRS': {
+    'Electric Bass': ELECTRIC_BASS_PICKED,
+    'Organ': CHURCH_ORGAN,
+  },
   'OSRS Assault and Battery': {
     'Organ': REED_ORGAN,
+  },
+  'OSRS Darkmeyer': {
+    'Synth Pad': FX_2_SOUNDTRACK,
+    'Strings V': PIZZICATO_STRINGS,
   },
   'Pt Battle! (Frontier Brain)': {
     'Synth Lead': LEAD_2_SAWTOOTH,
@@ -2644,6 +2754,7 @@ midi_instrument_overrides = {
   },
   'RS': {
     'Electric Bass': ELECTRIC_BASS_PICKED,
+    'Organ': CHURCH_ORGAN,
   },
   'RS Adorno III': {
     'Synth Pad': PAD_8_SWEEP,
@@ -2663,6 +2774,235 @@ midi_instrument_overrides = {
   },
   'RS Attack I (original)': {
     'Synth Pad': PAD_3_POLYSYNTH,
+  },
+  'RS Attack III (original)': {
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'RS Attack IV (original)': {
+    'Synth Lead': FX_8_SCI_FI,
+    'Violin I': VIOLIN,
+    'Violin II': VIOLIN,
+  },
+  'RS Bal\'lak the Pummeller': {
+    'Synth Pad 1': PAD_6_METALLIC,
+    'Synth Pad 2': FX_4_ATMOSPHERE,
+    'Synth Pad 3': FX_5_BRIGHTNESS,
+  },
+  'RS Beast of the Undercurrents': {
+    'Synth Pad': PAD_7_HALO,
+  },
+  'RS Big Chords (original)': {
+    'Synth Pad 1': FX_4_ATMOSPHERE,
+    'Synth Pad 2': PAD_2_WARM,
+  },
+  'RS Catacombs and Tombs': {
+    'Synth Pad': PAD_8_SWEEP,
+    'Toms': MELODIC_TOM,
+  },
+  'RS Chain Reaction': {
+    'Synth Pad 1': FX_2_SOUNDTRACK,
+    'Synth Pad 2': PAD_6_METALLIC,
+  },
+  'RS Dagannoth Dawn (original)': {
+    'Synth Pad': FX_7_ECHOES,
+    'Violins I': VIOLIN,
+  },
+  'RS Dagannoth Dawn': {
+    'Synth Pad': FX_7_ECHOES,
+    'Violins I': VIOLIN,
+  },
+  'RS Dance of Death': {
+    'Toms': MELODIC_TOM,
+  },
+  'RS Dangerous Road': {
+    'Strings I': PIZZICATO_STRINGS,
+    'Strings IV': PIZZICATO_STRINGS,
+    'Synth Pad': FX_4_ATMOSPHERE,
+  },
+  'RS Dangerous Way': {
+    'Strings II': PIZZICATO_STRINGS,
+  },
+  'RS Darkmeyer': {
+    'Strings IV': PIZZICATO_STRINGS,
+  },
+  'RS Dead Can Dance': {
+    'Strings I': PIZZICATO_STRINGS,
+    'Strings II': VIOLIN,
+  },
+  'RS Desolo II': {
+    'Strings II': PIZZICATO_STRINGS,
+    'Synth Lead': FX_4_ATMOSPHERE,
+    'Synth Pad 1': PAD_6_METALLIC,
+    'Synth Pad 2': FX_5_BRIGHTNESS,
+  },
+  'RS Desolo III': {
+    'Synth Pad': FX_4_ATMOSPHERE,
+  },
+  'RS Discover': {
+    'Violin I': VIOLIN,
+  },
+  'RS Dominion Tower III': {
+    'Organ': ROCK_ORGAN,
+  },
+  'RS Dracopelagic': {
+    'Synth Lead 1': LEAD_4_CHIFF,
+    'Synth Pad 2': PAD_3_POLYSYNTH,
+  },
+  'RS Dragontooth Island': {
+    'Viola': VIOLA,
+  },
+  'RS Dying Light': {
+    'Electric Bass 2': ELECTRIC_BASS_FINGER
+  },
+  'RS Emperor': {
+    'Acoustic Guitar 2': ACOUSTIC_GUITAR_STEEL,
+    'Organ': REED_ORGAN,
+    'Synth Lead': FX_4_ATMOSPHERE,
+  },
+  'RS Eruption (original)': {
+    'Strings': SYNTH_STRINGS_1,
+    'Viola': SYNTH_STRINGS_1,
+    'Violin': SYNTH_STRINGS_1,
+  },
+  'RS Escape': {
+    'Double Bass': ACOUSTIC_BASS
+  },
+  'RS Exposed (original)': {
+    'Organ': PERCUSSIVE_ORGAN,
+    'Synth Lead': PAD_5_BOWED_GLASS,
+    'Synth Pad': FX_6_GOBLINS,
+  },
+  'RS Exposed': {
+    'Synth Pad': FX_6_GOBLINS,
+  },
+  'RS Fight or Flight (original)': {
+    'Synth Pad': PAD_1_NEW_AGE,
+  },
+  'RS Fire and Brimstone': {
+    'Synth Lead': FX_4_ATMOSPHERE,
+  },
+  'RS Food for Thought': {
+    'Synth Lead': FX_4_ATMOSPHERE,
+  },
+  'RS Forgettable Melody': {
+    'Synth Lead': FX_5_BRIGHTNESS,
+  },
+  'RS Gemstone Dragons': {
+    'Synth Lead': LEAD_4_CHIFF,
+  },
+  'RS Glacialis III': {
+    'Synth Lead': FX_8_SCI_FI,
+  },
+  'RS Glacialis IV': {
+    'Synth Lead': FX_8_SCI_FI,
+  },
+  'RS Glacialis IX': {
+    'Synth Lead': FX_8_SCI_FI,
+  },
+  'RS Glacialis VI': {
+    'Synth Lead': FX_8_SCI_FI,
+  },
+  'RS Glacialis X': {
+    'Synth Lead': FX_8_SCI_FI,
+  },
+  'RS Gluttonous Behemoth': {
+    'Synth Lead 1': PAD_8_SWEEP,
+    'Synth Lead 2': FX_8_SCI_FI,
+  },
+  'RS Goblin Game': {
+    'Synth Pad 2': PAD_1_NEW_AGE,
+  },
+  'RS Have an Ice Day (original)': {
+    'Synth Lead': PAD_1_NEW_AGE,
+  },
+  'RS Have an Ice Day': {
+    'Synth Lead': PAD_1_NEW_AGE,
+  },
+  'RS Head to Head': {
+    'Violins': VIOLIN,
+  },
+  'RS Icy Trouble Ahead': {
+    'Synth Pad': PAD_8_SWEEP,
+    'Synth Lead 1': FX_4_ATMOSPHERE,
+    'Synth Lead 2': FX_2_SOUNDTRACK,
+  },
+  'RS In the Pits': {
+    'Synth Pad': PAD_7_HALO,
+  },
+  'RS Incantation (original)': {
+    'Synth Lead': PAD_5_BOWED_GLASS,
+  },
+  'RS Invaders Must Die III': {
+    'Synth Pad': PAD_8_SWEEP
+  },
+  'RS Joy of the Hunt': {
+    'Strings': PIZZICATO_STRINGS,
+    'Violins I': VIOLIN,
+  },
+  'RS Jungle Hunt (original)': {
+    'Organ 1': PERCUSSIVE_ORGAN,
+    'Organ 2': DRAWBAR_ORGAN,
+    'Synth Pad 1': SYNTH_BASS_1,
+    'Synth Pad 3': FX_4_ATMOSPHERE,
+  },
+  'RS Jungle Hunt': {
+    'Synth Pad 2': FX_4_ATMOSPHERE,
+  },
+  'RS Karamja Jam (original)': {
+    'Organ': PERCUSSIVE_ORGAN,
+  },
+  'RS Karamja Jam': {
+    'Organ': PERCUSSIVE_ORGAN,
+  },
+  'RS Labyrinth (original)': {
+    'Organ': PERCUSSIVE_ORGAN,
+    'Synth Pad': FX_2_SOUNDTRACK,
+    'Synth Voice': FX_7_ECHOES,
+  },
+  'RS Labyrinth': {
+    'Organ': PERCUSSIVE_ORGAN,
+    'Synth Pad': FX_2_SOUNDTRACK,
+  },
+  'RS Life\'s a Beach!': {
+    'Violin I': FIDDLE,
+  },
+  'RS Making Waves': {
+    'Accordion': TANGO_ACCORDION,
+    'Double Bass I': ACOUSTIC_BASS,
+    'Violin I': VIOLIN,
+  },
+  'RS Malady': {
+    'Violin': TREMOLO_STRINGS,
+    'Viola I': TREMOLO_STRINGS,
+  },
+  'RS Mind Over Matter': {
+    'Electric Bass': FRETLESS_BASS,
+  },
+  'RS Null and Void (original)': {
+    'Accordion 2': TANGO_ACCORDION,
+  },
+  'RS Occulo I': {
+    'Echo FX': GUITAR_FRET_NOISE,
+    'Toms': MELODIC_TOM,
+  },
+  'RS Occulo VIII': {
+    'Organ': ROCK_ORGAN,
+  },
+  'RS Ogre the Top': {
+    'Synth Pad': FX_1_RAIN,
+  },
+  'RS Pathways (original)': {
+    'Accordion': TANGO_ACCORDION,
+    'Organ': PERCUSSIVE_ORGAN,
+  },
+  'RS Pest Control': {
+    'Synth Pad': PAD_8_SWEEP,
+  },
+  'RS Pinball Wizard': {
+    'Electric Piano': ELECTRIC_PIANO_2,
+  },
+  'RS Prime Time': {
+    'Organ': PERCUSSIVE_ORGAN,
   },
   'RSE': {
     'Electric Bass': ELECTRIC_BASS_PICKED,
@@ -2896,13 +3236,31 @@ class PercussionSequencePart:
   notes: Set[int] = field(default_factory=set)
   note_mapping: Dict[int, int] = field(default_factory=dict)
   messages: List = field(default_factory=list)
+  note_names: List = field(default_factory=list)
+  note_name_mapping: Dict[str, int] = field(default_factory=dict)
 
-def fill_percussion_sequence_parts(instrument_name: str, current_note: int, message, percussion_sequence_parts: Dict[str, PercussionSequencePart]):
+def fill_percussion_sequence_parts(instrument_name: str, current_note: int, message, percussion_sequence_parts: Dict[str, PercussionSequencePart], note_name: str | None = None):
   sequence_part = percussion_sequence_parts[instrument_name]
   sequence_part.notes.add(current_note)
   sequence_part.messages.append(message)
+  if note_name is not None:
+    sequence_part.note_names.append(note_name)
 
-def map_percussion_sequence_note(instrument_name: str, current_note: int, sequence_part: PercussionSequencePart) -> int:
+def map_percussion_sequence_note(instrument_name: str, current_note: int, sequence_part: PercussionSequencePart, note_name: str | None = None) -> int:
+  if note_name is not None and instrument_name in percussion_sequence_name_orders:
+    if len(sequence_part.note_name_mapping) == 0:
+      num_notes = len(sequence_part.note_names)
+      if num_notes not in percussion_sequence_mappings[instrument_name]:
+        print('Percussion sequence length {} not found for {}.'.format(num_notes, instrument_name))
+        return get_percussion_mapping_from_parts(instrument_name, current_note, percussion_parts)
+
+      percussion_sequence_mapping = percussion_sequence_mappings[instrument_name][num_notes]
+      percussion_sequence_order = percussion_sequence_name_orders[instrument_name]
+      sorted_notes = sorted(sequence_part.note_names, key=percussion_sequence_order.index)
+      for i, note in enumerate(sorted_notes):
+        sequence_part.note_name_mapping[note] = percussion_sequence_mapping[i]
+    return sequence_part.note_name_mapping[note_name]
+
   if len(sequence_part.note_mapping) == 0:
     num_notes = len(sequence_part.notes)
     if num_notes not in percussion_sequence_mappings[instrument_name]:
@@ -2919,3 +3277,6 @@ def map_percussion_sequence_note(instrument_name: str, current_note: int, sequen
       sequence_part.note_mapping[note] = percussion_sequence_mapping[i]
 
   return sequence_part.note_mapping[current_note]
+
+def should_remove_instrument(track_name: str, part_name: str):
+  return track_name in mxl_remove_instruments and part_name in mxl_remove_instruments[track_name]

@@ -7,10 +7,10 @@ from typing import Any, Dict, List, Tuple
 from dataclasses import dataclass
 import editdistance
 
-track_name = 'Attack I'
+track_name = 'Ready for Battle'
 
 midi_file_1 = track_name + '.mid'
-midi_file_2 = 'Attack 1.mid'
+midi_file_2 = midi_file_1
 midi_path_1 = os.path.join(sf2_folder, 'RuneScape', 'RuneScape HD', midi_file_1)
 midi_path_2 = os.path.join(sf2_folder, 'RuneScape', 'Old School RuneScape', midi_file_2)
 
@@ -122,9 +122,14 @@ for i in range(0, 5):
     find_differences(i * 12 + transpose)
     find_differences(-i * 12 + transpose)
 
+no_differences = True
 for program, difference in get_sorted_data(differences):
   if difference.num_differences > 0:
     print(program, difference.program, difference.num_differences)
     print([note.note for note in difference.track_1])
     print([note.note for note in difference.track_2])
     print()
+    no_differences = False
+
+if no_differences:
+  print('No differences found.')

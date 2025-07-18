@@ -50,12 +50,12 @@ if [ ! -f "$orig_audio" ]; then
 fi
 
 if [ "$valid" = true ]; then
+    video_length=`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$orig_video"`
+    video_length=`echo "$video_length - $start_time_raw" | bc`
+    audio_length=`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$orig_audio"`
+    min_length=`echo "if ($video_length < $audio_length) $video_length else $audio_length" | bc`
 
     if [ "$fade" = true ]; then
-        video_length=`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$orig_video"`
-        video_length=`echo "$video_length - $start_time_raw" | bc`
-        audio_length=`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$orig_audio"`
-        min_length=`echo "if ($video_length < $audio_length) $video_length else $audio_length" | bc`
         fade_start=`echo "$min_length - $fade_out_time" | bc`
 
         ffmpeg -i "$orig_audio" -af 'afade=out:st='$fade_start':d='$fade_out_time "$fade_audio"
@@ -63,7 +63,7 @@ if [ "$valid" = true ]; then
         final_audio=$fade_audio
     fi
 
-    ffmpeg -i "$orig_video" -ss $start_time -async 1 "$cut_temp_file"
+    ffmpeg -i "$orig_video" -ss $start_time -t $min_length -async 1 "$cut_temp_file"
 
     ffmpeg -i "$cut_temp_file" -i "$final_audio" -c:v copy -c:a aac -b:a 192k -shortest -map 0:v:0 -map 1:a:0 "$final_name"
 

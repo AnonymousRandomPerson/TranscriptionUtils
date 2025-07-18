@@ -31,8 +31,18 @@ for file in sorted(os.listdir(search_folder)):
           open_hi_hat_ids = set()
           percussion_to_non_percussion = set()
           percussion_sequence_parts = defaultdict(PercussionSequencePart)
-          for part_info in xml_root.find('part-list').findall('score-part'):
+          remove_parts = set()
+          part_list = xml_root.find('part-list')
+          for part_info in part_list.findall('score-part'):
             part_name = part_info.find('part-name').text
+            part_id = part_info.attrib['id']
+
+            if item.filename.startswith(full_file_name) and should_remove_instrument(full_file_name, part_name):
+              print('Removing part:', part_name)
+              part_list.remove(part_info)
+              remove_parts.add(part_id)
+              continue
+
             instrument_name = get_instrument_name(part_name)
             program = None
 
@@ -81,7 +91,7 @@ for file in sorted(os.listdir(search_folder)):
                   else:
                     current_note = int(midi_unpitched.text) - 1
                     if instrument_name in percussion_sequence_mappings:
-                      fill_percussion_sequence_parts(instrument_name, current_note, midi_unpitched, percussion_sequence_parts)
+                      fill_percussion_sequence_parts(instrument_name, current_note, midi_unpitched, percussion_sequence_parts, percussion_instrument_name)
                     else:
                       percussion_mapping = get_percussion_mapping(game_acronym, track_name, instrument_name, current_note)
                       if percussion_mapping is None:
@@ -109,7 +119,7 @@ for file in sorted(os.listdir(search_folder)):
             if instrument_name in search_instruments:
               search_tracks.add(full_file_name)
 
-            parts[part_info.attrib['id']] = (part_name, instrument_name, program)
+            parts[part_id] = (part_name, instrument_name, program)
 
             if part_name.startswith('Snare') or part_name.startswith('Field') or part_name.startswith('Drum Set') or part_name.startswith('Hi-Hat'):
               open_hi_hat = False
@@ -129,13 +139,18 @@ for file in sorted(os.listdir(search_folder)):
                   print('Found cross-stick in', part_name)
 
           for instrument_name, sequence_part in percussion_sequence_parts.items():
-            for msg in sequence_part.messages:
+            for msg, note_name in zip(sequence_part.messages, sequence_part.note_names):
               current_note = int(msg.text) - 1
-              mapped_note = map_percussion_sequence_note(instrument_name, current_note, sequence_part)
+              mapped_note = map_percussion_sequence_note(instrument_name, current_note, sequence_part, note_name)
               msg.text = str(mapped_note + 1)
 
           for i, part in enumerate(xml_root.findall('part')):
-            part_name, instrument_name, program = parts[part.attrib['id']]
+            part_id = part.attrib['id']
+            if part_id in remove_parts:
+              xml_root.remove(part)
+              continue
+
+            part_name, instrument_name, program = parts[part_id]
 
             if program is None:
               transpose_offset = 0
@@ -214,7 +229,7 @@ for file in sorted(os.listdir(search_folder)):
                   if octave_shift is not None:
                     shift_type = octave_shift.attrib['type']
                     if shift_type == 'down' or shift_type == 'up':
-                      print('Found ottava {} in {}, measure {}'.format(shift_type, part_name, measure_number))
+                      pass #print('Found ottava {} in {}, measure {}'.format(shift_type, part_name, measure_number))
 
                   bracket = direction_type.find('bracket')
                   if bracket is not None and bracket.attrib['type'] == 'start':
@@ -228,7 +243,7 @@ for file in sorted(os.listdir(search_folder)):
                       wedge_type = wedge.attrib['type']
                       if wedge_type == 'stop':
                         if wedge_start:
-                          print('Found start/stop wedge in {}, measure {}.'.format(part_name, measure_number))
+                          #print('Found start/stop wedge in {}, measure {}.'.format(part_name, measure_number))
                           wedge_start = False
                       else:
                         wedge_start = True

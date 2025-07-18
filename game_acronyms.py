@@ -44,7 +44,7 @@ game_acronyms = {
   'LGPE': 'Pokemon Let\'s Go Pikachu Eevee',
   'LTTP': 'The Legend of Zelda A Link to the Past',
   'MBG': 'Marble Blast Gold',
-  'MBP': 'PlatinumQuest',
+  'MBP': 'Marble Blast Platinum',
   'MDB': 'Pokemon Mystery Dungeon Blue Rescue Team',
   'MDBSL': 'Pokemon Mystery Dungeon Blazing Stormy Light Adventure Squad',
   'MDGTI': 'Pokemon Mystery Dungeon Gates to Infinity',
@@ -159,6 +159,7 @@ special_track_names = {
   'MRSOH Phantom The Diva Delivers': 'Phantom, The Diva Delivers',
   'MRSOH Root of Corruption Pt I': 'Root of Corruption, Pt. I',
   'MRSOH Root of Corruption Pt II': 'Root of Corruption, Pt. II',
+  'NSMBW Lava Cave Underground Ruins Theme': 'Lava Cave   Underground Ruins Theme',
   'ORAS Mt Pyre': 'Mt. Pyre',
   'ORAS Mt Pyre Exterior': 'Mt. Pyre Exterior',
   'RSE Mt Chimney': 'Mt. Chimney',
@@ -173,12 +174,43 @@ special_track_names = {
 }
 
 special_track_game_names = {
+  'BBT PDA Game': 'Alien Hominid',
   'NSLT Fretting Yeti': 'Super Lucky\'s Tale',
   'OSRS Assault and Battery': 'RuneScape 2',
+  'OSRS Darkmeyer': 'Old School RuneScape',
+  'OSRS Ready for Battle': 'RuneScape 2',
   'RS A Pirate\'s Life for Me': 'RuneScape 3',
   'RS Alone': 'RuneScape 3',
   'RS Assault and Battery': 'RuneScape 3',
   'RS Assault and Battery (original)': 'RuneScape HD',
+  'RS Attack I': 'RuneScape 3',
+  'RS Attack II': 'RuneScape 3',
+  'RS Attack III': 'RuneScape 3',
+  'RS Attack IV': 'RuneScape 3',
+  'RS Attack V': 'RuneScape 3',
+  'RS Attack VI': 'RuneScape 3',
+  'RS Battle of Souls (original)': 'RuneScape HD',
+  'RS Big Chords': 'RuneScape 3',
+  'RS Castle Wars': 'RuneScape 3',
+  'RS Dagannoth Dawn': 'RuneScape 3',
+  'RS Dance of the Undead': 'RuneScape 3',
+  'RS Dominion Tower I (original)': 'RuneScape HD',
+  'RS Dominion Tower I': 'RuneScape 3',
+  'RS Dominion Tower II (original)': 'RuneScape HD',
+  'RS Dominion Tower II': 'RuneScape 3',
+  'RS Dominion Tower IV (original)': 'RuneScape HD',
+  'RS Dominion Tower V (original)': 'RuneScape HD',
+  'RS Dominion Tower V': 'RuneScape 3',
+  'RS Dragontooth Island': 'RuneScape 3',
+  'RS Eruption (original)': 'RuneScape HD',
+  'RS Exposed': 'RuneScape 3',
+  'RS Fight or Flight': 'RuneScape 3',
+  'RS Have an Ice Day': 'RuneScape 3',
+  'RS Horizon': 'RuneScape 3',
+  'RS Insect Queen': 'RuneScape 3',
+  'RS Jungle Hunt': 'RuneScape 3',
+  'RS Karamja Jam': 'RuneScape 3',
+  'RS Labyrinth': 'RuneScape 3',
 }
 
 def get_game_name(game_acronym: str, full_track_name: str):
@@ -217,7 +249,7 @@ def get_drive_track_name(game_acronym: str, track_name: str):
   else:
     drive_folder = get_game_name(game_acronym, full_name)
   drive_folder = drive_folder.replace('Pokemon', 'Pokémon')
-  if drive_folder.startswith('RuneScape'):
+  if 'RuneScape' in drive_folder:
     drive_folder = 'RuneScape'
 
   return drive_track_name, drive_folder
