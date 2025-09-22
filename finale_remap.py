@@ -250,7 +250,6 @@ mxl_manual_remap = set([
   'Atmosphere FX',
   'Bass Drum',
   'Bird Tweet FX',
-  'Bongo Drums',
   'Brightness FX',
   'Brake Drums',
   'Calliope',

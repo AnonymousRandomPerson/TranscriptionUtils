@@ -230,6 +230,7 @@ special_track_game_names = {
 drive_path_omit_suffix = set([
   'RS Roots and Flutes',
   'RS Scape Soft',
+  'RS Sojourn',
 ])
 
 def get_game_name(game_acronym: str, full_track_name: str):
