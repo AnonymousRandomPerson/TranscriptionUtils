@@ -15,7 +15,6 @@ midi_instruments = {
   'Music Box': MUSIC_BOX,
   'Bonang': VIBRAPHONE,
   'Gend\x8er': VIBRAPHONE,
-  'Handbells': VIBRAPHONE,
   'Vibraphone': VIBRAPHONE,
   'Balafon': MARIMBA,
   'Marimba': MARIMBA,
@@ -25,6 +24,9 @@ midi_instruments = {
   'Dulcimer': DULCIMER,
   'Santoor': DULCIMER,
   'Organ': PERCUSSIVE_ORGAN,
+  'Percussive Organ': PERCUSSIVE_ORGAN,
+  'Rock Organ': ROCK_ORGAN,
+  'Church Organ': CHURCH_ORGAN,
   'Accordion': ACCORDION,
   'Harmonica': HARMONICA,
   'Melodica': HARMONICA,
@@ -85,6 +87,7 @@ midi_instruments = {
   'Tuba': TUBA,
   'Tubas': TUBA,
   'Muted Trumpet': MUTED_TRUMPET,
+  'Muted Trumpets': MUTED_TRUMPET,
   'Flugelhorn': TRUMPET,
   'Flugelhorns': TRUMPET,
   'Horn': FRENCH_HORN,
@@ -135,7 +138,6 @@ midi_instruments = {
   'Tin Whistles': WHISTLE,
   'Blown Bottle': BLOWN_BOTTLE,
   'Blown Bottles': BLOWN_BOTTLE,
-  'Whistle': WHISTLE,
   'Ocarina': OCARINA,
   'Ocarinas': OCARINA,
   'Synth Lead': LEAD_1_SQUARE,
@@ -143,7 +145,9 @@ midi_instruments = {
   'Theremin': LEAD_6_SPACE_VOICE,
   'New Age Pad': PAD_1_NEW_AGE,
   'Synth Pad': PAD_2_WARM,
+  'Warm Pad': PAD_2_WARM,
   'Metallic Pad': PAD_6_METALLIC,
+  'Sweep Pad': PAD_8_SWEEP,
   'Rain FX': FX_1_RAIN,
   'Soundtrack FX': FX_2_SOUNDTRACK,
   'Crystal FX': FX_3_CRYSTAL,
@@ -161,6 +165,7 @@ midi_instruments = {
   'Rhaita': SHANAI,
   'Shehnai': SHANAI,
   'Crotales': TINKLE_BELL,
+  'Handbells': TINKLE_BELL,
   'Brake Drums': AGOGO,
   'Cowbell (Auto-tune)': AGOGO,
   'Steel Drums': STEEL_DRUMS,
@@ -245,6 +250,7 @@ mxl_manual_remap = set([
   'Atmosphere FX',
   'Bass Drum',
   'Bird Tweet FX',
+  'Bongo Drums',
   'Brightness FX',
   'Brake Drums',
   'Calliope',
@@ -255,12 +261,15 @@ mxl_manual_remap = set([
   'Electric Guitar',
   'Gend\x8er',
   'Goblins FX',
+  'Gongs',
   'Guiro',
+  'Mandolin',
   'Melodic Tom',
   'Muted Electric Bass',
   'Muted Electric Guitar',
   'Muted Trombone',
   'Muted Trumpet',
+  'Muted Trumpets',
   'O-daiko'
   'Orchestra Hit',
   'Organ',
@@ -275,7 +284,6 @@ mxl_manual_remap = set([
   'Synth Pad',
   'Temple Blocks',
   'Toms',
-  'Triangle',
   'VibraSlap',
   'Whistle',
   'Wind Chimes',
@@ -287,6 +295,10 @@ percussion_parts = {
     58: LOW_AGOGO,
     59: HIGH_AGOGO,
     60: LOW_AGOGO,
+    67: HIGH_AGOGO,
+    68: LOW_AGOGO,
+    76: HIGH_AGOGO,
+    77: LOW_AGOGO,
   },
   'Bass Drum': ACOUSTIC_BASS_DRUM,
   'Bell': RIDE_BELL,
@@ -467,6 +479,7 @@ percussion_parts = {
   'VibraSlap': VIBRASLAP,
   'Washboard': SHORT_GUIRO,
   'Whip': SLAP_NOISE,
+  'Whistle': SHORT_WHISTLE,
   'Wind Chimes': BELL_TREE,
   'Wood Block': HIGH_WOODBLOCK,
   'Wood Blocks': {
@@ -528,7 +541,7 @@ percussion_sequence_orders = {
 }
 
 percussion_sequence_name_orders = {
-  'Bongo Drums': ['Low Bongo Slap', 'Low Bongo', 'High Bongo', 'High Bongo Mute', 'High Bongo Slap']
+  'Bongo Drums': ['Low Bongo Slap', 'Low Bongo Mute', 'Low Bongo', 'High Bongo', 'High Bongo Mute', 'High Bongo Slap']
 }
 
 percussion_parts_override = {
@@ -539,6 +552,7 @@ ignore_unmapped_percussion = set([
   'SmartMusicSoftSynth',
   'Drum Set',
   'Drum Set (Brushes)',
+  'Temple Blocks'
 ])
 
 PMD_EXPLORERS_PROGRAM_TRANSPOSE = {
@@ -2746,6 +2760,9 @@ midi_instrument_overrides = {
     'Synth Pad': FX_2_SOUNDTRACK,
     'Strings V': PIZZICATO_STRINGS,
   },
+  'OSRS Roots and Flutes': {
+    'Organ': PERCUSSIVE_ORGAN,
+  },
   'Pt Battle! (Frontier Brain)': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
@@ -3004,6 +3021,18 @@ midi_instrument_overrides = {
   'RS Prime Time': {
     'Organ': PERCUSSIVE_ORGAN,
   },
+  'RS Roots and Flutes': {
+    'Organ': PERCUSSIVE_ORGAN,
+  },
+  'RS Runed Behemoth': {
+    'Organ': DRAWBAR_ORGAN,
+  },
+  'RS Scape Santa (original)': {
+    'Violin': VIOLIN,
+  },
+  'RS School\'s Out': {
+    'Electric Guitar': ELECTRIC_GUITAR_OVERDRIVEN,
+  },
   'RSE': {
     'Electric Bass': ELECTRIC_BASS_PICKED,
     'Electric Guitar': ELECTRIC_GUITAR_CLEAN,
@@ -3236,15 +3265,17 @@ class PercussionSequencePart:
   notes: Set[int] = field(default_factory=set)
   note_mapping: Dict[int, int] = field(default_factory=dict)
   messages: List = field(default_factory=list)
-  note_names: List = field(default_factory=list)
+  note_names: List[str] = field(default_factory=list)
   note_name_mapping: Dict[str, int] = field(default_factory=dict)
+  note_names_set: Set[str] = field(default_factory=set)
 
 def fill_percussion_sequence_parts(instrument_name: str, current_note: int, message, percussion_sequence_parts: Dict[str, PercussionSequencePart], note_name: str | None = None):
   sequence_part = percussion_sequence_parts[instrument_name]
   sequence_part.notes.add(current_note)
   sequence_part.messages.append(message)
-  if note_name is not None:
+  if note_name is not None and note_name not in sequence_part.note_names_set:
     sequence_part.note_names.append(note_name)
+    sequence_part.note_names_set.add(note_name)
 
 def map_percussion_sequence_note(instrument_name: str, current_note: int, sequence_part: PercussionSequencePart, note_name: str | None = None) -> int:
   if note_name is not None and instrument_name in percussion_sequence_name_orders:

@@ -17,7 +17,7 @@ def move_parts(combined_name: str):
   if game_acronym == 'RS' or game_acronym == 'OSRS':
     if combined_name in special_track_game_names:
       path_suffix = special_track_game_names[combined_name]
-      if path_suffix != 'RuneScape 3':
+      if path_suffix != 'RuneScape 3' and combined_name not in drive_path_omit_suffix:
         drive_path += f' ({path_suffix})'
     elif combined_name.endswith('(original)'):
       drive_path += ' (RuneScape 2)'

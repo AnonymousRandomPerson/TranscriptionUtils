@@ -7,7 +7,7 @@ from typing import Any, Dict, List, Tuple
 from dataclasses import dataclass
 import editdistance
 
-track_name = 'Ready for Battle'
+track_name = 'Sojourn'
 
 midi_file_1 = track_name + '.mid'
 midi_file_2 = midi_file_1
