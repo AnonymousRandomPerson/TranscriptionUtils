@@ -177,10 +177,11 @@ special_track_game_names = {
   'BBT PDA Game': 'Alien Hominid',
   'NSLT Fretting Yeti': 'Super Lucky\'s Tale',
   'OSRS Assault and Battery': 'RuneScape 2',
-  'OSRS Darkmeyer': 'Old School RuneScape',
   'OSRS Ready for Battle': 'RuneScape 2',
-  'OSRS Roots and Flutes': 'Old School RuneScape',
   'OSRS Scape Soft': 'RuneScape 2',
+  'OSRS Sojourn': 'RuneScape 2',
+  'OSRS Start': 'RuneScape 2',
+  'OSRS The Genie': 'RuneScape 2',
   'RS A Pirate\'s Life for Me': 'RuneScape 3',
   'RS Alone': 'RuneScape 3',
   'RS Assault and Battery': 'RuneScape 3',
@@ -225,12 +226,19 @@ special_track_game_names = {
   'RS Roots and Flutes': 'RuneScape 2',
   'RS Scape Soft': 'RuneScape HD',
   'RS Sojourn': 'RuneScape HD',
+  'RS Soul Wars (original)': 'RuneScape HD',
+  'RS Start': 'RuneScape 3',
+  'RS Start (original)': 'RuneScape HD',
+  'RS Storm Brew': 'RuneScape 3',
+  'RS The Genie': 'RuneScape HD',
 }
 
 drive_path_omit_suffix = set([
   'RS Roots and Flutes',
   'RS Scape Soft',
   'RS Sojourn',
+  'RS Start',
+  'RS The Genie',
 ])
 
 def get_game_name(game_acronym: str, full_track_name: str):

@@ -29,6 +29,7 @@ midi_instruments = {
   'Church Organ': CHURCH_ORGAN,
   'Accordion': ACCORDION,
   'Harmonica': HARMONICA,
+  'Harmonicas': HARMONICA,
   'Melodica': HARMONICA,
   'Acoustic Guitar': ACOUSTIC_GUITAR_NYLON,
   'Kora': ACOUSTIC_GUITAR_NYLON,
@@ -65,6 +66,7 @@ midi_instruments = {
   'Contralto': CHOIR_AAHS,
   'Soprano': CHOIR_AAHS,
   'Tenor': CHOIR_AAHS,
+  'Choir Doos': VOICE_OOHS,
   'Choir Oohs': VOICE_OOHS,
   'Kirby Voice': VOICE_OOHS,
   'Vocals': VOICE_OOHS,
@@ -146,6 +148,7 @@ midi_instruments = {
   'New Age Pad': PAD_1_NEW_AGE,
   'Synth Pad': PAD_2_WARM,
   'Warm Pad': PAD_2_WARM,
+  'Bowed Glass Pad': PAD_5_BOWED_GLASS,
   'Metallic Pad': PAD_6_METALLIC,
   'Sweep Pad': PAD_8_SWEEP,
   'Rain FX': FX_1_RAIN,
@@ -177,6 +180,7 @@ midi_instruments = {
   'Compressed Air FX': BREATH_NOISE,
   'Cymbal FX': BREATH_NOISE,
   'Fire FX': BREATH_NOISE,
+  'Howl FX': BREATH_NOISE,
   'Laugh FX': BREATH_NOISE,
   'Noise FX': BREATH_NOISE,
   'Roar FX': BREATH_NOISE,
@@ -202,6 +206,7 @@ midi_instruments = {
   'Wave FX': HELICOPTER,
   'Zap FX': HELICOPTER,
   'Gun Shot FX': GUNSHOT,
+  'Impact FX': GUNSHOT,
   'Metal Bang FX': GUNSHOT,
   'Rock Hit FX': GUNSHOT,
   'Swirl FX': GUNSHOT,
@@ -253,15 +258,16 @@ mxl_manual_remap = set([
   'Brightness FX',
   'Brake Drums',
   'Calliope',
+  'Choir Doos',
   'Crystal FX',
   'Cuíca',
-  'Drum Set',
   'Echo FX',
   'Electric Guitar',
   'Gend\x8er',
   'Goblins FX',
   'Gongs',
   'Guiro',
+  'Howl FX',
   'Mandolin',
   'Melodic Tom',
   'Muted Electric Bass',
@@ -283,7 +289,6 @@ mxl_manual_remap = set([
   'Synth Pad',
   'Temple Blocks',
   'Toms',
-  'VibraSlap',
   'Whistle',
   'Wind Chimes',
 ])
@@ -2762,6 +2767,14 @@ midi_instrument_overrides = {
   'OSRS Roots and Flutes': {
     'Organ': PERCUSSIVE_ORGAN,
   },
+  'OSRS Start': {
+    'Electric Bass': FRETLESS_BASS,
+    'Strings 1': VIOLIN,
+  },
+  'OSRS The Genie': {
+    'Synth Voice': PAD_4_CHOIR,
+    'Violins III': VIOLIN,
+  },
   'Pt Battle! (Frontier Brain)': {
     'Synth Lead': LEAD_2_SAWTOOTH,
   },
@@ -3031,6 +3044,16 @@ midi_instrument_overrides = {
   },
   'RS School\'s Out': {
     'Electric Guitar': ELECTRIC_GUITAR_OVERDRIVEN,
+  },
+  'RS Superstition': {
+    'Organ': PERCUSSIVE_ORGAN,
+  },
+  'RS The Genie': {
+    'Synth Voice': PAD_4_CHOIR,
+    'Violins III': VIOLIN,
+  },
+  'RS The Rogues\' Den': {
+    'Violins I': FIDDLE,
   },
   'RSE': {
     'Electric Bass': ELECTRIC_BASS_PICKED,
