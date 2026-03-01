@@ -7,10 +7,10 @@ from typing import Any, Dict, List, Tuple
 from dataclasses import dataclass
 import editdistance
 
-track_name = 'The Terrible Tower'
+track_name = 'Woe of the Wyvern'
 
 midi_file_1 = track_name + '.mid'
-midi_file_2 = midi_file_1
+midi_file_2 = track_name + '.mid'
 midi_path_1 = os.path.join(sf2_folder, 'RuneScape', 'RuneScape HD', midi_file_1)
 midi_path_2 = os.path.join(sf2_folder, 'RuneScape', 'Old School RuneScape', midi_file_2)
 

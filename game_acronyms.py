@@ -159,6 +159,7 @@ special_track_names = {
   'MRSOH Phantom The Diva Delivers': 'Phantom, The Diva Delivers',
   'MRSOH Root of Corruption Pt I': 'Root of Corruption, Pt. I',
   'MRSOH Root of Corruption Pt II': 'Root of Corruption, Pt. II',
+  'NID Vs Nightmare 2': 'Vs. Nightmare 2',
   'NSMBW Lava Cave Underground Ruins Theme': 'Lava Cave   Underground Ruins Theme',
   'ORAS Mt Pyre': 'Mt. Pyre',
   'ORAS Mt Pyre Exterior': 'Mt. Pyre Exterior',
@@ -182,6 +183,8 @@ special_track_game_names = {
   'OSRS Sojourn': 'RuneScape 2',
   'OSRS Start': 'RuneScape 2',
   'OSRS The Genie': 'RuneScape 2',
+  'OSRS Tomorrow': 'RuneScape 2',
+  'OSRS Warrior': 'RuneScape 2',
   'RS A Pirate\'s Life for Me': 'RuneScape 3',
   'RS Alone': 'RuneScape 3',
   'RS Assault and Battery': 'RuneScape 3',
@@ -231,6 +234,9 @@ special_track_game_names = {
   'RS Start (original)': 'RuneScape HD',
   'RS Storm Brew': 'RuneScape 3',
   'RS The Genie': 'RuneScape HD',
+  'RS Tomorrow': 'RuneScape HD',
+  'RS Warrior': 'RuneScape HD',
+  'RS Woe of the Wyvern': 'RuneScape 3',
 }
 
 drive_path_omit_suffix = set([
@@ -239,6 +245,8 @@ drive_path_omit_suffix = set([
   'RS Sojourn',
   'RS Start',
   'RS The Genie',
+  'RS Tomorrow',
+  'RS Warrior',
 ])
 
 def get_game_name(game_acronym: str, full_track_name: str):

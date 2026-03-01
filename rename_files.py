@@ -2,11 +2,11 @@ import os
 from file_locations import *
 
 rename_file_locations = [
-  os.path.join(parts_folder, 'OSRS Scape Soft'),
+  os.path.join(parts_folder, 'AM Last Boss 2nd Form'),
 ]
 #rename_file_locations.append(os.path.join(rename_file_locations[0], 'PDFs'))
-find_string = 'Old School RuneScape'
-replace_string = 'RuneScape 2'
+find_string = 'Dark Mind Battle Theme'
+replace_string = 'Last Boss 2nd Form'
 
 for rename_file_location in rename_file_locations:
   for file in os.listdir(rename_file_location):

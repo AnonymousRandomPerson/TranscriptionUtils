@@ -122,6 +122,7 @@ midi_instruments = {
   'Piccolo': PICCOLO,
   'Piccolos': PICCOLO,
   'Alto Flute': FLUTE,
+  'Alto Flutes': FLUTE,
   'Bansuri': FLUTE,
   'Bass Flute': FLUTE,
   'Flute': FLUTE,
@@ -144,12 +145,14 @@ midi_instruments = {
   'Ocarinas': OCARINA,
   'Synth Lead': LEAD_1_SQUARE,
   'Calliope': LEAD_3_CALLIOPE,
+  'Charang Synth': LEAD_5_CHARANG,
   'Theremin': LEAD_6_SPACE_VOICE,
   'New Age Pad': PAD_1_NEW_AGE,
   'Synth Pad': PAD_2_WARM,
   'Warm Pad': PAD_2_WARM,
   'Bowed Glass Pad': PAD_5_BOWED_GLASS,
   'Metallic Pad': PAD_6_METALLIC,
+  'Halo Pad': PAD_7_HALO,
   'Sweep Pad': PAD_8_SWEEP,
   'Rain FX': FX_1_RAIN,
   'Soundtrack FX': FX_2_SOUNDTRACK,
@@ -360,7 +363,9 @@ percussion_parts = {
     60: OPEN_HIGH_CONGA,
     69: LOW_CONGA,
     70: OPEN_HIGH_CONGA,
+    71: MUTE_HIGH_CONGA,
   },
+  'Gong': RIDE_BELL,
   'Gongs': RIDE_BELL,
   'Guiro': {
     61: LONG_GUIRO,
@@ -396,6 +401,7 @@ percussion_parts = {
     53: RIDE_BELL,
     59: RIDE_CYMBAL_2,
     84: RIDE_CYMBAL_1,
+    91: RIDE_CYMBAL_1,
     92: RIDE_CYMBAL_1,
     93: RIDE_BELL,
   },
@@ -422,6 +428,7 @@ percussion_parts = {
   'Static FX': CASTANETS,
   'Stick Click': DRUM_STICKS,
   'Surdo': {
+    68: OPEN_SURDO,
     86: MUTE_SURDO,
     87: OPEN_SURDO,
   },
@@ -3054,6 +3061,27 @@ midi_instrument_overrides = {
   },
   'RS The Rogues\' Den': {
     'Violins I': FIDDLE,
+  },
+  'RS To\'Kash the Bloodchiller': {
+    'Synth Pad 2': PAD_3_POLYSYNTH,
+  },
+  'RS Torqueo IV': {
+    'Organ': ROCK_ORGAN,
+  },
+  'RS Torqueo V': {
+    'Organ': ROCK_ORGAN,
+  },
+  'RS Torqueo VII': {
+    'Organ': ROCK_ORGAN,
+  },
+  'RS Unholy Cursebearer': {
+    'Double Basses': CONTRABASS,
+  },
+  'RS Village Life': {
+    'Violin I': FIDDLE,
+  },
+  'RS Volcanic Vikings': {
+    'Cello II': CELLO,
   },
   'RSE': {
     'Electric Bass': ELECTRIC_BASS_PICKED,

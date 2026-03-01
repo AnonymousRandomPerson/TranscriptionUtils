@@ -122,21 +122,14 @@ for file in sorted(os.listdir(search_folder)):
             parts[part_id] = (part_name, instrument_name, program)
 
             if part_name.startswith('Snare') or part_name.startswith('Field') or part_name.startswith('Drum Set') or part_name.startswith('Hi-Hat'):
-              open_hi_hat = False
               cross_stick = False
               for midi_instrument in part_info.findall('midi-instrument'):
-                  midi_unpitched = midi_instrument.find('midi-unpitched')
-                  if midi_unpitched is not None:
-                    if midi_unpitched.text == str(OPEN_HI_HAT + 1):
-                      open_hi_hat = True
-                      open_hi_hat_ids.add(midi_instrument.attrib['id'])
-                    cross_stick = cross_stick or midi_unpitched.text == str(SIDE_STICK + 1)
+                midi_unpitched = midi_instrument.find('midi-unpitched')
+                if midi_unpitched is not None:
+                  cross_stick = cross_stick or midi_unpitched.text == str(SIDE_STICK + 1)
 
-              if full_score:
-                if open_hi_hat:
-                  print('Found open hi-hat in', part_name)
-                if cross_stick:
-                  print('Found cross-stick in', part_name)
+              if full_score and cross_stick:
+                print('Found cross-stick in', part_name)
 
           for instrument_name, sequence_part in percussion_sequence_parts.items():
             for msg, note_name in zip(sequence_part.messages, sequence_part.note_names):
